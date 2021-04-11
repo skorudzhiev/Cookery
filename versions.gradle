@@ -1,0 +1,31 @@
+def libs = [:]
+ext.Libs = libs
+
+def versions = [
+        ktlint: "0.40.0",
+]
+ext.Versions = versions
+
+libs.androidGradlePlugin = "com.android.tools.build:gradle:7.0.0-alpha14"
+
+libs.junit = "junit:junit:4.13.2"
+
+versions.kotlin = "1.4.30"
+libs.Kotlin = [
+        gradlePlugin: "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
+]
+
+libs.AndroidX = [
+        coreKtx:          "androidx.core:core-ktx:1.3.2",
+        appCompat:        "androidx.appcompat:appcompat:1.2.0",
+        constraintLayout: "androidx.constraintlayout:constraintlayout:2.0.4"
+]
+
+libs.AndroidX.Test = [
+        junit: "androidx.test.ext:junit:1.1.2",
+        espresso: "androidx.test.espresso:espresso-core:3.3.0"
+]
+
+libs.Google = [
+        material: "com.google.android.material:material:1.3.0"
+]
