@@ -1,21 +1,28 @@
+import com.skorudzhiev.cookery.buildsrc.Libs
+
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
+}
+
+kapt {
+    correctErrorTypes = true
+    useBuildCache = true
 }
 
 android {
     compileSdkVersion buildConfig.compileSdk
-
     defaultConfig {
         applicationId "com.skorudzhiev.cookery"
-        minSdkVersion buildConfig.minSdkVersion
+        minSdkVersion buildConfig.minSdk
         targetSdkVersion buildConfig.targetSdkVersion
         versionCode 1
         versionName "1.0"
 
         resConfigs "en"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
 
     buildTypes {
@@ -38,7 +45,7 @@ dependencies {
     implementation Libs.AndroidX.appCompat
     implementation Libs.AndroidX.constraintLayout
     implementation Libs.Google.material
-    testImplementation Libs.junit
+    testImplementation Libs.AndroidX.Test.junit
     androidTestImplementation Libs.AndroidX.Test.junit
     androidTestImplementation Libs.AndroidX.Test.espresso
 }
