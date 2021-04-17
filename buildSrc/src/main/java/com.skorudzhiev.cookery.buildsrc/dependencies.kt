@@ -6,6 +6,7 @@ object Versions {
 
 object Libs {
     const val androidGradlePlugin = "com.android.tools.build:gradle:7.0.0-alpha14"
+    const val hiltGradlePlugin = "com.google.dagger:hilt-android-gradle-plugin:${Hilt.version}"
 
     object Kotlin {
         private const val version = "1.4.32"
@@ -30,5 +31,11 @@ object Libs {
 
     object Google {
         const val material = "com.google.android.material:material:1.3.0"
+    }
+
+    object Hilt {
+        const val version = "2.33-beta"
+        const val hiltAndroid = "com.google.dagger:hilt-android:$version"
+        const val hiltAndroidCompiler = "com.google.dagger:hilt-android-compiler:$version"
     }
 }

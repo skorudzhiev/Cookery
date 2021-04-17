@@ -4,6 +4,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
 kapt {
@@ -45,6 +46,11 @@ dependencies {
     implementation Libs.AndroidX.appCompat
     implementation Libs.AndroidX.constraintLayout
     implementation Libs.Google.material
+
+    // Hilt
+    implementation Libs.Hilt.hiltAndroid
+    kapt Libs.Hilt.hiltAndroidCompiler
+
     testImplementation Libs.AndroidX.Test.junit
     androidTestImplementation Libs.AndroidX.Test.junit
     androidTestImplementation Libs.AndroidX.Test.espresso
