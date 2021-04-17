@@ -42,6 +42,8 @@ android {
 }
 
 dependencies {
+    implementation project(':base-android')
+
     implementation Libs.AndroidX.coreKtx
     implementation Libs.AndroidX.appCompat
     implementation Libs.AndroidX.constraintLayout
