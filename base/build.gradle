@@ -1,0 +1,11 @@
+apply plugin: 'kotlin'
+
+import com.skorudzhiev.cookery.buildsrc.Libs
+
+dependencies {
+    api Libs.Kotlin.stdlib
+
+    api Libs.Coroutines.core
+    api Libs.Retrofit.retrofit
+    api Libs.OkHttp.loggingInterceptor
+}

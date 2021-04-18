@@ -38,4 +38,22 @@ object Libs {
         const val hiltAndroid = "com.google.dagger:hilt-android:$version"
         const val hiltAndroidCompiler = "com.google.dagger:hilt-android-compiler:$version"
     }
+
+    object Coroutines {
+        private const val version = "1.4.3"
+        const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version"
+        const val android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version"
+    }
+
+    object Retrofit {
+        private const val version = "2.9.0"
+        const val retrofit = "com.squareup.retrofit2:retrofit:$version"
+        const val gsonConverter = "com.squareup.retrofit2:converter-gson:$version"
+    }
+
+    object OkHttp {
+        private const val version = "4.9.1"
+        const val okHttp = "com.squareup.okhttp3:okhttp:$version"
+        const val loggingInterceptor = "com.squareup.okhttp3:logging-interceptor:$version"
+    }
 }
