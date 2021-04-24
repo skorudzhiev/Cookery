@@ -33,10 +33,17 @@ object Libs {
         const val material = "com.google.android.material:material:1.3.0"
     }
 
+    object Dagger {
+        private const val version = "2.33"
+        const val dagger = "com.google.dagger:dagger:$version"
+        const val compiler = "com.google.dagger:dagger-compiler:$version"
+    }
+
     object Hilt {
         const val version = "2.33-beta"
         const val hiltAndroid = "com.google.dagger:hilt-android:$version"
         const val hiltAndroidCompiler = "com.google.dagger:hilt-android-compiler:$version"
+        const val hiltGradlePlugin = "com.google.dagger:hilt-android-gradle-plugin:$version"
     }
 
     object Coroutines {
@@ -55,5 +62,13 @@ object Libs {
         private const val version = "4.9.1"
         const val okHttp = "com.squareup.okhttp3:okhttp:$version"
         const val loggingInterceptor = "com.squareup.okhttp3:logging-interceptor:$version"
+    }
+
+    object Room {
+        private const val version = "2.3.0"
+        const val common = "androidx.room:room-common:$version"
+        const val compiler = "androidx.room:room-compiler:$version"
+        const val runtime = "androidx.room:room-runtime:$version"
+        const val ktx = "androidx.room:room-ktx:$version"
     }
 }

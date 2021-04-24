@@ -8,5 +8,7 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Cookery"
 include ':app'
-include ':base-android'
 include ':base'
+include ':base-android'
+include ':data'
+include ':data-android'

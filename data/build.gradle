@@ -1,0 +1,9 @@
+apply plugin: 'kotlin'
+
+import com.skorudzhiev.cookery.buildsrc.Libs
+
+dependencies {
+    api project(':base')
+
+    api Libs.Room.common
+}

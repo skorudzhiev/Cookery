@@ -1,0 +1,37 @@
+import com.skorudzhiev.cookery.buildsrc.Libs
+
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+}
+kapt {
+    correctErrorTypes = true
+    useBuildCache = true
+}
+
+android {
+    compileSdk buildConfig.compileSdk
+
+    defaultConfig {
+        minSdkVersion buildConfig.minSdk
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation project(':base')
+    implementation project(':base-android')
+    api project(':data')
+
+    api Libs.Room.runtime
+    implementation Libs.Room.ktx
+    kapt Libs.Room.compiler
+
+    implementation Libs.Hilt.hiltAndroid
+    kapt Libs.Hilt.hiltAndroidCompiler
+}
