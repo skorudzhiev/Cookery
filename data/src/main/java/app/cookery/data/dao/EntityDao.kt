@@ -1,10 +1,10 @@
-package app.cookery.dao
+package app.cookery.data.dao
 
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Transaction
 import androidx.room.Update
-import app.cookery.entity.CookeryEntity
+import app.cookery.data.entity.CookeryEntity
 
 abstract class EntityDao<in E : CookeryEntity> {
 

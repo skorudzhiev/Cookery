@@ -8,5 +8,6 @@ dependencies {
     api Libs.Dagger.dagger
     api Libs.Coroutines.core
     api Libs.Retrofit.retrofit
+    api Libs.Retrofit.gsonConverter
     api Libs.OkHttp.loggingInterceptor
 }

@@ -1,6 +1,7 @@
 package com.skorudzhiev.cookery.di
 
 import android.content.Context
+import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,6 +13,8 @@ import okhttp3.Dispatcher
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.logging.LoggingEventListener
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
@@ -19,6 +22,30 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 @Module
 object NetworkModule {
+
+    private const val BASE_URL = "https://www.themealdb.com/"
+
+    @Singleton
+    @Provides
+    fun provideRetrofitClient(
+        @ApplicationContext context: Context
+    ): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(provideGsonConverterFactory())
+            .client(
+                provideOkHttpClient(
+                    provideHttpLoggingInterceptor(), provideHttpEventListener(), context
+                )
+            )
+            .build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideGsonConverterFactory(): GsonConverterFactory {
+        return GsonConverterFactory.create(GsonBuilder().create())
+    }
 
     @Singleton
     @Provides
