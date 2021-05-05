@@ -20,6 +20,7 @@ object Libs {
         const val coreKtx = "androidx.core:core-ktx:1.6.0-alpha02"
         const val appCompat = "androidx.appcompat:appcompat:1.2.0"
         const val constraintLayout = "androidx.constraintlayout:constraintlayout:2.0.4"
+        const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1"
 
         object Test {
             private const val version = "1.3.0"
