@@ -29,6 +29,8 @@ dependencies {
     api project(':base')
     implementation Libs.AndroidX.coreKtx
 
+    implementation Libs.timber
+
     implementation Libs.Hilt.hiltAndroid
     kapt Libs.Hilt.hiltAndroidCompiler
 }

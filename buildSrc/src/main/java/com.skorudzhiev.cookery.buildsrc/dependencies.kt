@@ -7,6 +7,7 @@ object Versions {
 object Libs {
     const val androidGradlePlugin = "com.android.tools.build:gradle:7.0.0-alpha14"
     const val hiltGradlePlugin = "com.google.dagger:hilt-android-gradle-plugin:${Hilt.version}"
+    const val timber = "com.jakewharton.timber:timber:4.7.1"
 
     object Kotlin {
         private const val version = "1.4.32"
