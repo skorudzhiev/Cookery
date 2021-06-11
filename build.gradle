@@ -13,13 +13,20 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+        maven {
+            url  "https://oss.sonatype.org/content/repositories/snapshots"
+            content {
+                includeModule("com.google.dagger", "hilt-android-gradle-plugin")
+            }
+        }
     }
 
     dependencies {
         classpath Libs.androidGradlePlugin
         classpath Libs.Kotlin.gradlePlugin
         classpath Libs.hiltGradlePlugin
-        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.0'
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.10'
+        classpath "com.google.dagger:hilt-android-gradle-plugin:HEAD-SNAPSHOT"
     }
 }
 
