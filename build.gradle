@@ -28,6 +28,14 @@ buildscript {
         classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.10'
         classpath "com.google.dagger:hilt-android-gradle-plugin:2.37"
     }
+
+    allprojects {
+        configurations.all {
+            resolutionStrategy {
+                force 'org.xerial:sqlite-jdbc:3.34.0'
+            }
+        }
+    }
 }
 
 plugins {
