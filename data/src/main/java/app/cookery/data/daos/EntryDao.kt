@@ -1,4 +1,4 @@
-package app.cookery.data.dao
+package app.cookery.data.daos
 
 import app.cookery.Entry
 

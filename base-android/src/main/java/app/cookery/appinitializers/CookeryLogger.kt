@@ -4,6 +4,7 @@ import android.os.Build
 import app.cookery.Logger
 import timber.log.Timber
 import java.util.regex.Pattern
+import javax.inject.Inject
 
 /**
  * Special version of [Timber.DebugTree] which is tailored for Timber being wrapped
@@ -39,7 +40,7 @@ private class CookeryDebugTree : Timber.DebugTree() {
     }
 }
 
-class CookeryLogger : Logger {
+class CookeryLogger @Inject constructor() : Logger {
 
     fun setup(debugMode: Boolean) {
         if (debugMode) {

@@ -1,11 +1,11 @@
 package app.cookery
 
-import app.cookery.data.entity.CookeryEntity
+import app.cookery.data.entities.CookeryEntity
 
 interface Entry : CookeryEntity {
-    val recipeId: Long
+    val recipeId: Int
 }
 
 interface MultipleEntry : Entry {
-    val otherRecipeId: Long
+    val otherRecipeId: Int
 }

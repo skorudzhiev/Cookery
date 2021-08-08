@@ -1,4 +1,4 @@
-package app.cookery.data.entity
+package app.cookery.data.entities
 
 interface CookeryEntity {
     val id: Long

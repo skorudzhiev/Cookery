@@ -1,10 +1,11 @@
-package app.cookery.data.dao
+package app.cookery.data.daos
 
 import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Transaction
 import androidx.room.Update
-import app.cookery.data.entity.CookeryEntity
+import app.cookery.data.entities.CookeryEntity
 
 abstract class EntityDao<in E : CookeryEntity> {
 
@@ -15,7 +16,7 @@ abstract class EntityDao<in E : CookeryEntity> {
         }
     }
 
-    suspend fun insertOrUpdate(entity: E): Long {
+    private suspend fun insertOrUpdate(entity: E): Long {
         return if (entity.id == 0L) {
             insert(entity)
         } else {
@@ -24,13 +25,13 @@ abstract class EntityDao<in E : CookeryEntity> {
         }
     }
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract suspend fun insert(entity: E): Long
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract suspend fun insertAll(vararg entity: E)
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract suspend fun insertAll(entities: List<E>)
 
     @Update

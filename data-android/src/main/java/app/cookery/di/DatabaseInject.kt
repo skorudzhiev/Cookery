@@ -17,7 +17,10 @@ import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
-object DatabaseDaoModule
+object DatabaseDaoModule {
+    @Provides
+    fun provideCategoriesDao(db: CookeryDatabase) = db.categoriesDao()
+}
 
 @InstallIn(SingletonComponent::class)
 @Module
