@@ -16,7 +16,7 @@ abstract class EntityDao<in E : CookeryEntity> {
         }
     }
 
-    private suspend fun insertOrUpdate(entity: E): Long {
+    suspend fun insertOrUpdate(entity: E): Long {
         return if (entity.id == 0L) {
             insert(entity)
         } else {

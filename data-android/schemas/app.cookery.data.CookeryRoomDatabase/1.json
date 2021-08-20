@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "d5b816ca23942c2d230356aa7ba43010",
+    "identityHash": "1d99a284de5b6a8a5e6275d26d9a6d7a",
     "entities": [
       {
-        "tableName": "categories",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`idCategory` INTEGER NOT NULL, `category_type` TEXT, `category_image` TEXT, `category_description` TEXT, PRIMARY KEY(`idCategory`))",
+        "tableName": "meal_categories",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`idCategory` INTEGER NOT NULL, `categoryType` TEXT, `categoryImage` TEXT, `categoryDescription` TEXT, PRIMARY KEY(`idCategory`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -16,19 +16,19 @@
           },
           {
             "fieldPath": "categoryType",
-            "columnName": "category_type",
+            "columnName": "categoryType",
             "affinity": "TEXT",
             "notNull": false
           },
           {
             "fieldPath": "categoryImage",
-            "columnName": "category_image",
+            "columnName": "categoryImage",
             "affinity": "TEXT",
             "notNull": false
           },
           {
             "fieldPath": "categoryDescription",
-            "columnName": "category_description",
+            "columnName": "categoryDescription",
             "affinity": "TEXT",
             "notNull": false
           }
@@ -41,12 +41,64 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "category_details",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`strMeal` TEXT, `categoryImage` TEXT, `idMeal` INTEGER NOT NULL, PRIMARY KEY(`idMeal`))",
+        "fields": [
+          {
+            "fieldPath": "mealName",
+            "columnName": "strMeal",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "categoryImage",
+            "columnName": "categoryImage",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "idMeal",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "idMeal"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "meals_area",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`mealArea` TEXT NOT NULL, PRIMARY KEY(`mealArea`))",
+        "fields": [
+          {
+            "fieldPath": "mealArea",
+            "columnName": "mealArea",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "mealArea"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd5b816ca23942c2d230356aa7ba43010')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '1d99a284de5b6a8a5e6275d26d9a6d7a')"
     ]
   }
 }
