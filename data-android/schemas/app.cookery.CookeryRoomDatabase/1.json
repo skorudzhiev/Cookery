@@ -1,0 +1,534 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "e44cf9c059c81b60debf428728afaa11",
+    "entities": [
+      {
+        "tableName": "Category",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`idCategory` TEXT NOT NULL, `categoryType` TEXT, `categoryImage` TEXT, `categoryDescription` TEXT, PRIMARY KEY(`idCategory`))",
+        "fields": [
+          {
+            "fieldPath": "categoryId",
+            "columnName": "idCategory",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "categoryType",
+            "columnName": "categoryType",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "categoryImage",
+            "columnName": "categoryImage",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "categoryDescription",
+            "columnName": "categoryDescription",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "idCategory"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "categories",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`categories` TEXT NOT NULL, PRIMARY KEY(`categories`))",
+        "fields": [
+          {
+            "fieldPath": "categories",
+            "columnName": "categories",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "categories"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "meals_area",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`mealArea` TEXT NOT NULL, PRIMARY KEY(`mealArea`))",
+        "fields": [
+          {
+            "fieldPath": "mealArea",
+            "columnName": "mealArea",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "mealArea"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "areas",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`areas` TEXT NOT NULL, PRIMARY KEY(`areas`))",
+        "fields": [
+          {
+            "fieldPath": "areas",
+            "columnName": "areas",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "areas"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "category_details",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`strMeal` TEXT, `categoryImage` TEXT, `idMeal` TEXT NOT NULL, PRIMARY KEY(`idMeal`))",
+        "fields": [
+          {
+            "fieldPath": "mealName",
+            "columnName": "strMeal",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "categoryImage",
+            "columnName": "categoryImage",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mealId",
+            "columnName": "idMeal",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "idMeal"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "filtered_by_area",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`area` TEXT NOT NULL, `meals` TEXT NOT NULL, PRIMARY KEY(`area`))",
+        "fields": [
+          {
+            "fieldPath": "area",
+            "columnName": "area",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "meals",
+            "columnName": "meals",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "area"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "filtered_by_category",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`category` TEXT NOT NULL, `meals` TEXT NOT NULL, PRIMARY KEY(`category`))",
+        "fields": [
+          {
+            "fieldPath": "category",
+            "columnName": "category",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "meals",
+            "columnName": "meals",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "category"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "meal_details",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`meals` TEXT NOT NULL, `idMeal` TEXT NOT NULL, `mealName` TEXT, `drinkAlternate` TEXT, `mealCategory` TEXT, `mealArea` TEXT, `cookingInstructions` TEXT, `mealImage` TEXT, `mealTags` TEXT, `mealYoutube` TEXT, `mealIngredient1` TEXT, `mealIngredient2` TEXT, `mealIngredient3` TEXT, `mealIngredient4` TEXT, `mealIngredient5` TEXT, `mealIngredient6` TEXT, `mealIngredient7` TEXT, `mealIngredient8` TEXT, `mealIngredient9` TEXT, `mealIngredient10` TEXT, `mealIngredient11` TEXT, `mealIngredient12` TEXT, `mealIngredient13` TEXT, `mealIngredient14` TEXT, `mealIngredient15` TEXT, `mealIngredient16` TEXT, `mealIngredient17` TEXT, `mealIngredient18` TEXT, `mealIngredient19` TEXT, `mealIngredient20` TEXT, `mealMeasure1` TEXT, `mealMeasure2` TEXT, `mealMeasure3` TEXT, `mealMeasure4` TEXT, `mealMeasure5` TEXT, `mealMeasure6` TEXT, `mealMeasure7` TEXT, `mealMeasure8` TEXT, `mealMeasure9` TEXT, `mealMeasure10` TEXT, `mealMeasure11` TEXT, `mealMeasure12` TEXT, `mealMeasure13` TEXT, `mealMeasure14` TEXT, `mealMeasure15` TEXT, `mealMeasure16` TEXT, `mealMeasure17` TEXT, `mealMeasure18` TEXT, `mealMeasure19` TEXT, `mealMeasure20` TEXT, `mealSource` TEXT, `mealImageSource` TEXT, `mealCreativeCommonsConfirmed` TEXT, `dateModified` TEXT, PRIMARY KEY(`idMeal`))",
+        "fields": [
+          {
+            "fieldPath": "meals",
+            "columnName": "meals",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mealId",
+            "columnName": "idMeal",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mealName",
+            "columnName": "mealName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "drinkAlternate",
+            "columnName": "drinkAlternate",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mealCategory",
+            "columnName": "mealCategory",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mealArea",
+            "columnName": "mealArea",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "cookingInstructions",
+            "columnName": "cookingInstructions",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mealImage",
+            "columnName": "mealImage",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mealTags",
+            "columnName": "mealTags",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mealYoutube",
+            "columnName": "mealYoutube",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mealIngredient1",
+            "columnName": "mealIngredient1",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mealIngredient2",
+            "columnName": "mealIngredient2",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mealIngredient3",
+            "columnName": "mealIngredient3",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mealIngredient4",
+            "columnName": "mealIngredient4",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mealIngredient5",
+            "columnName": "mealIngredient5",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mealIngredient6",
+            "columnName": "mealIngredient6",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mealIngredient7",
+            "columnName": "mealIngredient7",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mealIngredient8",
+            "columnName": "mealIngredient8",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mealIngredient9",
+            "columnName": "mealIngredient9",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mealIngredient10",
+            "columnName": "mealIngredient10",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mealIngredient11",
+            "columnName": "mealIngredient11",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mealIngredient12",
+            "columnName": "mealIngredient12",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mealIngredient13",
+            "columnName": "mealIngredient13",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mealIngredient14",
+            "columnName": "mealIngredient14",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mealIngredient15",
+            "columnName": "mealIngredient15",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mealIngredient16",
+            "columnName": "mealIngredient16",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mealIngredient17",
+            "columnName": "mealIngredient17",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mealIngredient18",
+            "columnName": "mealIngredient18",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mealIngredient19",
+            "columnName": "mealIngredient19",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mealIngredient20",
+            "columnName": "mealIngredient20",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mealMeasure1",
+            "columnName": "mealMeasure1",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mealMeasure2",
+            "columnName": "mealMeasure2",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mealMeasure3",
+            "columnName": "mealMeasure3",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mealMeasure4",
+            "columnName": "mealMeasure4",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mealMeasure5",
+            "columnName": "mealMeasure5",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mealMeasure6",
+            "columnName": "mealMeasure6",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mealMeasure7",
+            "columnName": "mealMeasure7",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mealMeasure8",
+            "columnName": "mealMeasure8",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mealMeasure9",
+            "columnName": "mealMeasure9",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mealMeasure10",
+            "columnName": "mealMeasure10",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mealMeasure11",
+            "columnName": "mealMeasure11",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mealMeasure12",
+            "columnName": "mealMeasure12",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mealMeasure13",
+            "columnName": "mealMeasure13",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mealMeasure14",
+            "columnName": "mealMeasure14",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mealMeasure15",
+            "columnName": "mealMeasure15",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mealMeasure16",
+            "columnName": "mealMeasure16",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mealMeasure17",
+            "columnName": "mealMeasure17",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mealMeasure18",
+            "columnName": "mealMeasure18",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mealMeasure19",
+            "columnName": "mealMeasure19",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mealMeasure20",
+            "columnName": "mealMeasure20",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mealSource",
+            "columnName": "mealSource",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mealImageSource",
+            "columnName": "mealImageSource",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mealCreativeCommonsConfirmed",
+            "columnName": "mealCreativeCommonsConfirmed",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dateModified",
+            "columnName": "dateModified",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "idMeal"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e44cf9c059c81b60debf428728afaa11')"
+    ]
+  }
+}

@@ -16,9 +16,8 @@ data class CategoryDetails(
 
     @PrimaryKey
     @SerializedName("idMeal")
-    @ColumnInfo(name = "idMeal") override val id: Long,
+    @ColumnInfo(name = "idMeal") val mealId: String = ""
 ) : CookeryEntity {
-    companion object {
-        val EMPTY = Category(id = 0)
-    }
+    override val id: Long
+        get() = 0
 }

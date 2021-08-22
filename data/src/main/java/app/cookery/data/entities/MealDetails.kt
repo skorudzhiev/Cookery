@@ -3,7 +3,6 @@ package app.cookery.data.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import app.cookery.data.entities.categories.Category
 import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "meal_details")
@@ -13,7 +12,7 @@ data class MealDetails(
 
     @PrimaryKey
     @SerializedName("idMeal")
-    @ColumnInfo(name = "idMeal") override val id: Long = 0,
+    @ColumnInfo(name = "idMeal") val mealId: String = "",
 
     @SerializedName("strMeal")
     @ColumnInfo(name = "mealName") val mealName: String? = null,
@@ -171,7 +170,6 @@ data class MealDetails(
     @SerializedName("dateModified")
     @ColumnInfo(name = "dateModified") val dateModified: String? = null,
 ) : CookeryEntity {
-    companion object {
-        val EMPTY = Category(id = 0)
-    }
+    override val id: Long
+        get() = 0
 }

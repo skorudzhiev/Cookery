@@ -4,15 +4,15 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import app.cookery.data.entities.categories.AllMealCategories
+import app.cookery.data.entities.categories.Areas
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface CategoriesDao {
+interface AreasDao {
 
-    @Query("SELECT *, `categories` FROM categories")
-    fun getAllMealCategories(): Flow<AllMealCategories>
+    @Query("SELECT *, `areas` FROM areas")
+    fun getMealAreas(): Flow<Areas>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(allMealCategories: AllMealCategories)
+    suspend fun insert(areas: Areas)
 }

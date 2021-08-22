@@ -6,26 +6,34 @@ import javax.inject.Singleton
 @Singleton
 class CategoriesRepository @Inject constructor(
     private val dataSource: CategoriesDataSource,
-    private val categoriesStore: CategoriesStore
+    private val store: CategoriesStore
 ) {
 
-    suspend fun fetchAllMealsCategories() {
-        val response = dataSource.getMealsCategories().getOrThrow()
-        categoriesStore.saveMealsCategoryTypes(response)
-    }
+    fun observeAllMealCategories() = store.observeAllMealCategories()
 
-    suspend fun fetchMealsByCategory(category: String) {
-        val response = dataSource.getMealsByCategory(category).getOrThrow()
-        categoriesStore.saveMealsByFilter(response)
+    fun observeAreaMeals() = store.observeAreaMeals()
+
+    fun observeMealsFilteredByCategory(category: String) = store.observeMealsFilteredByCategory(category)
+
+    fun observeMealsFilteredByArea(area: String) = store.observeMealsFilteredByArea(area)
+
+    suspend fun fetchAllMealCategories() {
+        val response = dataSource.getAllMealCategories().getOrThrow()
+        store.saveAllMealCategories(response)
     }
 
     suspend fun fetchAllMealAreas() {
         val response = dataSource.getMealAreas().getOrThrow()
-        categoriesStore.saveMealsByArea(response)
+        store.saveAreaMeals(response)
+    }
+
+    suspend fun fetchMealsByCategory(category: String) {
+        val response = dataSource.getMealsByCategory(category).getOrThrow()
+        store.saveMealsByCategory(category, response)
     }
 
     suspend fun fetchMealsByArea(area: String) {
         val response = dataSource.getMealsByArea(area).getOrThrow()
-        categoriesStore.saveMealsByFilter(response)
+        store.saveMealsByArea(area, response)
     }
 }

@@ -1,7 +1,6 @@
-package app.cookery.data
+package app.cookery
 
 import androidx.room.withTransaction
-import app.cookery.DatabaseTransactionRunner
 import javax.inject.Inject
 
 class RoomTransactionRunner @Inject constructor(

@@ -7,7 +7,7 @@ import app.cookery.data.entities.CookeryEntity
 import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "meals_area")
-data class MealsByArea(
+data class Area(
     @PrimaryKey
     @SerializedName("strArea")
     @ColumnInfo(name = "mealArea") val mealArea: String

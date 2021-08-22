@@ -4,9 +4,9 @@ import android.content.Context
 import android.os.Debug
 import androidx.room.Room
 import app.cookery.CookeryDatabase
+import app.cookery.CookeryRoomDatabase
 import app.cookery.DatabaseTransactionRunner
-import app.cookery.data.CookeryRoomDatabase
-import app.cookery.data.RoomTransactionRunner
+import app.cookery.RoomTransactionRunner
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -19,7 +19,19 @@ import javax.inject.Singleton
 @Module
 object DatabaseDaoModule {
     @Provides
+    fun provideAreasDao(db: CookeryDatabase) = db.areasDao()
+
+    @Provides
     fun provideCategoriesDao(db: CookeryDatabase) = db.categoriesDao()
+
+    @Provides
+    fun provideFilterByAreaDao(db: CookeryDatabase) = db.filterByAreaDao()
+
+    @Provides
+    fun provideFilterByCategoryDao(db: CookeryDatabase) = db.filterByCategoryDao()
+
+    @Provides
+    fun provideMealDetailsDao(db: CookeryDatabase) = db.mealDetailsDao()
 }
 
 @InstallIn(SingletonComponent::class)

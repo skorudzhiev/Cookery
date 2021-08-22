@@ -1,20 +1,49 @@
 package app.cookery.repositories.categories
 
+import app.cookery.data.daos.categories.AreasDao
 import app.cookery.data.daos.categories.CategoriesDao
-import app.cookery.data.daos.categories.MealsByAreaDao
-import app.cookery.data.daos.categories.MealsByFilterDao
-import app.cookery.data.entities.categories.ListedMealsByArea
-import app.cookery.data.entities.categories.ListedMealsByCategory
-import app.cookery.data.entities.categories.ListedMealsByFilter
+import app.cookery.data.daos.categories.FilterByAreaDao
+import app.cookery.data.daos.categories.FilterByCategoryDao
+import app.cookery.data.entities.categories.AllMealCategories
+import app.cookery.data.entities.categories.Areas
+import app.cookery.data.entities.categories.FilterMealsByArea
+import app.cookery.data.entities.categories.FilterMealsByCategory
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class CategoriesStore @Inject constructor(
     private val categoriesDao: CategoriesDao,
-    private val mealsByAreaDao: MealsByAreaDao,
-    private val mealsByFilterDao: MealsByFilterDao,
+    private val areasDao: AreasDao,
+    private val filterByCategoryDao: FilterByCategoryDao,
+    private val filterByAreaDao: FilterByAreaDao
 ) {
 
-    suspend fun saveMealsCategoryTypes(categories: ListedMealsByCategory) = categoriesDao.insertOrUpdate(categories)
-    suspend fun saveMealsByArea(meals: ListedMealsByArea) = mealsByAreaDao.insertOrUpdate(meals)
-    suspend fun saveMealsByFilter(category: ListedMealsByFilter) = mealsByFilterDao.insertOrUpdate(category)
+    fun observeAllMealCategories(): Flow<AllMealCategories> {
+        return categoriesDao.getAllMealCategories()
+    }
+
+    fun observeAreaMeals(): Flow<Areas> {
+        return areasDao.getMealAreas()
+    }
+
+    fun observeMealsFilteredByCategory(category: String): Flow<FilterMealsByCategory> {
+        return filterByCategoryDao.getMealsFilteredByCategory(category)
+    }
+
+    fun observeMealsFilteredByArea(area: String): Flow<FilterMealsByArea> {
+        return filterByAreaDao.getMealsFilteredByArea(area)
+    }
+
+    suspend fun saveAllMealCategories(categories: AllMealCategories) = categoriesDao.insert(categories)
+    suspend fun saveAreaMeals(meals: Areas) = areasDao.insert(meals)
+
+    suspend fun saveMealsByCategory(category: String, meals: FilterMealsByCategory) {
+        meals.category = category
+        filterByCategoryDao.insert(meals)
+    }
+
+    suspend fun saveMealsByArea(area: String, meals: FilterMealsByArea) {
+        meals.area = area
+        filterByAreaDao.insert(meals)
+    }
 }

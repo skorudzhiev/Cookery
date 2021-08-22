@@ -4,11 +4,13 @@ import javax.inject.Inject
 
 class MealRepository @Inject constructor(
     private val dataSource: MealDataSource,
-    private val mealStore: MealStore
+    private val store: MealStore
 ) {
+
+    fun observeMealDetails(mealId: String) = store.observeMeal(mealId)
 
     suspend fun fetchMealDetails(mealId: String) {
         val response = dataSource.getMealDetails(mealId).getOrThrow()
-        mealStore.saveMeal(response)
+        store.saveMeal(response)
     }
 }
