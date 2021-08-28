@@ -1,0 +1,20 @@
+{
+  "area": "Canadian",
+  "meals": [
+    {
+      "strMeal": "BeaverTails",
+      "strMealThumb": "",
+      "idMeal": "52928"
+    },
+    {
+      "strMeal": "Breakfast Potatoes",
+      "strMealThumb": "",
+      "idMeal": "52965"
+    },
+    {
+      "strMeal": "Canadian Butter Tarts",
+      "strMealThumb": "",
+      "idMeal": "52923"
+    }
+  ]
+}

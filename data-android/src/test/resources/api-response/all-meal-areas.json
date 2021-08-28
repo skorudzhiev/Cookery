@@ -1,0 +1,13 @@
+{
+  "meals": [
+    {
+      "strArea": "American"
+    },
+    {
+      "strArea": "British"
+    },
+    {
+      "strArea": "Canadian"
+    }
+  ]
+}

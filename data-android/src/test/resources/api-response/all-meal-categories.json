@@ -1,0 +1,22 @@
+{
+  "categories": [
+    {
+      "idCategory": "1",
+      "strCategory": "Beef",
+      "strCategoryThumb": "",
+      "strCategoryDescription": ""
+    },
+    {
+      "idCategory": "2",
+      "strCategory": "Chicken",
+      "strCategoryThumb": "",
+      "strCategoryDescription": ""
+    },
+    {
+      "idCategory": "3",
+      "strCategory": "Dessert",
+      "strCategoryThumb": "",
+      "strCategoryDescription": ""
+    }
+  ]
+}

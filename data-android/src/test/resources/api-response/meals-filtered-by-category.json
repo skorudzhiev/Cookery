@@ -1,0 +1,20 @@
+{
+  "category": "Seafood",
+  "meals": [
+    {
+      "strMeal": "Baked salmon with fennel & tomatoes",
+      "strMealThumb": "",
+      "idMeal": "52959"
+    },
+    {
+      "strMeal": "Cajun spiced fish tacos",
+      "strMealThumb": "",
+      "idMeal": "52819"
+    },
+    {
+      "strMeal": "Escovitch Fish",
+      "strMealThumb": "",
+      "idMeal": "52944"
+    }
+  ]
+}

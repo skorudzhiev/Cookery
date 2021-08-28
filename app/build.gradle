@@ -23,7 +23,7 @@ android {
 
         resConfigs "en"
 
-        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+        testInstrumentationRunner "com.skorudzhiev.cookery.HiltTestRunner"
     }
 
     buildTypes {
@@ -38,6 +38,11 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+
+    packagingOptions {
+        exclude 'META-INF/AL2.0'
+        exclude 'META-INF/LGPL2.1'
     }
 }
 
@@ -59,6 +64,13 @@ dependencies {
     kapt Libs.Hilt.hiltAndroidCompiler
 
     testImplementation Libs.AndroidX.Test.junit
+
     androidTestImplementation Libs.AndroidX.Test.junit
-    androidTestImplementation Libs.AndroidX.Test.espresso
+    androidTestImplementation Libs.AndroidX.Test.archCore
+    androidTestImplementation Libs.AndroidX.Test.runner
+    androidTestImplementation Libs.Coroutines.test
+    androidTestImplementation Libs.Google.truth
+    androidTestImplementation Libs.Mockito.core
+    androidTestImplementation Libs.Hilt.testing
+    kaptAndroidTest Libs.Hilt.hiltAndroidCompiler
 }

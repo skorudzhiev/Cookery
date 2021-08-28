@@ -39,8 +39,12 @@ dependencies {
 
     api Libs.Room.runtime
     implementation Libs.Room.ktx
-    kapt Libs.Room.compiler
-
     implementation Libs.Hilt.hiltAndroid
+    kapt Libs.Room.compiler
     kapt Libs.Hilt.hiltAndroidCompiler
+
+    testImplementation Libs.AndroidX.Test.junit
+    testImplementation Libs.AndroidX.Test.archCore
+    testImplementation Libs.mockwebserver
+    testImplementation Libs.Google.truth
 }
