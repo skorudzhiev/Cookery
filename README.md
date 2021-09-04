@@ -5,7 +5,7 @@ Cookery is a recipes app, which connects with [TheMealDB](https://www.themealdb.
 <img src="https://github.com/skorudzhiev/skorudzhiev/blob/main/assets/Cookery.svg" alt="quizexplorer" width="120" height="120"/>
 </p>
 
-### Development Progress - 🚧 Foundations 🚧
+### Development Progress - 🚧 First screens 🚧
  
 ## Android Development
 Cookery is aspired to be an ongoing project, in an attempt to practice some MAD (Modern Android development) skills.
@@ -23,9 +23,6 @@ Cookery is aspired to be an ongoing project, in an attempt to practice some MAD 
 This project uses [ktlint](https://github.com/pinterest/ktlint), provided through the [spotless](https://github.com/diffplug/spotless) gradle plugin.
 
 If your PR doesn't pass the checkstyle CI check, make sure to run `./gradlew spotlessApply` and fix all warnings in the current branch.
-
-You can also run the `createSpotlessPreCommitHook()` task, located in the root `build.gradle` file. It creates a pre-commit hook 
-for the spotless gradle task, to ensure proper formatting during development.
  
 ## Contributions
 If you're interested in contributions to this project, make sure to read the project's [Wiki](https://github.com/skorudzhiev/Cookery/wiki/Git-Workflow)
