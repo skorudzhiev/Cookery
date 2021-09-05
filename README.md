@@ -6,6 +6,9 @@ Cookery is a recipes app, which connects with [TheMealDB](https://www.themealdb.
 </p>
 
 ### Development Progress - 🚧 First screens 🚧
+
+### CI - Build status
+[![CircleCI](https://circleci.com/gh/skorudzhiev/Cookery/tree/main.svg?style=svg)](https://circleci.com/gh/skorudzhiev/Cookery/tree/main)
  
 ## Android Development
 Cookery is aspired to be an ongoing project, in an attempt to practice some MAD (Modern Android development) skills.
