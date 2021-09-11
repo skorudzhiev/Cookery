@@ -21,6 +21,7 @@ object Libs {
 
     object AndroidX {
         const val coreKtx = "androidx.core:core-ktx:1.6.0-alpha02"
+        const val runtime = "androidx.lifecycle:lifecycle-runtime-ktx:2.4.0-alpha03"
         const val appCompat = "androidx.appcompat:appcompat:1.2.0"
         const val constraintLayout = "androidx.constraintlayout:constraintlayout:2.0.4"
         const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1"
@@ -84,5 +85,27 @@ object Libs {
 
     object Mockito {
         const val core = "org.mockito:mockito-core:2.28.2"
+    }
+
+    object Compose {
+        const val version = "1.1.0-alpha02"
+        const val ui = "androidx.compose.ui:ui:$version"
+        const val foundation = "androidx.compose.foundation:foundation:$version"
+        const val layout = "androidx.compose.foundation:foundation-layout:$version"
+        const val material = "androidx.compose.material:material:$version"
+        const val animation = "androidx.compose.animation:animation:$version"
+        const val tooling = "androidx.compose.ui:ui-tooling:$version"
+    }
+
+    object Accompanist {
+        private const val version = "0.17.0"
+        const val insets = "com.google.accompanist:accompanist-insets:$version"
+        const val insets_ui = "com.google.accompanist:accompanist-insets-ui:$version"
+        const val swipe_refresh = "com.google.accompanist:accompanist-swiperefresh:$version"
+    }
+
+    object Coil {
+        private const val version = "1.3.2"
+        const val compose = "io.coil-kt:coil-compose:$version"
     }
 }
