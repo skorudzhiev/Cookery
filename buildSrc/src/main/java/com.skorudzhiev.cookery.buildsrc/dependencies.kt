@@ -5,7 +5,7 @@ object Versions {
 }
 
 object Libs {
-    const val androidGradlePlugin = "com.android.tools.build:gradle:7.1.0-alpha01"
+    const val androidGradlePlugin = "com.android.tools.build:gradle:7.1.0-alpha11"
     const val hiltGradlePlugin = "com.google.dagger:hilt-android-gradle-plugin:${Hilt.version}"
     const val timber = "com.jakewharton.timber:timber:4.7.1"
     const val mockwebserver = "com.squareup.okhttp3:mockwebserver:4.1.0"
@@ -13,7 +13,7 @@ object Libs {
 
 
     object Kotlin {
-        private const val version = "1.4.32"
+        private const val version = "1.5.30"
         const val stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$version"
         const val gradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$version"
         const val extensions = "org.jetbrains.kotlin:kotlin-android-extensions:$version"
@@ -25,6 +25,9 @@ object Libs {
         const val appCompat = "androidx.appcompat:appcompat:1.2.0"
         const val constraintLayout = "androidx.constraintlayout:constraintlayout:2.0.4"
         const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1"
+        const val activityCompose = "androidx.activity:activity-compose:1.3.1"
+        const val navigationCompose = "androidx.navigation:navigation-compose:2.4.0-alpha07"
+        const val hiltCompose = "androidx.hilt:hilt-navigation-compose:1.0.0-alpha03"
 
         object Test {
             private const val version = "1.3.0"
@@ -49,7 +52,7 @@ object Libs {
     }
 
     object Hilt {
-        const val version = "2.36"
+        const val version = "2.38.1"
         const val hiltAndroid = "com.google.dagger:hilt-android:$version"
         const val hiltAndroidCompiler = "com.google.dagger:hilt-android-compiler:$version"
         const val hiltGradlePlugin = "com.google.dagger:hilt-android-gradle-plugin:$version"
@@ -88,13 +91,14 @@ object Libs {
     }
 
     object Compose {
-        const val version = "1.1.0-alpha02"
+        const val version = "1.1.0-alpha03"
         const val ui = "androidx.compose.ui:ui:$version"
         const val foundation = "androidx.compose.foundation:foundation:$version"
         const val layout = "androidx.compose.foundation:foundation-layout:$version"
         const val material = "androidx.compose.material:material:$version"
         const val animation = "androidx.compose.animation:animation:$version"
         const val tooling = "androidx.compose.ui:ui-tooling:$version"
+        const val viewBinding = "androidx.compose.ui:ui-viewbinding:$version"
     }
 
     object Accompanist {
@@ -102,6 +106,7 @@ object Libs {
         const val insets = "com.google.accompanist:accompanist-insets:$version"
         const val insets_ui = "com.google.accompanist:accompanist-insets-ui:$version"
         const val swipe_refresh = "com.google.accompanist:accompanist-swiperefresh:$version"
+        const val navigationAnimation = "com.google.accompanist:accompanist-navigation-animation:$version"
     }
 
     object Coil {

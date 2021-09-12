@@ -11,15 +11,12 @@ val CookeryLightColors = lightColors(
     primary = Color.Black,
     secondary = WebOrange,
     background = Color.White,
-    surface = Silver,
-    onBackground = Color.Black,
-    onSurface = Color.Black
+    surface = Silver
 )
 
 val CookeryDarkColors = darkColors(
     primary = Color.White,
     secondary = WebOrange,
     background = Color.Black,
-    surface = Color.White,
-    onBackground = Color.White
+    surface = Color.Black
 )

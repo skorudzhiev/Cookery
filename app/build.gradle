@@ -36,6 +36,16 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    buildFeatures {
+        viewBinding true
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion Libs.Compose.version
+    }
+
     kotlinOptions {
         jvmTarget = '1.8'
     }
@@ -53,14 +63,28 @@ dependencies {
     implementation project(':data-android')
     implementation project(':domain')
     implementation project(':common-ui-view')
+    implementation project(':common-ui-compose')
 
-    implementation Libs.AndroidX.coreKtx
-    implementation Libs.AndroidX.appCompat
-    implementation Libs.AndroidX.constraintLayout
-    implementation Libs.Google.material
+    implementation Libs.AndroidX.activityCompose
+    implementation Libs.AndroidX.navigationCompose
+
+    implementation Libs.Compose.foundation
+    implementation Libs.Compose.layout
+    implementation Libs.Compose.material
+    implementation Libs.Compose.animation
+    implementation Libs.Compose.tooling
+    implementation Libs.Compose.viewBinding
+
+    implementation Libs.Accompanist.insets
+    implementation Libs.Accompanist.navigationAnimation
+
+    implementation Libs.Kotlin.stdlib
+    implementation Libs.Coroutines.core
+    implementation Libs.Coroutines.android
 
     // Hilt
     implementation Libs.Hilt.hiltAndroid
+    implementation Libs.AndroidX.hiltCompose
     kapt Libs.Hilt.hiltAndroidCompiler
 
     testImplementation Libs.AndroidX.Test.junit

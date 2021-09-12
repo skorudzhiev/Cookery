@@ -5,9 +5,9 @@ import com.skorudzhiev.cookery.buildsrc.Versions
 
 buildscript {
     ext.buildConfig = [
-            'compileSdk' : 30,
+            'compileSdk' : 31,
             'minSdk'     : 21,
-            'targetSdk'  : 30,
+            'targetSdk'  : 31,
     ]
 
     repositories {
@@ -25,8 +25,6 @@ buildscript {
         classpath Libs.androidGradlePlugin
         classpath Libs.Kotlin.gradlePlugin
         classpath Libs.hiltGradlePlugin
-        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.30'
-        classpath "com.google.dagger:hilt-android-gradle-plugin:2.37"
     }
 
     allprojects {
