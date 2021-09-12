@@ -99,6 +99,7 @@ object Libs {
         const val animation = "androidx.compose.animation:animation:$version"
         const val tooling = "androidx.compose.ui:ui-tooling:$version"
         const val viewBinding = "androidx.compose.ui:ui-viewbinding:$version"
+        const val util = "androidx.compose.ui:ui-util:$version"
     }
 
     object Accompanist {

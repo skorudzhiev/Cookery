@@ -73,6 +73,7 @@ dependencies {
     implementation Libs.Compose.material
     implementation Libs.Compose.animation
     implementation Libs.Compose.tooling
+    implementation Libs.Compose.util
     implementation Libs.Compose.viewBinding
 
     implementation Libs.Accompanist.insets

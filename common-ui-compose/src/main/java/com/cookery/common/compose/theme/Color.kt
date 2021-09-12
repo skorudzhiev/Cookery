@@ -10,8 +10,8 @@ private val Silver = Color(203, 203, 203)
 val CookeryLightColors = lightColors(
     primary = Color.Black,
     secondary = WebOrange,
-    background = Color.White,
-    surface = Silver
+    background = Silver,
+    surface = Color.White
 )
 
 val CookeryDarkColors = darkColors(
