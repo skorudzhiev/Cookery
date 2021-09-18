@@ -19,6 +19,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
+import app.cookery.home.categories.Categories
 import com.skorudzhiev.cookery.ui.HomeSections
 import com.skorudzhiev.cookery.ui.navigation.MainDestinations.MEAL_ID_KEY
 
@@ -29,11 +30,11 @@ object MainDestinations {
 }
 
 fun NavGraphBuilder.addHomeGraph(
-    onCategorySelected: (Long, NavBackStackEntry) -> Unit,
+    onMealSelected: (String, NavBackStackEntry) -> Unit,
     modifier: Modifier = Modifier
 ) {
     composable(HomeSections.CATEGORIES.route) { from ->
-        helloWorld(screen = stringResource(id = HomeSections.CATEGORIES.title))
+        Categories(onMealClicked = { id -> onMealSelected(id, from) }, modifier)
     }
     composable(HomeSections.SEARCH.route) { from ->
         helloWorld(screen = stringResource(id = HomeSections.SEARCH.title))
@@ -73,7 +74,7 @@ fun CookeryNavGraph(
             startDestination = HomeSections.CATEGORIES.route
         ) {
             addHomeGraph(
-                onCategorySelected = { mealId: Long, from: NavBackStackEntry ->
+                onMealSelected = { mealId: String, from: NavBackStackEntry ->
                     if (from.lifecycleIsResumed()) {
                         navController.navigate("${MainDestinations.MEAL_DETAIL_ROUTE}/$mealId")
                     }

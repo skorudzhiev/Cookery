@@ -1,7 +1,9 @@
 package com.cookery.common.compose.theme
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
 private val WebOrange = Color(255, 168, 0)
@@ -20,3 +22,21 @@ val CookeryDarkColors = darkColors(
     background = Color.Black,
     surface = Color.Black
 )
+
+@Composable
+fun getThemePrimaryColor(): Color {
+    return if (isSystemInDarkTheme()) {
+        CookeryDarkColors.primary
+    } else {
+        CookeryLightColors.primary
+    }
+}
+
+@Composable
+fun getThemeColorForImageBorder(): Color {
+    return if (isSystemInDarkTheme()) {
+        CookeryDarkColors.primary
+    } else {
+        CookeryLightColors.background
+    }
+}

@@ -7,7 +7,6 @@ import androidx.compose.animation.core.AnimationSpec
 import androidx.compose.animation.core.SpringSpec
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.border
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Spacer
@@ -46,8 +45,7 @@ import androidx.core.os.ConfigurationCompat
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph
-import com.cookery.common.compose.theme.CookeryDarkColors
-import com.cookery.common.compose.theme.CookeryLightColors
+import com.cookery.common.compose.theme.getThemePrimaryColor
 import com.google.accompanist.insets.navigationBarsPadding
 
 private const val indicatorId = "indicator"
@@ -58,8 +56,6 @@ private val textIconSpacing = 2.dp
 private val bottomNavigationItemPadding = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
 private val bottomNavIndicatorShape = RoundedCornerShape(percent = 50)
 private val bottomNavLabelTransformOrigin = TransformOrigin(0f, 0.5f)
-private val darkThemePrimaryColor: Color = CookeryDarkColors.primary
-private val lightThemePrimaryColor: Color = CookeryLightColors.primary
 
 @Composable
 fun BottomNavigation(
@@ -243,15 +239,6 @@ private fun BottomNavIndicator(
             .then(bottomNavigationItemPadding)
             .border(strokeWidth, color, shape)
     )
-}
-
-@Composable
-private fun getThemePrimaryColor(): Color {
-    return if (isSystemInDarkTheme()) {
-        darkThemePrimaryColor
-    } else {
-        lightThemePrimaryColor
-    }
 }
 
 @Composable

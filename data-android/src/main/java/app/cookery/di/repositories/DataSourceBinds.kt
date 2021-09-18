@@ -14,8 +14,8 @@ import dagger.hilt.components.SingletonComponent
 abstract class DataSourceBinds {
 
     @Binds
-    abstract fun bindTheMealDbCategoryDataSource(source: TheMealDbCategoryDataSource): CategoriesDataSource
+    abstract fun bindCategoriesDataSource(source: TheMealDbCategoryDataSource): CategoriesDataSource
 
     @Binds
-    abstract fun bindTheMealDbMeaDataSource(source: TheMealDbMealDataSource): MealDataSource
+    abstract fun bindMealDataSource(source: TheMealDbMealDataSource): MealDataSource
 }
