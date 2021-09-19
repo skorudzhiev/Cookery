@@ -6,6 +6,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -18,6 +19,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -30,7 +32,49 @@ import com.cookery.common.compose.theme.CookeryLightColors
 import com.cookery.common.compose.theme.getThemeColorForImageBorder
 
 @Composable
-fun CardItemHome(
+fun HorizontalItemHome(
+    imageUrl: String?,
+    mealDescription: String?,
+    modifier: Modifier = Modifier
+) {
+    CookeryCard(
+        modifier = modifier
+            .size(
+                width = 200.dp,
+                height = 70.dp
+            ),
+        shape = RoundedCornerShape(corner = CornerSize(5.dp))
+    ) {
+        Row(
+            modifier = modifier
+                .padding(start = 4.dp),
+            verticalAlignment = CenterVertically
+        ) {
+            imageUrl?.let {
+                CircularBorderImage(
+                    modifier = modifier
+                        .size(50.dp),
+                    imageUrl = it,
+                    contentDescription = null,
+                    borderStrokeColor = getThemeColorForCardImage(),
+                    borderStrokeSize = 1.dp
+                )
+            }
+            mealDescription?.let {
+                Text(
+                    text = "Very long type of meal that includes a variety of ingredients and whatnot",
+                    style = MaterialTheme.typography.caption,
+                    maxLines = 4,
+                    modifier = modifier
+                        .padding(start = 8.dp)
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun VerticalItemHome(
     categoryType: String?,
     imageUrl: String?,
     modifier: Modifier = Modifier
@@ -82,7 +126,7 @@ private fun DrawCircle(
     Surface(
         modifier = modifier,
         shape = CircleShape,
-        border = BorderStroke(3.dp, getThemeColorForCardHead()),
+        border = BorderStroke(3.dp, getThemeColorForCardImage()),
     ) {
         Canvas(
             modifier = modifier
@@ -95,7 +139,7 @@ private fun DrawCircle(
 }
 
 @Composable
-private fun getThemeColorForCardHead(): Color {
+private fun getThemeColorForCardImage(): Color {
     return if (isSystemInDarkTheme()) {
         CookeryLightColors.background
     } else {

@@ -1,9 +1,7 @@
 package com.cookery.common.compose.components
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -17,7 +15,6 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -25,15 +22,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import app.cookery.data.entities.categories.AllMealCategories
 import app.cookery.data.entities.categories.Category
-import coil.compose.rememberImagePainter
-import com.cookery.common.compose.modifiers.drawColoredShadow
 import com.cookery.common.compose.theme.getThemeColorForImageBorder
 import com.cookery.common.compose.theme.getThemePrimaryColor
 
@@ -46,9 +38,23 @@ fun CategoryTypes(
     highlight: Boolean = false
 ) {
     Column(modifier = modifier) {
-        // TODO: Create a conditional logic to handle both type of items
+        // TODO: Create a conditional logic to handle different type of items
         //          for the moment, display them this way, only for debugging purposes
         CategoryTitle(title = "Category type")
+        Spacer(modifier = Modifier.height(8.dp))
+        RandomizedMeals(
+            modifier = modifier
+                .padding(
+                    bottom = 16.dp
+                ),
+            meals = mealCategories,
+            onMealClicked = onMealClicked
+        )
+        CookeryDivider(thickness = 2.dp)
+
+        Spacer(modifier = Modifier.height(32.dp))
+
+        CategoryTitle(title = "Category type2")
         Spacer(modifier = Modifier.height(8.dp))
         HighlightedCategories(
             meals = mealCategories,
@@ -58,7 +64,21 @@ fun CategoryTypes(
 
         Spacer(modifier = Modifier.height(32.dp))
 
-        CategoryTitle(title = "Category type2")
+        CategoryTitle(title = "Category type3")
+        Spacer(modifier = Modifier.height(8.dp))
+        RandomizedMeals(
+            modifier = modifier
+                .padding(
+                    bottom = 16.dp
+                ),
+            meals = mealCategories,
+            onMealClicked = onMealClicked
+        )
+        CookeryDivider(thickness = 2.dp)
+
+        Spacer(modifier = Modifier.height(32.dp))
+
+        CategoryTitle(title = "Category type4")
         Spacer(modifier = Modifier.height(8.dp))
         Categories(
             meals = mealCategories,
@@ -92,6 +112,45 @@ private fun CategoryTitle(
 }
 
 @Composable
+private fun RandomizedMeals(
+    meals: AllMealCategories,
+    onMealClicked: (String) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    LazyRow(
+        modifier = modifier,
+        horizontalArrangement = spacedBy(4.dp),
+        contentPadding = PaddingValues(start = 2.dp, end = 2.dp)
+    ) {
+        items(meals.categories) { meal ->
+            RandomizedMealItem(
+                category = meal,
+                onMealClicked = onMealClicked
+            )
+        }
+    }
+}
+
+@Composable
+private fun RandomizedMealItem(
+    category: Category,
+    onMealClicked: (String) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier
+            .clickable(onClick = { onMealClicked(category.categoryId) })
+            .fillMaxSize()
+            .padding(start = 16.dp)
+    ) {
+        HorizontalItemHome(
+            imageUrl = category.categoryImage,
+            mealDescription = category.categoryType
+        )
+    }
+}
+
+@Composable
 private fun HighlightedCategories(
     meals: AllMealCategories,
     onMealClicked: (String) -> Unit,
@@ -101,7 +160,7 @@ private fun HighlightedCategories(
     LazyRow(
         modifier = modifier
             .padding(bottom = 12.dp),
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        horizontalArrangement = spacedBy(16.dp),
         contentPadding = PaddingValues(start = 24.dp, end = 12.dp)
     ) {
         items(meals.categories) { category ->
@@ -124,7 +183,7 @@ private fun HighlightedCategoryItem(
             .clickable(onClick = { onMealClicked(category.categoryId) })
             .fillMaxSize()
     ) {
-        CardItemHome(
+        VerticalItemHome(
             categoryType = category.categoryType,
             imageUrl = category.categoryImage
         )
@@ -139,7 +198,7 @@ private fun Categories(
 ) {
     LazyRow(
         modifier = modifier,
-        horizontalArrangement = Arrangement.spacedBy(2.dp),
+        horizontalArrangement = spacedBy(2.dp),
         contentPadding = PaddingValues(start = 14.dp, end = 12.dp)
     ) {
         items(meals.categories) { category ->
@@ -171,10 +230,12 @@ private fun CategoryItem(
                 .padding(8.dp)
         ) {
             category.categoryImage?.let {
-                CategoryImage(
+                CircularBorderImage(
                     imageUrl = it,
                     contentDescription = null,
-                    modifier = Modifier.size(70.dp)
+                    modifier = Modifier.size(70.dp),
+                    borderStrokeColor = getThemeColorForImageBorder(),
+                    borderStrokeSize = 2.dp
                 )
                 category.categoryType?.let { mealCategory ->
                     Text(
@@ -186,32 +247,5 @@ private fun CategoryItem(
                 }
             }
         }
-    }
-}
-
-@Composable
-private fun CategoryImage(
-    imageUrl: String,
-    contentDescription: String?,
-    modifier: Modifier = Modifier,
-    elevation: Dp = 0.dp
-) {
-    Surface(
-        color = Color.LightGray,
-        elevation = elevation,
-        shape = CircleShape,
-        border = BorderStroke(2.dp, getThemeColorForImageBorder()),
-        modifier = modifier.drawColoredShadow(getThemeColorForImageBorder())
-    ) {
-        Image(
-            painter = rememberImagePainter(
-                data = imageUrl,
-                builder = { crossfade(true) }
-            ),
-            contentDescription = contentDescription,
-            modifier = Modifier
-                .fillMaxSize(),
-            contentScale = ContentScale.Crop
-        )
     }
 }
