@@ -4,8 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.cookery.domain.interactors.UpdateAllMealCategories
 import app.cookery.domain.interactors.UpdateAreas
-import app.cookery.domain.observers.ObserveAllMealCategories
-import app.cookery.domain.observers.ObserveAreas
+import app.cookery.domain.observers.ObserveMealsCollection
 import com.cookery.util.ObservableLoadingCounter
 import com.cookery.util.collectInfo
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,26 +21,19 @@ import javax.inject.Inject
 internal class CategoriesViewModel @Inject constructor(
     private val updateAllMealCategories: UpdateAllMealCategories,
     private val updateAreas: UpdateAreas,
-    observeAllMealCategories: ObserveAllMealCategories,
-    observeAreas: ObserveAreas
+    observeMealsCollection: ObserveMealsCollection
 ) : ViewModel() {
 
-    private val allCategoriesLoadingState = ObservableLoadingCounter()
-    private val allAreasLoadingState = ObservableLoadingCounter()
-
+    private val mealsCollectionLoadingState = ObservableLoadingCounter()
     private val pendingActions = MutableSharedFlow<CategoriesAction>()
 
     val state: StateFlow<CategoriesViewState> = combine(
-        allCategoriesLoadingState.observable,
-        allAreasLoadingState.observable,
-        observeAllMealCategories.flow,
-        observeAreas.flow,
-    ) { categoriesLoad, areasLoad, categories, areas ->
+        mealsCollectionLoadingState.observable,
+        observeMealsCollection.flow,
+    ) { collectionsLoad, collections ->
         CategoriesViewState(
-            allMealCategories = categories,
-            categoriesRefreshing = categoriesLoad,
-            allMealAreas = areas,
-            areasRefreshing = areasLoad,
+            mealsCollection = collections,
+            collectionRefreshing = collectionsLoad,
         )
     }.stateIn(
         scope = viewModelScope,
@@ -50,9 +42,9 @@ internal class CategoriesViewModel @Inject constructor(
     )
 
     init {
-        observeAllMealCategories(ObserveAllMealCategories.Params())
-        observeAreas(ObserveAreas.Params())
+        observeMealsCollection(ObserveMealsCollection.Params())
 
+        refresh()
         viewModelScope.launch {
             pendingActions.collect { action ->
                 when (action) {
@@ -71,11 +63,11 @@ internal class CategoriesViewModel @Inject constructor(
     private fun refresh() {
         viewModelScope.launch {
             updateAllMealCategories(UpdateAllMealCategories.Params())
-                .collectInfo(allCategoriesLoadingState)
+                .collectInfo(mealsCollectionLoadingState)
         }
         viewModelScope.launch {
             updateAreas(UpdateAreas.Params())
-                .collectInfo(allAreasLoadingState)
+                .collectInfo(mealsCollectionLoadingState)
         }
     }
 }

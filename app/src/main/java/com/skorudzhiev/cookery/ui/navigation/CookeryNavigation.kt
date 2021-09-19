@@ -30,11 +30,11 @@ object MainDestinations {
 }
 
 fun NavGraphBuilder.addHomeGraph(
-    onMealSelected: (String, NavBackStackEntry) -> Unit,
+    onItemSelected: (String, NavBackStackEntry) -> Unit,
     modifier: Modifier = Modifier
 ) {
     composable(HomeSections.CATEGORIES.route) { from ->
-        Categories(onMealClicked = { id -> onMealSelected(id, from) }, modifier)
+        Categories(onItemClicked = { id -> onItemSelected(id, from) }, modifier)
     }
     composable(HomeSections.SEARCH.route) { from ->
         helloWorld(screen = stringResource(id = HomeSections.SEARCH.title))
@@ -74,7 +74,7 @@ fun CookeryNavGraph(
             startDestination = HomeSections.CATEGORIES.route
         ) {
             addHomeGraph(
-                onMealSelected = { mealId: String, from: NavBackStackEntry ->
+                onItemSelected = { mealId: String, from: NavBackStackEntry ->
                     if (from.lifecycleIsResumed()) {
                         navController.navigate("${MainDestinations.MEAL_DETAIL_ROUTE}/$mealId")
                     }

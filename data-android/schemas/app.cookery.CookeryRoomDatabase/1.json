@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "e44cf9c059c81b60debf428728afaa11",
+    "identityHash": "7558ce74ce587fb2dc12dfdeaffd6d03",
     "entities": [
       {
         "tableName": "Category",
@@ -180,6 +180,50 @@
         "primaryKey": {
           "columnNames": [
             "category"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "meals_collection",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`collectionName` TEXT NOT NULL, `categoryMeals` TEXT, `categories` TEXT, `areas` TEXT, `collectionType` TEXT NOT NULL, PRIMARY KEY(`collectionName`))",
+        "fields": [
+          {
+            "fieldPath": "collectionName",
+            "columnName": "collectionName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "meals",
+            "columnName": "categoryMeals",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "categories",
+            "columnName": "categories",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "areas",
+            "columnName": "areas",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "collectionType",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "collectionName"
           ],
           "autoGenerate": false
         },
@@ -528,7 +572,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e44cf9c059c81b60debf428728afaa11')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7558ce74ce587fb2dc12dfdeaffd6d03')"
     ]
   }
 }

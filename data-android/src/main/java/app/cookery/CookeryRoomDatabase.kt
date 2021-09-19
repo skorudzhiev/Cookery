@@ -14,6 +14,7 @@ import app.cookery.data.entities.categories.CategoryDetails
 import app.cookery.data.entities.categories.CategoryDetailsTypeConverter
 import app.cookery.data.entities.categories.FilterMealsByArea
 import app.cookery.data.entities.categories.FilterMealsByCategory
+import app.cookery.data.entities.categories.MealsCollection
 
 @Database(
     entities = [
@@ -24,6 +25,7 @@ import app.cookery.data.entities.categories.FilterMealsByCategory
         CategoryDetails::class,
         FilterMealsByArea::class,
         FilterMealsByCategory::class,
+        MealsCollection::class,
         MealDetails::class
     ],
     version = 1

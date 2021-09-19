@@ -25,66 +25,89 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import app.cookery.data.entities.categories.AllMealCategories
+import app.cookery.data.entities.categories.Area
+import app.cookery.data.entities.categories.Areas
 import app.cookery.data.entities.categories.Category
+import app.cookery.data.entities.categories.CategoryDetails
+import app.cookery.data.entities.categories.CollectionType
+import app.cookery.data.entities.categories.MealCollection
+import app.cookery.data.entities.categories.MealsCollection
 import com.cookery.common.compose.theme.getThemeColorForImageBorder
 import com.cookery.common.compose.theme.getThemePrimaryColor
 
 @Composable
 fun CategoryTypes(
-    mealCategories: AllMealCategories,
-    onMealClicked: (String) -> Unit,
+    mealCollection: MealCollection,
+    onItemClicked: (String) -> Unit,
     modifier: Modifier = Modifier,
     index: Int = 0,
     highlight: Boolean = false
 ) {
     Column(modifier = modifier) {
-        // TODO: Create a conditional logic to handle different type of items
-        //          for the moment, display them this way, only for debugging purposes
-        CategoryTitle(title = "Category type")
-        Spacer(modifier = Modifier.height(8.dp))
-        RandomizedMeals(
-            modifier = modifier
-                .padding(
-                    bottom = 16.dp
-                ),
-            meals = mealCategories,
-            onMealClicked = onMealClicked
-        )
-        CookeryDivider(thickness = 2.dp)
 
-        Spacer(modifier = Modifier.height(32.dp))
+        when (mealCollection.type) {
+            CollectionType.RandomizedMeals -> {
+                CategoryTitle(title = mealCollection.name)
+                Spacer(modifier = Modifier.height(8.dp))
+                mealCollection.meals?.let {
+                    RandomizedMeals(
+                        modifier = modifier
+                            .padding(
+                                bottom = 16.dp
+                            ),
+                        categoryMeals = it,
+                        onMealClicked = onItemClicked
+                    )
+                }
+                CookeryDivider(thickness = 2.dp)
 
-        CategoryTitle(title = "Category type2")
-        Spacer(modifier = Modifier.height(8.dp))
-        HighlightedCategories(
-            meals = mealCategories,
-            onMealClicked = onMealClicked
-        )
-        CookeryDivider(thickness = 2.dp)
+                Spacer(modifier = Modifier.height(32.dp))
+            }
+            CollectionType.Categories -> {
+                CategoryTitle(title = mealCollection.name)
+                Spacer(modifier = Modifier.height(8.dp))
+                mealCollection.categories?.let {
+                    HighlightedCategories(
+                        categories = it,
+                        onMealClicked = onItemClicked
+                    )
+                }
+                CookeryDivider(thickness = 2.dp)
 
-        Spacer(modifier = Modifier.height(32.dp))
+                Spacer(modifier = Modifier.height(32.dp))
+            }
+            CollectionType.Areas -> {
+                CategoryTitle(title = mealCollection.name)
+                Spacer(modifier = Modifier.height(8.dp))
+                mealCollection.areas?.let {
+                    com.cookery.common.compose.components.Areas(
+                        areas = it.areas,
+                        modifier = modifier
+                    )
+                }
+                CookeryDivider(thickness = 2.dp)
 
-        CategoryTitle(title = "Category type3")
-        Spacer(modifier = Modifier.height(8.dp))
-        RandomizedMeals(
-            modifier = modifier
-                .padding(
-                    bottom = 16.dp
-                ),
-            meals = mealCategories,
-            onMealClicked = onMealClicked
-        )
-        CookeryDivider(thickness = 2.dp)
+                Spacer(modifier = Modifier.height(32.dp))
+            }
+        }
+    }
+}
 
-        Spacer(modifier = Modifier.height(32.dp))
-
-        CategoryTitle(title = "Category type4")
-        Spacer(modifier = Modifier.height(8.dp))
-        Categories(
-            meals = mealCategories,
-            onMealClicked = onMealClicked
-        )
-        CookeryDivider(thickness = 2.dp)
+@Composable
+fun Areas(
+    areas: List<Area>,
+    modifier: Modifier = Modifier
+) {
+    LazyRow(
+        modifier = modifier,
+        horizontalArrangement = spacedBy(4.dp),
+        contentPadding = PaddingValues(start = 2.dp, end = 2.dp)
+    ) {
+        items(areas) { area ->
+            AreaItem(area = area.mealArea,
+                modifier = modifier
+            )
+        }
     }
 }
 
@@ -113,7 +136,7 @@ private fun CategoryTitle(
 
 @Composable
 private fun RandomizedMeals(
-    meals: AllMealCategories,
+    categoryMeals: List<CategoryDetails>,
     onMealClicked: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -122,9 +145,9 @@ private fun RandomizedMeals(
         horizontalArrangement = spacedBy(4.dp),
         contentPadding = PaddingValues(start = 2.dp, end = 2.dp)
     ) {
-        items(meals.categories) { meal ->
+        items(categoryMeals) { meal ->
             RandomizedMealItem(
-                category = meal,
+                meal = meal,
                 onMealClicked = onMealClicked
             )
         }
@@ -133,26 +156,26 @@ private fun RandomizedMeals(
 
 @Composable
 private fun RandomizedMealItem(
-    category: Category,
+    meal: CategoryDetails,
     onMealClicked: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Box(
         modifier = modifier
-            .clickable(onClick = { onMealClicked(category.categoryId) })
+            .clickable(onClick = { onMealClicked(meal.mealId) })
             .fillMaxSize()
             .padding(start = 16.dp)
     ) {
         HorizontalItemHome(
-            imageUrl = category.categoryImage,
-            mealDescription = category.categoryType
+            imageUrl = meal.categoryImage,
+            mealDescription = meal.mealName
         )
     }
 }
 
 @Composable
 private fun HighlightedCategories(
-    meals: AllMealCategories,
+    categories: List<Category>,
     onMealClicked: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -163,7 +186,7 @@ private fun HighlightedCategories(
         horizontalArrangement = spacedBy(16.dp),
         contentPadding = PaddingValues(start = 24.dp, end = 12.dp)
     ) {
-        items(meals.categories) { category ->
+        items(categories) { category ->
             HighlightedCategoryItem(
                 category = category,
                 onMealClicked = onMealClicked

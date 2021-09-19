@@ -4,6 +4,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,6 +20,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -30,6 +32,39 @@ import coil.compose.rememberImagePainter
 import com.cookery.common.compose.theme.CookeryDarkColors
 import com.cookery.common.compose.theme.CookeryLightColors
 import com.cookery.common.compose.theme.getThemeColorForImageBorder
+
+@Composable
+fun AreaItem(
+    area: String?,
+    modifier: Modifier
+) {
+    CookeryCard(
+        modifier = modifier
+            .size(
+                width = 100.dp,
+                height = 35.dp
+            ),
+        shape = RoundedCornerShape(
+            corner = CornerSize(15.dp)
+        )
+    ) {
+        Row(
+            modifier = modifier,
+            verticalAlignment = CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            area?.let {
+                Text(
+                    text = it,
+                    style = MaterialTheme.typography.caption,
+                    maxLines = 1,
+                    modifier = modifier
+                )
+            }
+        }
+    }
+
+}
 
 @Composable
 fun HorizontalItemHome(
@@ -62,7 +97,7 @@ fun HorizontalItemHome(
             }
             mealDescription?.let {
                 Text(
-                    text = "Very long type of meal that includes a variety of ingredients and whatnot",
+                    text = it,
                     style = MaterialTheme.typography.caption,
                     maxLines = 4,
                     modifier = modifier
