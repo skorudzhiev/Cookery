@@ -3,15 +3,17 @@ package app.cookery.repositories.categories
 import app.cookery.TheMealDbApi
 import app.cookery.data.Result
 import app.cookery.data.entities.categories.AllMealCategories
-import app.cookery.data.entities.categories.Areas
+import app.cookery.data.entities.categories.Area
 import app.cookery.data.entities.categories.FilterMealsByArea
 import app.cookery.data.entities.categories.FilterMealsByCategory
+import app.cookery.data.mappers.AreasToArea
 import app.cookery.extensions.executeWithRetry
 import app.cookery.extensions.toResult
 import javax.inject.Inject
 
 class TheMealDbCategoryDataSource @Inject constructor(
-    private val theMealDbApi: TheMealDbApi
+    private val theMealDbApi: TheMealDbApi,
+    private val areaMapper: AreasToArea
 ) : CategoriesDataSource {
     override suspend fun getAllMealCategories(): Result<AllMealCategories> {
         return theMealDbApi.getMealCategories()
@@ -25,10 +27,10 @@ class TheMealDbCategoryDataSource @Inject constructor(
             .toResult()
     }
 
-    override suspend fun getMealAreas(): Result<Areas> {
+    override suspend fun getMealAreas(): Result<List<Area>> {
         return theMealDbApi.getMealAreas()
             .executeWithRetry()
-            .toResult()
+            .toResult(areaMapper::map)
     }
 
     override suspend fun getMealsByArea(area: String): Result<FilterMealsByArea> {

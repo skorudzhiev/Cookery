@@ -1,5 +1,7 @@
 package com.skorudzhiev.cookery.repositories
 
+import app.cookery.data.mappers.AreasToArea
+import app.cookery.data.mappers.MealsAreaToArea
 import app.cookery.repositories.categories.TheMealDbCategoryDataSource
 import com.google.common.truth.Truth.assertThat
 import com.skorudzhiev.cookery.allMealAreas
@@ -32,7 +34,8 @@ class CategoriesRepositoryTest {
     fun setup() {
         mockWebServer = MockWebServer()
         dataSource = TheMealDbCategoryDataSource(
-            provideTheMealDbTestingApi(mockWebServer)
+            provideTheMealDbTestingApi(mockWebServer),
+            AreasToArea(mapper = MealsAreaToArea())
         )
     }
 

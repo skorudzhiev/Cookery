@@ -4,7 +4,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import app.cookery.data.entities.CookeryEntity
-import com.google.gson.reflect.TypeToken
 
 @Entity(tableName = "meals_collection")
 data class MealsCollection(
@@ -24,7 +23,7 @@ data class MealsCollection(
     @ColumnInfo(name = "collectionType")
     val type: CollectionType
 
-): CookeryEntity {
+) : CookeryEntity {
     override val id: Long
         get() = 0
 }

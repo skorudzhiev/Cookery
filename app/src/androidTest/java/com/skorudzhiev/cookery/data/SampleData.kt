@@ -3,7 +3,6 @@ package com.skorudzhiev.cookery.data
 import app.cookery.data.entities.MealDetails
 import app.cookery.data.entities.categories.AllMealCategories
 import app.cookery.data.entities.categories.Area
-import app.cookery.data.entities.categories.Areas
 import app.cookery.data.entities.categories.Category
 import app.cookery.data.entities.categories.CategoryDetails
 import app.cookery.data.entities.categories.FilterMealsByArea
@@ -22,13 +21,11 @@ val mealDetails = MealDetails(
 )
 
 // https://www.themealdb.com/api/json/v1/1/list.php?a=list
-val areas = Areas(
-    listOf(
-        Area(mealArea = "Canadian"),
-        Area(mealArea = "Indian"),
-        Area(mealArea = "Mexican"),
-        Area(mealArea = "")
-    )
+val areas = listOf(
+    Area(area = "American"),
+    Area(area = "British"),
+    Area(area = "Croatian"),
+    Area(area = "")
 )
 
 // https://www.themealdb.com/api/json/v1/1/categories.php

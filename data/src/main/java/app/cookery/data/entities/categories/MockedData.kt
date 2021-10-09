@@ -1,5 +1,6 @@
 package app.cookery.data.entities.categories
 
+import app.cookery.data.models.Areas
 
 // TODO: This will be removed once we get there
 
@@ -12,7 +13,7 @@ data class MealCollection(
     val name: String,
     val meals: List<CategoryDetails>? = null,
     val categories: List<Category>? = null,
-    val areas: Areas? = null,
+    val areas: List<Area>? = null,
     val type: CollectionType
 )
 
@@ -190,22 +191,21 @@ val pastaCategory = FilterMealsByCategory(
 )
 
 val randomCategoryMealsList = takeTwoRandomMeals(beefCategory.meals)
-        .plus(takeTwoRandomMeals(chickenCategory.meals))
-        .plus(takeTwoRandomMeals(dessertCategory.meals))
-        .plus(takeTwoRandomMeals(lambCategory.meals))
-        .plus(takeTwoRandomMeals(pastaCategory.meals))
+    .plus(takeTwoRandomMeals(chickenCategory.meals))
+    .plus(takeTwoRandomMeals(dessertCategory.meals))
+    .plus(takeTwoRandomMeals(lambCategory.meals))
+    .plus(takeTwoRandomMeals(pastaCategory.meals))
 
 // TODO: Areas
 // https://www.themealdb.com/api/json/v1/1/list.php?a=list
-val allMealAreas = Areas(
-    areas = listOf(
-        Area(mealArea = "American"),
-        Area(mealArea = "British"),
-        Area(mealArea = "Canadian"),
-        Area(mealArea = "Chinese"),
-        Area(mealArea = "French")
+val allMealAreas =
+    listOf(
+        Area(area = "American"),
+        Area(area = "British"),
+        Area(area = "Canadian"),
+        Area(area = "Chinese"),
+        Area(area = "French")
     )
-)
 
 // https://www.themealdb.com/api/json/v1/1/filter.php?a=American
 val americanMealsArea = FilterMealsByArea(
@@ -340,6 +340,6 @@ val mealsCollection = listOf(
     )
 )
 
-private fun takeTwoRandomMeals(meals: List<CategoryDetails>) : List<CategoryDetails> {
+private fun takeTwoRandomMeals(meals: List<CategoryDetails>): List<CategoryDetails> {
     return meals.shuffled().take(2)
 }

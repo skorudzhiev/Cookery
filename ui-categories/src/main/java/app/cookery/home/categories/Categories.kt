@@ -14,13 +14,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import app.cookery.data.entities.categories.MealCollection
-import app.cookery.data.entities.categories.MealsCollection
 import app.cookery.data.entities.categories.MockedData
 import com.cookery.common.compose.components.CategoryTypes
-import com.cookery.common.compose.rememberFlowWithLifecycle
 import com.google.accompanist.insets.statusBarsHeight
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.toCollection
 
 @Composable
 fun Categories(

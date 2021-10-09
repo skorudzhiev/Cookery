@@ -1,7 +1,6 @@
 package app.cookery.repositories.categories
 
 import app.cookery.data.entities.categories.AllMealCategories
-import app.cookery.data.entities.categories.Areas
 import app.cookery.data.entities.categories.CategoryDetails
 import app.cookery.data.entities.categories.CollectionType
 import app.cookery.data.entities.categories.MealsCollection
@@ -51,7 +50,7 @@ class CategoriesRepository @Inject constructor(
             meals = categoryDetailsList,
             type = CollectionType.RandomizedMeals
         )
-        store.saveMealsCollection(collection)
+//        store.saveMealsCollection(collection)
     }
 
     private suspend fun storeAllMealCategoriesCollection(allMealCategories: AllMealCategories) {
@@ -61,41 +60,12 @@ class CategoriesRepository @Inject constructor(
             categories = allMealCategories.categories,
             type = CollectionType.Categories
         )
-        store.saveMealsCollection(collection)
+//        store.saveMealsCollection(collection)
     }
 
     suspend fun fetchAllMealAreas() {
         val response = dataSource.getMealAreas().getOrThrow()
         store.saveAreaMeals(response)
-        storeRandomizedAreasCollection(response)
-        storeAreaMealsCollection(response)
-    }
-
-    private suspend fun storeRandomizedAreasCollection(availableAreas: Areas) {
-        val categoryDetailsList = emptyList<CategoryDetails>()
-        for (area in availableAreas.areas) {
-            val categoryDetails = observeMealsFilteredByArea(area = area.mealArea)
-            categoryDetails.collect { mealsByArea ->
-                categoryDetailsList.plus(mealsByArea.meals.takeTwoRandom)
-            }
-        }
-        val collection = MealsCollection(
-            // TODO: Replace with string resource
-            collectionName = "Popular meals by area",
-            meals = categoryDetailsList,
-            type = CollectionType.RandomizedMeals
-        )
-        store.saveMealsCollection(collection)
-    }
-
-    private suspend fun storeAreaMealsCollection(areas: Areas) {
-        val collection = MealsCollection(
-            // TODO: Replace with string resource
-            collectionName = "Available area meals",
-            areas = areas.areas,
-            type = CollectionType.Areas
-        )
-        store.saveMealsCollection(collection)
     }
 
     suspend fun fetchMealsByCategory(category: String) {

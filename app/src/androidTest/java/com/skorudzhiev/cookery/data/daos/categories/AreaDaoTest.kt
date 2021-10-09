@@ -3,7 +3,7 @@ package com.skorudzhiev.cookery.data.daos.categories
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.filters.SmallTest
 import app.cookery.CookeryRoomDatabase
-import app.cookery.data.daos.categories.AreasDao
+import app.cookery.data.daos.categories.AreaDao
 import com.google.common.truth.Truth.assertThat
 import com.skorudzhiev.cookery.data.areas
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -22,7 +22,7 @@ import javax.inject.Named
 @ExperimentalCoroutinesApi
 @SmallTest
 @HiltAndroidTest
-class AreasDaoTest {
+class AreaDaoTest {
 
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
@@ -35,7 +35,7 @@ class AreasDaoTest {
     lateinit var database: CookeryRoomDatabase
 
     @Inject
-    lateinit var dao: AreasDao
+    lateinit var dao: AreaDao
 
     @Before
     fun setup() {
@@ -49,16 +49,16 @@ class AreasDaoTest {
 
     @Test
     fun insert_meal_areas() = runBlocking {
-        dao.insert(areas)
+        dao.insertAreas(areas)
         val observedAreas = dao.getMealAreas().take(1).firstOrNull()
         assertThat(observedAreas).isEqualTo(areas)
     }
 
     @Test
     fun get_meal_areas() = runBlocking {
-        dao.insert(areas)
+        dao.insertAreas(areas)
         val observedAreas = dao.getMealAreas().take(1).firstOrNull()
         assertThat(observedAreas).isNotNull()
-        assertThat(observedAreas?.areas?.get(2)).isEqualTo(areas.areas[2])
+        assertThat(observedAreas?.get(2)).isEqualTo(areas[2])
     }
 }

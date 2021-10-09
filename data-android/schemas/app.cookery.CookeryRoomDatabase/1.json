@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "7558ce74ce587fb2dc12dfdeaffd6d03",
+    "identityHash": "3e2d50e2e1f2a89fc258e3338c836408",
     "entities": [
       {
         "tableName": "Category",
@@ -63,39 +63,19 @@
         "foreignKeys": []
       },
       {
-        "tableName": "meals_area",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`mealArea` TEXT NOT NULL, PRIMARY KEY(`mealArea`))",
+        "tableName": "Area",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`area` TEXT NOT NULL, PRIMARY KEY(`area`))",
         "fields": [
           {
-            "fieldPath": "mealArea",
-            "columnName": "mealArea",
+            "fieldPath": "area",
+            "columnName": "area",
             "affinity": "TEXT",
             "notNull": true
           }
         ],
         "primaryKey": {
           "columnNames": [
-            "mealArea"
-          ],
-          "autoGenerate": false
-        },
-        "indices": [],
-        "foreignKeys": []
-      },
-      {
-        "tableName": "areas",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`areas` TEXT NOT NULL, PRIMARY KEY(`areas`))",
-        "fields": [
-          {
-            "fieldPath": "areas",
-            "columnName": "areas",
-            "affinity": "TEXT",
-            "notNull": true
-          }
-        ],
-        "primaryKey": {
-          "columnNames": [
-            "areas"
+            "area"
           ],
           "autoGenerate": false
         },
@@ -180,50 +160,6 @@
         "primaryKey": {
           "columnNames": [
             "category"
-          ],
-          "autoGenerate": false
-        },
-        "indices": [],
-        "foreignKeys": []
-      },
-      {
-        "tableName": "meals_collection",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`collectionName` TEXT NOT NULL, `categoryMeals` TEXT, `categories` TEXT, `areas` TEXT, `collectionType` TEXT NOT NULL, PRIMARY KEY(`collectionName`))",
-        "fields": [
-          {
-            "fieldPath": "collectionName",
-            "columnName": "collectionName",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "meals",
-            "columnName": "categoryMeals",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "categories",
-            "columnName": "categories",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "areas",
-            "columnName": "areas",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "type",
-            "columnName": "collectionType",
-            "affinity": "TEXT",
-            "notNull": true
-          }
-        ],
-        "primaryKey": {
-          "columnNames": [
-            "collectionName"
           ],
           "autoGenerate": false
         },
@@ -572,7 +508,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7558ce74ce587fb2dc12dfdeaffd6d03')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3e2d50e2e1f2a89fc258e3338c836408')"
     ]
   }
 }

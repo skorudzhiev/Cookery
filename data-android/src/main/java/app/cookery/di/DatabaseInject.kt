@@ -19,7 +19,7 @@ import javax.inject.Singleton
 @Module
 object DatabaseDaoModule {
     @Provides
-    fun provideAreasDao(db: CookeryDatabase) = db.areasDao()
+    fun provideAreasDao(db: CookeryDatabase) = db.areaDao()
 
     @Provides
     fun provideCategoriesDao(db: CookeryDatabase) = db.categoriesDao()
@@ -30,8 +30,8 @@ object DatabaseDaoModule {
     @Provides
     fun provideFilterByCategoryDao(db: CookeryDatabase) = db.filterByCategoryDao()
 
-    @Provides
-    fun provideMealsCollectionDao(db: CookeryDatabase) = db.mealsCollectionDao()
+//    @Provides
+//    fun provideMealsCollectionDao(db: CookeryDatabase) = db.mealsCollectionDao()
 
     @Provides
     fun provideMealDetailsDao(db: CookeryDatabase) = db.mealDetailsDao()

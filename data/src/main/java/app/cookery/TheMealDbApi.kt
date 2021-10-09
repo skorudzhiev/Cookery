@@ -2,9 +2,9 @@ package app.cookery
 
 import app.cookery.data.entities.MealDetails
 import app.cookery.data.entities.categories.AllMealCategories
-import app.cookery.data.entities.categories.Areas
 import app.cookery.data.entities.categories.FilterMealsByArea
 import app.cookery.data.entities.categories.FilterMealsByCategory
+import app.cookery.data.models.Areas
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query

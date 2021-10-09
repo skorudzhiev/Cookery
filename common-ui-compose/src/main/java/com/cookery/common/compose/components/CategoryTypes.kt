@@ -26,12 +26,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import app.cookery.data.entities.categories.AllMealCategories
 import app.cookery.data.entities.categories.Area
-import app.cookery.data.entities.categories.Areas
 import app.cookery.data.entities.categories.Category
 import app.cookery.data.entities.categories.CategoryDetails
 import app.cookery.data.entities.categories.CollectionType
 import app.cookery.data.entities.categories.MealCollection
-import app.cookery.data.entities.categories.MealsCollection
 import com.cookery.common.compose.theme.getThemeColorForImageBorder
 import com.cookery.common.compose.theme.getThemePrimaryColor
 
@@ -80,8 +78,8 @@ fun CategoryTypes(
                 CategoryTitle(title = mealCollection.name)
                 Spacer(modifier = Modifier.height(8.dp))
                 mealCollection.areas?.let {
-                    com.cookery.common.compose.components.Areas(
-                        areas = it.areas,
+                    Areas(
+                        areas = it,
                         modifier = modifier
                     )
                 }
@@ -104,7 +102,8 @@ fun Areas(
         contentPadding = PaddingValues(start = 2.dp, end = 2.dp)
     ) {
         items(areas) { area ->
-            AreaItem(area = area.mealArea,
+            AreaItem(
+                area = area.area,
                 modifier = modifier
             )
         }

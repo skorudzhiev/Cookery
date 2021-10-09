@@ -71,3 +71,17 @@ inline fun <T> Response<T>.bodyOrThrow(): T {
     if (!isSuccessful) throw HttpException(this)
     return body()!!
 }
+
+suspend fun <T, E> Response<T>.toResult(mapper: suspend (T) -> E): Result<E> = try {
+    if (isSuccessful) {
+        Success(data = mapper(bodyOrThrow()), responseModified = isFromNetwork())
+    } else {
+        ErrorResult(toException())
+    }
+} catch (e: Exception) {
+    ErrorResult(e)
+}
+
+inline fun <T> Response<T>.isFromNetwork(): Boolean {
+    return raw().cacheResponse == null
+}
