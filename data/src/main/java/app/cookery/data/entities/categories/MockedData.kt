@@ -1,6 +1,6 @@
 package app.cookery.data.entities.categories
 
-import app.cookery.data.models.Areas
+import app.cookery.data.models.Categories
 
 // TODO: This will be removed once we get there
 
@@ -19,45 +19,43 @@ data class MealCollection(
 
 // TODO: Categories
 // https://www.themealdb.com/api/json/v1/1/categories.php
-val allMealCategories = AllMealCategories(
-    listOf(
-        Category(
-            categoryId = "1",
-            categoryType = "Beef",
-            categoryImage = "https://www.themealdb.com/images/category/beef.png",
-            categoryDescription = ""
-        ),
-        Category(
-            categoryId = "2",
-            categoryType = "Chicken",
-            categoryImage = "https://www.themealdb.com/images/category/chicken.png",
-            categoryDescription = ""
-        ),
-        Category(
-            categoryId = "3",
-            categoryType = "Dessert",
-            categoryImage = "https://www.themealdb.com/images/category/dessert.png",
-            categoryDescription = ""
-        ),
-        Category(
-            categoryId = "4",
-            categoryType = "Lamb",
-            categoryImage = "https://www.themealdb.com/images/category/lamb.png",
-            categoryDescription = ""
-        ),
-        Category(
-            categoryId = "5",
-            categoryType = "Pasta",
-            categoryImage = "https://www.themealdb.com/images/category/pasta.png",
-            categoryDescription = ""
-        )
+val allMealCategories = listOf(
+    Category(
+        categoryId = "1",
+        categoryName = "Beef",
+        categoryImage = "https://www.themealdb.com/images/category/beef.png",
+        categoryDescription = ""
+    ),
+    Category(
+        categoryId = "2",
+        categoryName = "Chicken",
+        categoryImage = "https://www.themealdb.com/images/category/chicken.png",
+        categoryDescription = ""
+    ),
+    Category(
+        categoryId = "3",
+        categoryName = "Dessert",
+        categoryImage = "https://www.themealdb.com/images/category/dessert.png",
+        categoryDescription = ""
+    ),
+    Category(
+        categoryId = "4",
+        categoryName = "Lamb",
+        categoryImage = "https://www.themealdb.com/images/category/lamb.png",
+        categoryDescription = ""
+    ),
+    Category(
+        categoryId = "5",
+        categoryName = "Pasta",
+        categoryImage = "https://www.themealdb.com/images/category/pasta.png",
+        categoryDescription = ""
     )
 )
 
 // This is just for debug
-val randomMealsFromCategories = AllMealCategories(
-    allMealCategories.categories.shuffled().take(2)
-)
+val randomMealsFromCategories = (
+    allMealCategories.shuffled().take(2)
+    )
 
 // https://www.themealdb.com/api/json/v1/1/filter.php?c=Beef
 val beefCategory = FilterMealsByCategory(
@@ -325,7 +323,7 @@ val mealsCollection = listOf(
     ),
     MealCollection(
         name = "Category meals",
-        categories = allMealCategories.categories,
+        categories = allMealCategories,
         type = CollectionType.Categories
     ),
     MealCollection(

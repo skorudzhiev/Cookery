@@ -2,23 +2,25 @@ package app.cookery.repositories.categories
 
 import app.cookery.TheMealDbApi
 import app.cookery.data.Result
-import app.cookery.data.entities.categories.AllMealCategories
 import app.cookery.data.entities.categories.Area
+import app.cookery.data.entities.categories.Category
 import app.cookery.data.entities.categories.FilterMealsByArea
 import app.cookery.data.entities.categories.FilterMealsByCategory
 import app.cookery.data.mappers.AreasToArea
+import app.cookery.data.mappers.CategoriesToCategory
 import app.cookery.extensions.executeWithRetry
 import app.cookery.extensions.toResult
 import javax.inject.Inject
 
 class TheMealDbCategoryDataSource @Inject constructor(
     private val theMealDbApi: TheMealDbApi,
-    private val areaMapper: AreasToArea
+    private val areaMapper: AreasToArea,
+    private val categoryMapper: CategoriesToCategory
 ) : CategoriesDataSource {
-    override suspend fun getAllMealCategories(): Result<AllMealCategories> {
+    override suspend fun getAllMealCategories(): Result<List<Category>> {
         return theMealDbApi.getMealCategories()
             .executeWithRetry()
-            .toResult()
+            .toResult(categoryMapper::map)
     }
 
     override suspend fun getMealsByCategory(category: String): Result<FilterMealsByCategory> {

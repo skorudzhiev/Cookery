@@ -4,8 +4,8 @@ import app.cookery.data.daos.categories.AreaDao
 import app.cookery.data.daos.categories.CategoriesDao
 import app.cookery.data.daos.categories.FilterByAreaDao
 import app.cookery.data.daos.categories.FilterByCategoryDao
-import app.cookery.data.entities.categories.AllMealCategories
 import app.cookery.data.entities.categories.Area
+import app.cookery.data.entities.categories.Category
 import app.cookery.data.entities.categories.CollectionType
 import app.cookery.data.entities.categories.FilterMealsByArea
 import app.cookery.data.entities.categories.FilterMealsByCategory
@@ -36,7 +36,7 @@ class CategoriesStore @Inject constructor(
         )
     }
 
-    fun observeAllMealCategories(): Flow<AllMealCategories> {
+    fun observeAllMealCategories(): Flow<List<Category>> {
         return categoriesDao.getAllMealCategories()
     }
 
@@ -52,8 +52,7 @@ class CategoriesStore @Inject constructor(
         return filterByAreaDao.getMealsFilteredByArea(area)
     }
 
-//    suspend fun saveMealsCollection(mealsCollection: MealsCollection) = mealsCollectionDao.insert(mealsCollection)
-    suspend fun saveAllMealCategories(categories: AllMealCategories) = categoriesDao.insert(categories)
+    suspend fun saveAllMealCategories(categories: List<Category>) = categoriesDao.insertCategories(categories)
     suspend fun saveAreaMeals(areas: List<Area>) = areaDao.insertAreas(areas)
 
     suspend fun saveMealsByCategory(category: String, meals: FilterMealsByCategory) {

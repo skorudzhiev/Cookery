@@ -24,7 +24,6 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import app.cookery.data.entities.categories.AllMealCategories
 import app.cookery.data.entities.categories.Area
 import app.cookery.data.entities.categories.Category
 import app.cookery.data.entities.categories.CategoryDetails
@@ -206,7 +205,7 @@ private fun HighlightedCategoryItem(
             .fillMaxSize()
     ) {
         VerticalItemHome(
-            categoryType = category.categoryType,
+            categoryType = category.categoryName,
             imageUrl = category.categoryImage
         )
     }
@@ -214,7 +213,7 @@ private fun HighlightedCategoryItem(
 
 @Composable
 private fun Categories(
-    meals: AllMealCategories,
+    meals: List<Category>,
     onMealClicked: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -223,7 +222,7 @@ private fun Categories(
         horizontalArrangement = spacedBy(2.dp),
         contentPadding = PaddingValues(start = 14.dp, end = 12.dp)
     ) {
-        items(meals.categories) { category ->
+        items(meals) { category ->
             CategoryItem(
                 category = category,
                 onMealClicked = onMealClicked
@@ -259,7 +258,7 @@ private fun CategoryItem(
                     borderStrokeColor = getThemeColorForImageBorder(),
                     borderStrokeSize = 2.dp
                 )
-                category.categoryType?.let { mealCategory ->
+                category.categoryName?.let { mealCategory ->
                     Text(
                         text = mealCategory,
                         style = MaterialTheme.typography.subtitle1,

@@ -1,7 +1,6 @@
 package com.skorudzhiev.cookery
 
 import app.cookery.data.entities.MealDetails
-import app.cookery.data.entities.categories.AllMealCategories
 import app.cookery.data.entities.categories.Area
 import app.cookery.data.entities.categories.Category
 import app.cookery.data.entities.categories.CategoryDetails
@@ -21,26 +20,24 @@ val mealDetails = MealDetails(
 )
 
 // https://www.themealdb.com/api/json/v1/1/categories.php
-val allMealCategories = AllMealCategories(
-    listOf(
-        Category(
-            categoryId = "1",
-            categoryType = "Beef",
-            categoryImage = "",
-            categoryDescription = ""
-        ),
-        Category(
-            categoryId = "2",
-            categoryType = "Chicken",
-            categoryImage = "",
-            categoryDescription = ""
-        ),
-        Category(
-            categoryId = "3",
-            categoryType = "Dessert",
-            categoryImage = "",
-            categoryDescription = ""
-        )
+val allMealCategories = listOf(
+    Category(
+        categoryId = "1",
+        categoryName = "Beef",
+        categoryImage = "",
+        categoryDescription = ""
+    ),
+    Category(
+        categoryId = "2",
+        categoryName = "Chicken",
+        categoryImage = "",
+        categoryDescription = ""
+    ),
+    Category(
+        categoryId = "3",
+        categoryName = "Dessert",
+        categoryImage = "",
+        categoryDescription = ""
     )
 )
 

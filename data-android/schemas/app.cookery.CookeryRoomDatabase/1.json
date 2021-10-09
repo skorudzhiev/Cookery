@@ -2,23 +2,23 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "3e2d50e2e1f2a89fc258e3338c836408",
+    "identityHash": "72590b71c2019dd779c589711832a3df",
     "entities": [
       {
         "tableName": "Category",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`idCategory` TEXT NOT NULL, `categoryType` TEXT, `categoryImage` TEXT, `categoryDescription` TEXT, PRIMARY KEY(`idCategory`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`categoryName` TEXT NOT NULL, `categoryId` TEXT NOT NULL, `categoryImage` TEXT, `categoryDescription` TEXT, PRIMARY KEY(`categoryName`))",
         "fields": [
           {
-            "fieldPath": "categoryId",
-            "columnName": "idCategory",
+            "fieldPath": "categoryName",
+            "columnName": "categoryName",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "categoryType",
-            "columnName": "categoryType",
+            "fieldPath": "categoryId",
+            "columnName": "categoryId",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "categoryImage",
@@ -35,27 +35,7 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "idCategory"
-          ],
-          "autoGenerate": false
-        },
-        "indices": [],
-        "foreignKeys": []
-      },
-      {
-        "tableName": "categories",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`categories` TEXT NOT NULL, PRIMARY KEY(`categories`))",
-        "fields": [
-          {
-            "fieldPath": "categories",
-            "columnName": "categories",
-            "affinity": "TEXT",
-            "notNull": true
-          }
-        ],
-        "primaryKey": {
-          "columnNames": [
-            "categories"
+            "categoryName"
           ],
           "autoGenerate": false
         },
@@ -508,7 +488,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3e2d50e2e1f2a89fc258e3338c836408')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '72590b71c2019dd779c589711832a3df')"
     ]
   }
 }

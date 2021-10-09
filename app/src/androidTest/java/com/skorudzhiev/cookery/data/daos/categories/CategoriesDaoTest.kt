@@ -49,16 +49,16 @@ class CategoriesDaoTest {
 
     @Test
     fun insert_all_meal_categories() = runBlocking {
-        dao.insert(allMealCategories)
+        dao.insertCategories(allMealCategories)
         val observedCategories = dao.getAllMealCategories().take(1).firstOrNull()
         assertThat(observedCategories).isEqualTo(allMealCategories)
     }
 
     @Test
     fun get_all_meal_categories() = runBlocking {
-        dao.insert(allMealCategories)
+        dao.insertCategories(allMealCategories)
         val observedCategories = dao.getAllMealCategories().take(1).firstOrNull()
         assertThat(observedCategories).isNotNull()
-        assertThat(observedCategories?.categories?.get(2)).isEqualTo(allMealCategories.categories[2])
+        assertThat(observedCategories?.get(2)).isEqualTo(allMealCategories[2])
     }
 }
