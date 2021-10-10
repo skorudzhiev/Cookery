@@ -2,8 +2,10 @@ package com.skorudzhiev.cookery.repositories
 
 import app.cookery.data.mappers.AreasToArea
 import app.cookery.data.mappers.CategoriesToCategory
+import app.cookery.data.mappers.CategoryDetailsMapper
 import app.cookery.data.mappers.MealCategoryToCategory
 import app.cookery.data.mappers.MealsAreaToArea
+import app.cookery.data.mappers.MealsToCategoryDetails
 import app.cookery.repositories.categories.TheMealDbCategoryDataSource
 import com.google.common.truth.Truth.assertThat
 import com.skorudzhiev.cookery.allMealAreas
@@ -38,7 +40,8 @@ class CategoriesRepositoryTest {
         dataSource = TheMealDbCategoryDataSource(
             provideTheMealDbTestingApi(mockWebServer),
             AreasToArea(mapper = MealsAreaToArea()),
-            CategoriesToCategory(MealCategoryToCategory())
+            CategoriesToCategory(MealCategoryToCategory()),
+            MealsToCategoryDetails(CategoryDetailsMapper())
         )
     }
 
@@ -75,11 +78,11 @@ class CategoriesRepositoryTest {
     fun `should fetch meals filtered by area given response 200`() {
         mockWebServer.enqueueResponse(mealsFilteredByAreaSourceFile, 200)
         runBlocking {
-            val actual = dataSource.getMealsByArea(mealArea).getOrThrow()
+            val actual = dataSource.getMealsByCategory(mealArea).getOrThrow()
             val expected = mealsFilteredByArea
 
             assertThat(expected).isNotNull()
-            assertThat(actual).isEqualTo(expected)
+            assertThat(actual[0].mealId).isEqualTo(expected[0].mealId)
         }
     }
 
@@ -91,7 +94,7 @@ class CategoriesRepositoryTest {
             val expected = mealsFilteredByCategory
 
             assertThat(expected).isNotNull()
-            assertThat(actual).isEqualTo(expected)
+            assertThat(actual[0].mealId).isEqualTo(expected[0].mealId)
         }
     }
 }

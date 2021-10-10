@@ -165,7 +165,7 @@ private fun RandomizedMealItem(
             .padding(start = 16.dp)
     ) {
         HorizontalItemHome(
-            imageUrl = meal.categoryImage,
+            imageUrl = meal.mealImage,
             mealDescription = meal.mealName
         )
     }

@@ -3,21 +3,13 @@ package app.cookery.data.entities.categories
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import app.cookery.data.entities.CookeryEntity
-import com.google.gson.annotations.SerializedName
 
-@Entity(tableName = "category_details")
+@Entity
 data class CategoryDetails(
-    @SerializedName("strMeal")
-    @ColumnInfo(name = "strMeal") val mealName: String? = null,
-
-    @SerializedName("strMealThumb")
-    @ColumnInfo(name = "categoryImage") val categoryImage: String? = null,
-
     @PrimaryKey
-    @SerializedName("idMeal")
-    @ColumnInfo(name = "idMeal") val mealId: String = ""
-) : CookeryEntity {
-    override val id: Long
-        get() = 0
-}
+    @ColumnInfo(name = "mealId") val mealId: String,
+    @ColumnInfo(name = "mealName") val mealName: String,
+    @ColumnInfo(name = "mealImage") val mealImage: String,
+    @ColumnInfo(name = "categoryName") var categoryName: String? = "",
+    @ColumnInfo(name = "area") var area: String? = ""
+)

@@ -15,10 +15,6 @@ class CategoriesRepository @Inject constructor(
 
     fun observeAreaMeals() = store.observeAreaMeals()
 
-    fun observeMealsFilteredByCategory(category: String) = store.observeMealsFilteredByCategory(category)
-
-    fun observeMealsFilteredByArea(area: String) = store.observeMealsFilteredByArea(area)
-
     suspend fun fetchAllMealCategories() {
         val response = dataSource.getAllMealCategories().getOrThrow()
         store.saveAllMealCategories(response)
@@ -29,13 +25,21 @@ class CategoriesRepository @Inject constructor(
         store.saveAreaMeals(response)
     }
 
-    suspend fun fetchMealsByCategory(category: String) {
-        val response = dataSource.getMealsByCategory(category).getOrThrow()
-        store.saveMealsByCategory(category, response)
+    suspend fun fetchMealsByCategory(categoryName: String) {
+        val response = dataSource.getMealsByCategory(categoryName).getOrThrow()
+        store.saveCategoryDetails(
+            meals = response,
+            categoryName = categoryName,
+            area = ""
+        )
     }
 
     suspend fun fetchMealsByArea(area: String) {
-        val response = dataSource.getMealsByArea(area).getOrThrow()
-        store.saveMealsByArea(area, response)
+        val response = dataSource.getMealsByCategory(area).getOrThrow()
+        store.saveCategoryDetails(
+            meals = response,
+            categoryName = "",
+            area = area
+        )
     }
 }

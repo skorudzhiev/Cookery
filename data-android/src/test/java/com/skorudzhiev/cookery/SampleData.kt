@@ -4,8 +4,6 @@ import app.cookery.data.entities.MealDetails
 import app.cookery.data.entities.categories.Area
 import app.cookery.data.entities.categories.Category
 import app.cookery.data.entities.categories.CategoryDetails
-import app.cookery.data.entities.categories.FilterMealsByArea
-import app.cookery.data.entities.categories.FilterMealsByCategory
 
 // www.themealdb.com/api/json/v1/1/lookup.php?i=52772
 val mealDetails = MealDetails(
@@ -49,45 +47,51 @@ val allMealAreas = listOf(
 )
 
 // https://www.themealdb.com/api/json/v1/1/filter.php?a=Canadian
-val mealsFilteredByArea = FilterMealsByArea(
-    area = "Canadian",
-    meals = listOf(
-        CategoryDetails(
-            mealName = "BeaverTails",
-            categoryImage = "",
-            mealId = "52928"
-        ),
-        CategoryDetails(
-            mealName = "Breakfast Potatoes",
-            categoryImage = "",
-            mealId = "52965"
-        ),
-        CategoryDetails(
-            mealName = "Canadian Butter Tarts",
-            categoryImage = "",
-            mealId = "52923"
-        )
+val mealsFilteredByArea = listOf(
+    CategoryDetails(
+        mealId = "52928",
+        mealName = "BeaverTails",
+        mealImage = "",
+        categoryName = "",
+        area = "Canadian"
+    ),
+    CategoryDetails(
+        mealId = "52965",
+        mealName = "Breakfast Potatoes",
+        mealImage = "",
+        categoryName = "",
+        area = "Canadian"
+    ),
+    CategoryDetails(
+        mealId = "52923",
+        mealName = "Canadian Butter Tart",
+        mealImage = "",
+        categoryName = "",
+        area = "Canadian"
     )
 )
 
 // https://www.themealdb.com/api/json/v1/1/filter.php?c=Seafood
-val mealsFilteredByCategory = FilterMealsByCategory(
-    category = "Seafood",
-    meals = listOf(
-        CategoryDetails(
-            mealName = "Baked salmon with fennel & tomatoes",
-            categoryImage = "",
-            mealId = "52959"
-        ),
-        CategoryDetails(
-            mealName = "Cajun spiced fish tacos",
-            categoryImage = "",
-            mealId = "52819"
-        ),
-        CategoryDetails(
-            mealName = "Escovitch Fish",
-            categoryImage = "",
-            mealId = "52944"
-        )
+val mealsFilteredByCategory = listOf(
+    CategoryDetails(
+        mealId = "52959",
+        mealName = "Baked salmon with fennel & tomatoes",
+        mealImage = "",
+        categoryName = "Seafood",
+        area = ""
+    ),
+    CategoryDetails(
+        mealId = "52819",
+        mealName = "Cajun spiced fish tacos",
+        mealImage = "",
+        categoryName = "Seafood",
+        area = ""
+    ),
+    CategoryDetails(
+        mealId = "52944",
+        mealName = "Escovitch Fish",
+        mealImage = "",
+        categoryName = "Seafood",
+        area = ""
     )
 )

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "72590b71c2019dd779c589711832a3df",
+    "identityHash": "b2d6ac400882551cb4a19244e42c6888",
     "entities": [
       {
         "tableName": "Category",
@@ -63,83 +63,43 @@
         "foreignKeys": []
       },
       {
-        "tableName": "category_details",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`strMeal` TEXT, `categoryImage` TEXT, `idMeal` TEXT NOT NULL, PRIMARY KEY(`idMeal`))",
+        "tableName": "CategoryDetails",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`mealId` TEXT NOT NULL, `mealName` TEXT NOT NULL, `mealImage` TEXT NOT NULL, `categoryName` TEXT, `area` TEXT, PRIMARY KEY(`mealId`))",
         "fields": [
-          {
-            "fieldPath": "mealName",
-            "columnName": "strMeal",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "categoryImage",
-            "columnName": "categoryImage",
-            "affinity": "TEXT",
-            "notNull": false
-          },
           {
             "fieldPath": "mealId",
-            "columnName": "idMeal",
+            "columnName": "mealId",
             "affinity": "TEXT",
             "notNull": true
-          }
-        ],
-        "primaryKey": {
-          "columnNames": [
-            "idMeal"
-          ],
-          "autoGenerate": false
-        },
-        "indices": [],
-        "foreignKeys": []
-      },
-      {
-        "tableName": "filtered_by_area",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`area` TEXT NOT NULL, `meals` TEXT NOT NULL, PRIMARY KEY(`area`))",
-        "fields": [
+          },
+          {
+            "fieldPath": "mealName",
+            "columnName": "mealName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mealImage",
+            "columnName": "mealImage",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "categoryName",
+            "columnName": "categoryName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
           {
             "fieldPath": "area",
             "columnName": "area",
             "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "meals",
-            "columnName": "meals",
-            "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           }
         ],
         "primaryKey": {
           "columnNames": [
-            "area"
-          ],
-          "autoGenerate": false
-        },
-        "indices": [],
-        "foreignKeys": []
-      },
-      {
-        "tableName": "filtered_by_category",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`category` TEXT NOT NULL, `meals` TEXT NOT NULL, PRIMARY KEY(`category`))",
-        "fields": [
-          {
-            "fieldPath": "category",
-            "columnName": "category",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "meals",
-            "columnName": "meals",
-            "affinity": "TEXT",
-            "notNull": true
-          }
-        ],
-        "primaryKey": {
-          "columnNames": [
-            "category"
+            "mealId"
           ],
           "autoGenerate": false
         },
@@ -488,7 +448,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '72590b71c2019dd779c589711832a3df')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b2d6ac400882551cb4a19244e42c6888')"
     ]
   }
 }

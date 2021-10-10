@@ -25,13 +25,7 @@ object DatabaseDaoModule {
     fun provideCategoriesDao(db: CookeryDatabase) = db.categoriesDao()
 
     @Provides
-    fun provideFilterByAreaDao(db: CookeryDatabase) = db.filterByAreaDao()
-
-    @Provides
-    fun provideFilterByCategoryDao(db: CookeryDatabase) = db.filterByCategoryDao()
-
-//    @Provides
-//    fun provideMealsCollectionDao(db: CookeryDatabase) = db.mealsCollectionDao()
+    fun provideCategoryDetailsDao(db: CookeryDatabase) = db.categoryDetailsDao()
 
     @Provides
     fun provideMealDetailsDao(db: CookeryDatabase) = db.mealDetailsDao()

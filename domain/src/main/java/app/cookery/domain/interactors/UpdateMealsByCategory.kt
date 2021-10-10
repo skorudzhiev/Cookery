@@ -13,9 +13,9 @@ class UpdateMealsByCategory @Inject constructor(
 
     override suspend fun doWork(params: Params) {
         withContext(dispatchers.io) {
-            repository.fetchMealsByCategory(params.category)
+            repository.fetchMealsByCategory(params.categoryName)
         }
     }
 
-    data class Params(val category: String)
+    data class Params(val categoryName: String)
 }

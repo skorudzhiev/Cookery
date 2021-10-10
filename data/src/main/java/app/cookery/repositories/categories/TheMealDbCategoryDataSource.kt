@@ -4,10 +4,10 @@ import app.cookery.TheMealDbApi
 import app.cookery.data.Result
 import app.cookery.data.entities.categories.Area
 import app.cookery.data.entities.categories.Category
-import app.cookery.data.entities.categories.FilterMealsByArea
-import app.cookery.data.entities.categories.FilterMealsByCategory
+import app.cookery.data.entities.categories.CategoryDetails
 import app.cookery.data.mappers.AreasToArea
 import app.cookery.data.mappers.CategoriesToCategory
+import app.cookery.data.mappers.MealsToCategoryDetails
 import app.cookery.extensions.executeWithRetry
 import app.cookery.extensions.toResult
 import javax.inject.Inject
@@ -15,7 +15,8 @@ import javax.inject.Inject
 class TheMealDbCategoryDataSource @Inject constructor(
     private val theMealDbApi: TheMealDbApi,
     private val areaMapper: AreasToArea,
-    private val categoryMapper: CategoriesToCategory
+    private val categoryMapper: CategoriesToCategory,
+    private val categoryDetailsMapper: MealsToCategoryDetails
 ) : CategoriesDataSource {
     override suspend fun getAllMealCategories(): Result<List<Category>> {
         return theMealDbApi.getMealCategories()
@@ -23,21 +24,15 @@ class TheMealDbCategoryDataSource @Inject constructor(
             .toResult(categoryMapper::map)
     }
 
-    override suspend fun getMealsByCategory(category: String): Result<FilterMealsByCategory> {
+    override suspend fun getMealsByCategory(category: String): Result<List<CategoryDetails>> {
         return theMealDbApi.getMealByCategory(category)
             .executeWithRetry()
-            .toResult()
+            .toResult(categoryDetailsMapper::map)
     }
 
     override suspend fun getMealAreas(): Result<List<Area>> {
         return theMealDbApi.getMealAreas()
             .executeWithRetry()
             .toResult(areaMapper::map)
-    }
-
-    override suspend fun getMealsByArea(area: String): Result<FilterMealsByArea> {
-        return theMealDbApi.getMealByArea(area)
-            .executeWithRetry()
-            .toResult()
     }
 }
