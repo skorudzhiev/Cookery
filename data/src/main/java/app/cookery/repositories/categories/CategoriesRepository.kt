@@ -35,7 +35,7 @@ class CategoriesRepository @Inject constructor(
     }
 
     suspend fun fetchMealsByArea(area: String) {
-        val response = dataSource.getMealsByCategory(area).getOrThrow()
+        val response = dataSource.getMealsByArea(area).getOrThrow()
         store.saveCategoryDetails(
             meals = response,
             categoryName = "",

@@ -8,5 +8,6 @@ import app.cookery.data.entities.categories.CategoryDetails
 interface CategoriesDataSource {
     suspend fun getAllMealCategories(): Result<List<Category>>
     suspend fun getMealsByCategory(category: String): Result<List<CategoryDetails>>
+    suspend fun getMealsByArea(area: String): Result<List<CategoryDetails>>
     suspend fun getMealAreas(): Result<List<Area>>
 }

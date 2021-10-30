@@ -30,6 +30,12 @@ class TheMealDbCategoryDataSource @Inject constructor(
             .toResult(categoryDetailsMapper::map)
     }
 
+    override suspend fun getMealsByArea(area: String): Result<List<CategoryDetails>> {
+        return theMealDbApi.getMealByArea(area)
+            .executeWithRetry()
+            .toResult(categoryDetailsMapper::map)
+    }
+
     override suspend fun getMealAreas(): Result<List<Area>> {
         return theMealDbApi.getMealAreas()
             .executeWithRetry()
