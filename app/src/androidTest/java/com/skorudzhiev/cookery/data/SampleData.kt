@@ -6,15 +6,17 @@ import app.cookery.data.entities.categories.Category
 import app.cookery.data.entities.categories.CategoryDetails
 
 // www.themealdb.com/api/json/v1/1/lookup.php?i=52772
-val mealDetails = MealDetails(
-    "", "52772", "Teriyaki Chicken Casserole", "", "Chicken",
-    "Japanese", "", "", "", "", "",
-    "", "", "", "", "", "",
-    "", "", "", "", "", "",
-    "", "", "", "", "", "",
-    "", "", "", "", "", "", "",
-    "", "", "", "", "", "", "",
-    "", "", "", "", "", "", "", "", "", "", ""
+val mealDetails = listOf(
+    MealDetails(
+        "52772", "52772", "Teriyaki Chicken Casserole", "", "Chicken",
+        "Japanese", "", "", "", "", "",
+        "", "", "", "", "", "",
+        "", "", "", "", "", "",
+        "", "", "", "", "", "",
+        "", "", "", "", "", "", "",
+        "", "", "", "", "", "", "",
+        "", "", "", "", "", "", "", "", "", ""
+    )
 )
 
 // https://www.themealdb.com/api/json/v1/1/list.php?a=list

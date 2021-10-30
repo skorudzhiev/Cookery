@@ -13,5 +13,5 @@ class MealStore @Inject constructor(
         return mealDao.getMealDetails(mealId)
     }
 
-    suspend fun saveMeal(mealDetails: MealDetails) = mealDao.insert(mealDetails)
+    suspend fun saveMeal(mealDetails: List<MealDetails>) = mealDao.insertMealDetails(mealDetails)
 }

@@ -49,16 +49,16 @@ class MealDaoTest {
 
     @Test
     fun insert_meal() = runBlockingTest {
-        dao.insert(mealDetails)
+        dao.insertMealDetails(mealDetails)
         val observedMeals = dao.getMealDetails("52772").take(1).firstOrNull()
-        assertThat(observedMeals).isEqualTo(mealDetails)
+        assertThat(observedMeals).isEqualTo(mealDetails[0])
     }
 
     @Test
     fun get_meal_details() = runBlockingTest {
-        dao.insert(mealDetails)
+        dao.insertMealDetails(mealDetails)
         val observedMeals = dao.getMealDetails("52772").take(1).firstOrNull()
         assertThat(observedMeals).isNotNull()
-        assertThat(observedMeals?.mealName).isEqualTo(mealDetails.mealName)
+        assertThat(observedMeals?.mealName).isEqualTo(mealDetails[0].mealName)
     }
 }

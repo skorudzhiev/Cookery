@@ -10,8 +10,14 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface MealDao {
 
-    @Query("SELECT * from meal_details WHERE idMeal = :mealId")
+    @Query("SELECT * from MealDetails WHERE idMeal = :mealId")
     fun getMealDetails(mealId: String): Flow<MealDetails>
+
+    suspend fun insertMealDetails(mealDetailsList: List<MealDetails>) {
+        mealDetailsList.forEach {
+            insert(it)
+        }
+    }
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(mealDetails: MealDetails)

@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.cookery.domain.interactors.UpdateAllMealCategories
 import app.cookery.domain.interactors.UpdateAreas
+import app.cookery.domain.interactors.UpdateMealDetails
 import app.cookery.domain.interactors.UpdateMealsByArea
 import app.cookery.domain.interactors.UpdateMealsByCategory
 import app.cookery.domain.observers.ObserveMealsCollection
@@ -25,6 +26,7 @@ internal class CategoriesViewModel @Inject constructor(
     private val updateAreas: UpdateAreas,
     private val updateMealsByCategory: UpdateMealsByCategory,
     private val updateMealsByArea: UpdateMealsByArea,
+    private val updateMealDetails: UpdateMealDetails,
     observeMealsCollection: ObserveMealsCollection
 ) : ViewModel() {
 
@@ -79,6 +81,11 @@ internal class CategoriesViewModel @Inject constructor(
         }
         viewModelScope.launch {
             updateMealsByArea(UpdateMealsByArea.Params("American"))
+                .collectInfo(mealsCollectionLoadingState)
+        }
+        viewModelScope.launch {
+            updateMealDetails(UpdateMealDetails.Params("52773"))
+                .collectInfo(mealsCollectionLoadingState)
         }
     }
 }

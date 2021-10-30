@@ -1,5 +1,7 @@
 package com.skorudzhiev.cookery.repositories
 
+import app.cookery.data.mappers.MealListToMealDetails
+import app.cookery.data.mappers.MealToMealDetails
 import app.cookery.repositories.details.TheMealDbMealDataSource
 import com.google.common.truth.Truth.assertThat
 import com.skorudzhiev.cookery.enqueueResponse
@@ -24,7 +26,8 @@ class MealRepositoryTest {
     fun setup() {
         mockWebServer = MockWebServer()
         dataSource = TheMealDbMealDataSource(
-            provideTheMealDbTestingApi(mockWebServer)
+            provideTheMealDbTestingApi(mockWebServer),
+            MealListToMealDetails(MealToMealDetails())
         )
     }
 
