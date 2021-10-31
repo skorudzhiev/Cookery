@@ -6,11 +6,7 @@ import app.cookery.data.daos.categories.CategoryDetailsDao
 import app.cookery.data.entities.categories.Area
 import app.cookery.data.entities.categories.Category
 import app.cookery.data.entities.categories.CategoryDetails
-import app.cookery.data.entities.categories.CollectionType
-import app.cookery.data.entities.categories.MealsCollection
-import app.cookery.data.models.Areas
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
 import javax.inject.Inject
 
 class CategoriesStore @Inject constructor(
@@ -19,26 +15,17 @@ class CategoriesStore @Inject constructor(
     private val categoryDetailsDao: CategoryDetailsDao
 ) {
 
-    fun observeMealsCollection(): Flow<List<MealsCollection>> {
-        return flowOf(
-            listOf(
-                MealsCollection(
-                    collectionName = "",
-                    meals = listOf(),
-                    categories = listOf(),
-                    areas = listOf(),
-                    type = CollectionType.Categories
-                )
-            )
-        )
+    fun observeRandomCategoryMeals(): Flow<List<CategoryDetails>> = categoryDetailsDao.getRandomCategoryMeals()
+    fun observeRandomAreaMeals(): Flow<List<CategoryDetails>> = categoryDetailsDao.getRandomAreaMeals()
+    fun observeAllMealCategories(): Flow<List<Category>> = categoriesDao.getAllMealCategories()
+    fun observeAreaMeals(): Flow<List<Area>> = areaDao.getMealAreas()
+
+    fun observeCategoryDetailsByName(categoryName: String): Flow<CategoryDetails> {
+        return categoryDetailsDao.getCategoryDetailsByName(categoryName = categoryName)
     }
 
-    fun observeAllMealCategories(): Flow<List<Category>> {
-        return categoriesDao.getAllMealCategories()
-    }
-
-    fun observeAreaMeals(): Flow<Areas> {
-        return flowOf(Areas(areas = listOf()))
+    fun observeCategoryDetailsByArea(area: String): Flow<CategoryDetails> {
+        return categoryDetailsDao.getCategoryDetailsByArea(area = area)
     }
 
     suspend fun saveAllMealCategories(categories: List<Category>) = categoriesDao.insertCategories(categories)

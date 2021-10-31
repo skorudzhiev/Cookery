@@ -4,10 +4,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.cookery.domain.interactors.UpdateAllMealCategories
 import app.cookery.domain.interactors.UpdateAreas
-import app.cookery.domain.interactors.UpdateMealDetails
 import app.cookery.domain.interactors.UpdateMealsByArea
 import app.cookery.domain.interactors.UpdateMealsByCategory
-import app.cookery.domain.observers.ObserveMealsCollection
+import app.cookery.domain.observers.ObserveAreas
+import app.cookery.domain.observers.ObserveCategories
+import app.cookery.domain.observers.ObserveRandomAreaMeals
+import app.cookery.domain.observers.ObserveRandomCategoryMeals
+import app.cookery.extensions.combine
 import com.cookery.util.ObservableLoadingCounter
 import com.cookery.util.collectInfo
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,7 +18,6 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -23,23 +25,41 @@ import javax.inject.Inject
 @HiltViewModel
 internal class CategoriesViewModel @Inject constructor(
     private val updateAllMealCategories: UpdateAllMealCategories,
-    private val updateAreas: UpdateAreas,
     private val updateMealsByCategory: UpdateMealsByCategory,
     private val updateMealsByArea: UpdateMealsByArea,
-    private val updateMealDetails: UpdateMealDetails,
-    observeMealsCollection: ObserveMealsCollection
+    private val updateAreas: UpdateAreas,
+    observeCategories: ObserveCategories,
+    observeAreas: ObserveAreas,
+    observeRandomCategoryMeals: ObserveRandomCategoryMeals,
+    observeRandomAreaMeals: ObserveRandomAreaMeals
 ) : ViewModel() {
 
-    private val mealsCollectionLoadingState = ObservableLoadingCounter()
+    private val categoriesLoadingState = ObservableLoadingCounter()
+    private val areasLoadingState = ObservableLoadingCounter()
+    private val randomCategoriesLoadingState = ObservableLoadingCounter()
+    private val randomAreasLoadingState = ObservableLoadingCounter()
+
     private val pendingActions = MutableSharedFlow<CategoriesAction>()
 
     val state: StateFlow<CategoriesViewState> = combine(
-        mealsCollectionLoadingState.observable,
-        observeMealsCollection.flow,
-    ) { collectionsLoad, collections ->
+        categoriesLoadingState.observable,
+        areasLoadingState.observable,
+        randomCategoriesLoadingState.observable,
+        randomAreasLoadingState.observable,
+        observeCategories.flow,
+        observeAreas.flow,
+        observeRandomCategoryMeals.flow,
+        observeRandomAreaMeals.flow
+    ) { categoriesLoad, areasLoad, randomCategoriesLoad, randomAreasLoad, categories, areas, randomCategoriesMeals, randomAreaMeals ->
         CategoriesViewState(
-            mealsCollection = collections,
-            collectionRefreshing = collectionsLoad,
+            mealCategories = categories,
+            categoriesRefreshing = categoriesLoad,
+            areaMeals = areas,
+            areasRefreshing = areasLoad,
+            popularMeals = randomCategoriesMeals,
+            randomCategoriesRefreshing = randomCategoriesLoad,
+            recommendedMeals = randomAreaMeals,
+            randomAreasRefreshing = randomAreasLoad
         )
     }.stateIn(
         scope = viewModelScope,
@@ -48,8 +68,12 @@ internal class CategoriesViewModel @Inject constructor(
     )
 
     init {
-        observeMealsCollection(ObserveMealsCollection.Params())
+        observeCategories(ObserveCategories.Params())
+        observeAreas(ObserveAreas.Params())
+        observeRandomCategoryMeals(ObserveRandomCategoryMeals.Params())
+        observeRandomAreaMeals(ObserveRandomAreaMeals.Params())
 
+        // TODO: Call this only once/until you populate the DB
         refresh()
         viewModelScope.launch {
             pendingActions.collect { action ->
@@ -69,23 +93,48 @@ internal class CategoriesViewModel @Inject constructor(
     private fun refresh() {
         viewModelScope.launch {
             updateAllMealCategories(UpdateAllMealCategories.Params())
-                .collectInfo(mealsCollectionLoadingState)
+                .collectInfo(categoriesLoadingState)
         }
         viewModelScope.launch {
             updateAreas(UpdateAreas.Params())
-                .collectInfo(mealsCollectionLoadingState)
+                .collectInfo(areasLoadingState)
         }
+
+        // TODO: All of these would go to a separate function invoked only once you install the app.
+        //  Then a value will be stored in prefs to be sure that we won't make additional network requests.
         viewModelScope.launch {
-            updateMealsByCategory(UpdateMealsByCategory.Params("Beef"))
-                .collectInfo(mealsCollectionLoadingState)
+            updateMealsByCategory(UpdateMealsByCategory.Params("Pasta"))
+                .collectInfo(categoriesLoadingState)
         }
+
+        viewModelScope.launch {
+            updateMealsByCategory(UpdateMealsByCategory.Params("Starter"))
+                .collectInfo(categoriesLoadingState)
+        }
+
+        viewModelScope.launch {
+            updateMealsByCategory(UpdateMealsByCategory.Params("Dessert"))
+                .collectInfo(categoriesLoadingState)
+        }
+
+        viewModelScope.launch {
+            updateMealsByArea(UpdateMealsByArea.Params("Italian"))
+                .collectInfo(areasLoadingState)
+        }
+
+        viewModelScope.launch {
+            updateMealsByArea(UpdateMealsByArea.Params("Thai"))
+                .collectInfo(areasLoadingState)
+        }
+
+        viewModelScope.launch {
+            updateMealsByArea(UpdateMealsByArea.Params("Mexican"))
+                .collectInfo(areasLoadingState)
+        }
+
         viewModelScope.launch {
             updateMealsByArea(UpdateMealsByArea.Params("American"))
-                .collectInfo(mealsCollectionLoadingState)
-        }
-        viewModelScope.launch {
-            updateMealDetails(UpdateMealDetails.Params("52773"))
-                .collectInfo(mealsCollectionLoadingState)
+                .collectInfo(areasLoadingState)
         }
     }
 }

@@ -10,6 +10,12 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface CategoryDetailsDao {
 
+    @Query("SELECT * FROM CategoryDetails WHERE area = \"\" ORDER BY RANDOM() LIMIT 20")
+    fun getRandomCategoryMeals(): Flow<List<CategoryDetails>>
+
+    @Query("SELECT * FROM CategoryDetails WHERE categoryName = \"\" ORDER BY RANDOM() LIMIT 20")
+    fun getRandomAreaMeals(): Flow<List<CategoryDetails>>
+
     @Query("SELECT * FROM CategoryDetails WHERE categoryName = :categoryName")
     fun getCategoryDetailsByName(categoryName: String): Flow<CategoryDetails>
 

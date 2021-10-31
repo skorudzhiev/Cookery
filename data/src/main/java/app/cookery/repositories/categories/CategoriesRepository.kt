@@ -9,10 +9,11 @@ class CategoriesRepository @Inject constructor(
     private val store: CategoriesStore
 ) {
 
-    fun observeMealsCollection() = store.observeMealsCollection()
-
+    fun observeCategoryDetailsByName(categoryName: String) = store.observeCategoryDetailsByName(categoryName)
+    fun observeCategoryDetailsByArea(area: String) = store.observeCategoryDetailsByArea(area)
+    fun observeRandomCategoryDetails() = store.observeRandomCategoryMeals()
+    fun observeRandomAreaMeals() = store.observeRandomAreaMeals()
     fun observeAllMealCategories() = store.observeAllMealCategories()
-
     fun observeAreaMeals() = store.observeAreaMeals()
 
     suspend fun fetchAllMealCategories() {
