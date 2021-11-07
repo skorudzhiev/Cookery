@@ -5,104 +5,42 @@ import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import app.cookery.data.entities.categories.Area
 import app.cookery.data.entities.categories.Category
 import app.cookery.data.entities.categories.CategoryDetails
-import app.cookery.data.entities.categories.CollectionType
-import app.cookery.data.entities.categories.MealCollection
+import com.cookery.common.compose.R
 import com.cookery.common.compose.theme.getThemeColorForImageBorder
 import com.cookery.common.compose.theme.getThemePrimaryColor
 
 @Composable
-fun CategoryTypes(
-    mealCollection: MealCollection,
-    onItemClicked: (String) -> Unit,
-    modifier: Modifier = Modifier,
-    index: Int = 0,
-    highlight: Boolean = false
-) {
-    Column(modifier = modifier) {
-
-        when (mealCollection.type) {
-            CollectionType.RandomizedMeals -> {
-                CategoryTitle(title = mealCollection.name)
-                Spacer(modifier = Modifier.height(8.dp))
-                mealCollection.meals?.let {
-                    RandomizedMeals(
-                        modifier = modifier
-                            .padding(
-                                bottom = 16.dp
-                            ),
-                        categoryMeals = it,
-                        onMealClicked = onItemClicked
-                    )
-                }
-                CookeryDivider(thickness = 2.dp)
-
-                Spacer(modifier = Modifier.height(32.dp))
-            }
-            CollectionType.Categories -> {
-                CategoryTitle(title = mealCollection.name)
-                Spacer(modifier = Modifier.height(8.dp))
-                mealCollection.categories?.let {
-                    HighlightedCategories(
-                        categories = it,
-                        onMealClicked = onItemClicked
-                    )
-                }
-                CookeryDivider(thickness = 2.dp)
-
-                Spacer(modifier = Modifier.height(32.dp))
-            }
-            CollectionType.Areas -> {
-                CategoryTitle(title = mealCollection.name)
-                Spacer(modifier = Modifier.height(8.dp))
-                mealCollection.areas?.let {
-                    Areas(
-                        areas = it,
-                        modifier = modifier
-                    )
-                }
-                CookeryDivider(thickness = 2.dp)
-
-                Spacer(modifier = Modifier.height(32.dp))
-            }
-        }
-    }
-}
-
-@Composable
-fun Areas(
+internal fun Areas(
     areas: List<Area>,
+    openAreaDetails: (String, String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyRow(
-        modifier = modifier,
+        modifier = modifier
+            .padding(start = 8.dp, bottom = 4.dp),
         horizontalArrangement = spacedBy(4.dp),
         contentPadding = PaddingValues(start = 2.dp, end = 2.dp)
     ) {
         items(areas) { area ->
             AreaItem(
                 area = area.area,
+                onAreaClicked = openAreaDetails,
                 modifier = modifier
             )
         }
@@ -110,59 +48,45 @@ fun Areas(
 }
 
 @Composable
-private fun CategoryTitle(
-    title: String,
-    modifier: Modifier = Modifier
-) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier
-            .padding(start = 24.dp)
-    ) {
-        Text(
-            text = title,
-            style = MaterialTheme.typography.subtitle1,
-            color = getThemePrimaryColor().copy(alpha = 0.5f),
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-            modifier = Modifier
-                .weight(1f)
-                .wrapContentWidth(Alignment.Start)
-        )
-    }
-}
-
-@Composable
-private fun RandomizedMeals(
+internal fun RandomizedMeals(
     categoryMeals: List<CategoryDetails>,
-    onMealClicked: (String) -> Unit,
+    openMealDetails: (String, String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyRow(
-        modifier = modifier,
+        modifier = modifier
+            .padding(start = 8.dp),
         horizontalArrangement = spacedBy(4.dp),
         contentPadding = PaddingValues(start = 2.dp, end = 2.dp)
     ) {
         items(categoryMeals) { meal ->
             RandomizedMealItem(
                 meal = meal,
-                onMealClicked = onMealClicked
+                onMealClicked = openMealDetails
             )
         }
     }
 }
 
 @Composable
-private fun RandomizedMealItem(
+internal fun RandomizedMealItem(
     meal: CategoryDetails,
-    onMealClicked: (String) -> Unit,
+    onMealClicked: (String, String) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val mealType = stringResource(R.string.category_type_popular)
+
     Box(
         modifier = modifier
-            .clickable(onClick = { onMealClicked(meal.mealId) })
+            .clickable(
+                onClick = {
+                    onMealClicked(
+                        meal.mealId,
+                        mealType
+                    )
+                }
+            )
             .fillMaxSize()
-            .padding(start = 16.dp)
     ) {
         HorizontalItemHome(
             imageUrl = meal.mealImage,
@@ -172,36 +96,40 @@ private fun RandomizedMealItem(
 }
 
 @Composable
-private fun HighlightedCategories(
+internal fun HighlightedCategories(
     categories: List<Category>,
-    onMealClicked: (String) -> Unit,
+    openCategoryDetails: (String, String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val scroll = rememberScrollState(0)
     LazyRow(
         modifier = modifier
-            .padding(bottom = 12.dp),
-        horizontalArrangement = spacedBy(16.dp),
-        contentPadding = PaddingValues(start = 24.dp, end = 12.dp)
+            .padding(start = 8.dp),
+        horizontalArrangement = spacedBy(16.dp)
     ) {
         items(categories) { category ->
             HighlightedCategoryItem(
                 category = category,
-                onMealClicked = onMealClicked
+                onMealClicked = openCategoryDetails
             )
         }
     }
 }
 
 @Composable
-private fun HighlightedCategoryItem(
+internal fun HighlightedCategoryItem(
     category: Category,
-    onMealClicked: (String) -> Unit,
+    onMealClicked: (String, String) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val mealType = stringResource(R.string.category_type_popular)
+
     Box(
         modifier = modifier
-            .clickable(onClick = { onMealClicked(category.categoryId) })
+            .clickable(
+                onClick = {
+                    onMealClicked(category.categoryId, mealType)
+                }
+            )
             .fillMaxSize()
     ) {
         VerticalItemHome(
@@ -232,7 +160,7 @@ private fun Categories(
 }
 
 @Composable
-private fun CategoryItem(
+internal fun CategoryItem(
     category: Category,
     onMealClicked: (String) -> Unit,
     modifier: Modifier = Modifier
@@ -258,14 +186,12 @@ private fun CategoryItem(
                     borderStrokeColor = getThemeColorForImageBorder(),
                     borderStrokeSize = 2.dp
                 )
-                category.categoryName?.let { mealCategory ->
-                    Text(
-                        text = mealCategory,
-                        style = MaterialTheme.typography.subtitle1,
-                        color = getThemePrimaryColor(),
-                        modifier = Modifier.padding(top = 8.dp)
-                    )
-                }
+                Text(
+                    text = category.categoryName,
+                    style = MaterialTheme.typography.subtitle1,
+                    color = getThemePrimaryColor(),
+                    modifier = Modifier.padding(top = 8.dp)
+                )
             }
         }
     }

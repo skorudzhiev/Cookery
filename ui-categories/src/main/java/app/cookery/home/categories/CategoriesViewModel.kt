@@ -73,12 +73,12 @@ internal class CategoriesViewModel @Inject constructor(
         observeRandomCategoryMeals(ObserveRandomCategoryMeals.Params())
         observeRandomAreaMeals(ObserveRandomAreaMeals.Params())
 
-        // TODO: Call this only once/until you populate the DB
-        refresh()
         viewModelScope.launch {
             pendingActions.collect { action ->
                 when (action) {
                     CategoriesAction.RefreshAction -> refresh()
+                    CategoriesAction.InitializeData -> fetchData()
+                    else -> {}
                 }
             }
         }
@@ -99,9 +99,18 @@ internal class CategoriesViewModel @Inject constructor(
             updateAreas(UpdateAreas.Params())
                 .collectInfo(areasLoadingState)
         }
+    }
 
-        // TODO: All of these would go to a separate function invoked only once you install the app.
-        //  Then a value will be stored in prefs to be sure that we won't make additional network requests.
+    private fun fetchData() {
+        viewModelScope.launch {
+            updateAllMealCategories(UpdateAllMealCategories.Params())
+                .collectInfo(categoriesLoadingState)
+        }
+        viewModelScope.launch {
+            updateAreas(UpdateAreas.Params())
+                .collectInfo(areasLoadingState)
+        }
+
         viewModelScope.launch {
             updateMealsByCategory(UpdateMealsByCategory.Params("Pasta"))
                 .collectInfo(categoriesLoadingState)

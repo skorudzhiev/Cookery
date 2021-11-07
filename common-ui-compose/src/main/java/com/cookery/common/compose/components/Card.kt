@@ -3,6 +3,7 @@ package com.cookery.common.compose.components
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -25,24 +26,37 @@ import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
+import com.cookery.common.compose.R
 import com.cookery.common.compose.theme.CookeryDarkColors
 import com.cookery.common.compose.theme.CookeryLightColors
 import com.cookery.common.compose.theme.getThemeColorForImageBorder
 
 @Composable
 fun AreaItem(
-    area: String?,
+    area: String,
+    onAreaClicked: (String, String) -> Unit,
     modifier: Modifier
 ) {
+    val areaType = stringResource(R.string.category_type_areas)
+
     CookeryCard(
         modifier = modifier
             .size(
                 width = 100.dp,
                 height = 35.dp
+            )
+            .clickable(
+                onClick = {
+                    onAreaClicked(
+                        area,
+                        areaType
+                    )
+                }
             ),
         shape = RoundedCornerShape(
             corner = CornerSize(15.dp)
@@ -53,14 +67,12 @@ fun AreaItem(
             verticalAlignment = CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
-            area?.let {
-                Text(
-                    text = it,
-                    style = MaterialTheme.typography.caption,
-                    maxLines = 1,
-                    modifier = modifier
-                )
-            }
+            Text(
+                text = area,
+                style = MaterialTheme.typography.caption,
+                maxLines = 1,
+                modifier = modifier
+            )
         }
     }
 }

@@ -30,6 +30,7 @@ dependencies {
     implementation Libs.AndroidX.coreKtx
 
     implementation Libs.timber
+    implementation Libs.AndroidX.datastorePrefs
 
     implementation Libs.Hilt.hiltAndroid
     kapt Libs.Hilt.hiltAndroidCompiler

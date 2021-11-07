@@ -21,20 +21,26 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import app.cookery.home.categories.Categories
 import com.skorudzhiev.cookery.ui.HomeSections
-import com.skorudzhiev.cookery.ui.navigation.MainDestinations.MEAL_ID_KEY
+import com.skorudzhiev.cookery.ui.navigation.MainDestinations.CATEGORY_ID_KEY
+import com.skorudzhiev.cookery.ui.navigation.MainDestinations.CATEGORY_TYPE
 
 object MainDestinations {
     const val HOME_ROUTE = "home"
-    const val MEAL_DETAIL_ROUTE = "meal"
-    const val MEAL_ID_KEY = "mealId"
+    const val CATEGORY_DETAIL_ROUTE = "route"
+    const val CATEGORY_ID_KEY = "categoryId"
+    const val CATEGORY_TYPE = "categoryType"
 }
 
 fun NavGraphBuilder.addHomeGraph(
-    onItemSelected: (String, NavBackStackEntry) -> Unit,
+    onItemSelected: (String, String, NavBackStackEntry) -> Unit,
     modifier: Modifier = Modifier
 ) {
     composable(HomeSections.CATEGORIES.route) { from ->
-        Categories(onItemClicked = { id -> onItemSelected(id, from) }, modifier)
+        Categories(
+            openMealDetails = { id, type -> onItemSelected(id, type, from) },
+            openAreaDetails = { id, type -> onItemSelected(id, type, from) },
+            openCategoryDetails = { id, type -> onItemSelected(id, type, from) }
+        )
     }
     composable(HomeSections.SEARCH.route) { from ->
         helloWorld(screen = stringResource(id = HomeSections.SEARCH.title))
@@ -74,20 +80,24 @@ fun CookeryNavGraph(
             startDestination = HomeSections.CATEGORIES.route
         ) {
             addHomeGraph(
-                onItemSelected = { mealId: String, from: NavBackStackEntry ->
+                onItemSelected = { selectedId: String, categoryType: String, from: NavBackStackEntry ->
                     if (from.lifecycleIsResumed()) {
-                        navController.navigate("${MainDestinations.MEAL_DETAIL_ROUTE}/$mealId")
+                        navController.navigate("${MainDestinations.CATEGORY_DETAIL_ROUTE}/$selectedId/$categoryType")
                     }
                 },
                 modifier = modifier
             )
         }
         composable(
-            "${MainDestinations.MEAL_DETAIL_ROUTE}/{$MEAL_ID_KEY}",
-            arguments = listOf(navArgument(MEAL_ID_KEY) { type = NavType.LongType })
+            "${MainDestinations.CATEGORY_DETAIL_ROUTE}/{$CATEGORY_ID_KEY}/{$CATEGORY_TYPE}",
+            arguments = listOf(
+                navArgument(CATEGORY_ID_KEY) { type = NavType.StringType },
+                navArgument(CATEGORY_TYPE) { type = NavType.StringType }
+            )
         ) { backStackEntry ->
             val arguments = requireNotNull(backStackEntry.arguments)
-            val recipeId = arguments.getLong(MEAL_ID_KEY)
+            val categoryId = arguments.getString(CATEGORY_ID_KEY)
+            val categoryType = arguments.getString(CATEGORY_TYPE)
             // TODO: RecipeDetails screen composable
         }
     }

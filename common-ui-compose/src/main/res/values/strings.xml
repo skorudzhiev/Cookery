@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="category_type_popular">Popular meals</string>
+    <string name="category_type_all_categories">Category meals</string>
+    <string name="category_type_recommended">Recommended meals</string>
+    <string name="category_type_areas">Areas</string>
+</resources>

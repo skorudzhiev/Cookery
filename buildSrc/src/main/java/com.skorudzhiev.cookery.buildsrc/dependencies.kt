@@ -28,6 +28,7 @@ object Libs {
         const val activityCompose = "androidx.activity:activity-compose:1.3.1"
         const val navigationCompose = "androidx.navigation:navigation-compose:2.4.0-alpha07"
         const val hiltCompose = "androidx.hilt:hilt-navigation-compose:1.0.0-alpha03"
+        const val datastorePrefs = "androidx.datastore:datastore-preferences:1.0.0"
 
         object Test {
             private const val version = "1.3.0"
