@@ -16,6 +16,7 @@ Cookery is aspired to be an ongoing project, in an attempt to practice some MAD 
 * Dependency injection with [Hilt](https://dagger.dev/hilt/)
 * [Kotlin Coroutines](https://kotlinlang.org/docs/coroutines-guide.html) and [Kotlin Flow](https://kotlinlang.org/docs/flow.html) for an asynchronous development
 * Use of many [Android Architecture Components](https://developer.android.com/topic/libraries/architecture/) throughout the project
+* The UI is built with [Jetpack Compose](https://developer.android.com/jetpack/compose)
 
 ## Development setup
 
@@ -23,6 +24,13 @@ Cookery is aspired to be an ongoing project, in an attempt to practice some MAD 
 This project uses [ktlint](https://github.com/pinterest/ktlint), provided through the [spotless](https://github.com/diffplug/spotless) gradle plugin.
 
 If your PR doesn't pass the checkstyle CI check, make sure to run `./gradlew spotlessApply` and fix all warnings in the current branch.
+
+## Screenshots
+
+### Home screen
+Dark theme             |  Light theme
+:-------------------------:|:-------------------------:
+![](https://user-images.githubusercontent.com/26792749/141307913-81b12728-b49e-45b7-a54b-4f79a0617258.png)  |  ![](https://user-images.githubusercontent.com/26792749/141307992-484d602e-2c36-4782-b1d3-027f1be9688f.png)
  
 ## Contributions
 If you're interested in contributions to this project, make sure to read the project's [Wiki](https://github.com/skorudzhiev/Cookery/wiki/Git-Workflow)
