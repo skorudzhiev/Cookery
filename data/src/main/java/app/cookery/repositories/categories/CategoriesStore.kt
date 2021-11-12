@@ -6,6 +6,7 @@ import app.cookery.data.daos.categories.CategoryDetailsDao
 import app.cookery.data.entities.categories.Area
 import app.cookery.data.entities.categories.Category
 import app.cookery.data.entities.categories.CategoryDetails
+import app.cookery.data.entities.relations.CategoryWithCategoryDetails
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -19,6 +20,11 @@ class CategoriesStore @Inject constructor(
     fun observeRandomAreaMeals(): Flow<List<CategoryDetails>> = categoryDetailsDao.getRandomAreaMeals()
     fun observeAllMealCategories(): Flow<List<Category>> = categoriesDao.getAllMealCategories()
     fun observeAreaMeals(): Flow<List<Area>> = areaDao.getMealAreas()
+
+    fun observeCategoryWithCategoryDetails(
+        categoryName: String
+    ): Flow<List<CategoryWithCategoryDetails>> =
+        categoriesDao.getCategoryWithCategoryDetails(categoryName)
 
     fun observeCategoryDetailsByName(categoryName: String): Flow<CategoryDetails> {
         return categoryDetailsDao.getCategoryDetailsByName(categoryName = categoryName)
