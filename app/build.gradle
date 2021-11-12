@@ -65,6 +65,7 @@ dependencies {
     implementation project(':common-ui-view')
     implementation project(':common-ui-compose')
     implementation project(':ui-categories')
+    implementation project(':ui-details')
 
     implementation Libs.AndroidX.activityCompose
     implementation Libs.AndroidX.navigationCompose
