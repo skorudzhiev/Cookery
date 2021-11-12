@@ -30,9 +30,7 @@ fun <T> CollectionWithHeader(
     items: List<T>,
     title: String,
     refreshing: Boolean,
-    openMealDetails: (String, String) -> Unit,
-    openCategoryDetails: (String, String) -> Unit,
-    openAreaDetails: (String, String) -> Unit,
+    openDetailsScreen: (String, String) -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -51,9 +49,7 @@ fun <T> CollectionWithHeader(
         HandleCategoryTypes(
             items = items,
             title = title,
-            openMealDetails = openMealDetails,
-            openCategoryDetails = openCategoryDetails,
-            openAreaDetails = openAreaDetails
+            openDetailsScreen = openDetailsScreen
         )
         // todo: check for internet connection, or else
     }
@@ -64,9 +60,7 @@ fun <T> CollectionWithHeader(
 internal fun <T> HandleCategoryTypes(
     items: List<T>,
     title: String,
-    openMealDetails: (String, String) -> Unit,
-    openCategoryDetails: (String, String) -> Unit,
-    openAreaDetails: (String, String) -> Unit,
+    openDetailsScreen: (String, String) -> Unit
 ) {
     val popular = stringResource(R.string.category_type_popular)
     val categories = stringResource(R.string.category_type_all_categories)
@@ -77,19 +71,19 @@ internal fun <T> HandleCategoryTypes(
         when (title) {
             popular -> RandomizedMeals(
                 categoryMeals = items as List<CategoryDetails>,
-                openMealDetails = openMealDetails
+                openDetailsScreen = openDetailsScreen
             )
             categories -> HighlightedCategories(
                 categories = items as List<Category>,
-                openCategoryDetails = openCategoryDetails
+                openCategoryDetails = openDetailsScreen
             )
             recommended -> RandomizedMeals(
                 categoryMeals = items as List<CategoryDetails>,
-                openMealDetails = openMealDetails
+                openDetailsScreen = openDetailsScreen
             )
             areas -> Areas(
                 areas = items as List<Area>,
-                openAreaDetails = openAreaDetails
+                openAreaDetails = openDetailsScreen
             )
         }
     }
@@ -135,9 +129,7 @@ internal fun Header(
 fun <T> Collection(
     items: List<T>,
     title: String,
-    openMealDetails: (String, String) -> Unit,
-    openCategoryDetails: (String, String) -> Unit,
-    openAreaDetails: (String, String) -> Unit,
+    openDetailsScreen: (String, String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(modifier) {
@@ -146,9 +138,7 @@ fun <T> Collection(
         HandleCategoryTypes(
             items = items,
             title = title,
-            openMealDetails = openMealDetails,
-            openCategoryDetails = openCategoryDetails,
-            openAreaDetails = openAreaDetails
+            openDetailsScreen = openDetailsScreen
         )
     }
 }

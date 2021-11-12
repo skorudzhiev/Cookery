@@ -50,7 +50,7 @@ internal fun Areas(
 @Composable
 internal fun RandomizedMeals(
     categoryMeals: List<CategoryDetails>,
-    openMealDetails: (String, String) -> Unit,
+    openDetailsScreen: (String, String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyRow(
@@ -62,7 +62,7 @@ internal fun RandomizedMeals(
         items(categoryMeals) { meal ->
             RandomizedMealItem(
                 meal = meal,
-                onMealClicked = openMealDetails
+                openDetailsScreen = openDetailsScreen
             )
         }
     }
@@ -71,7 +71,7 @@ internal fun RandomizedMeals(
 @Composable
 internal fun RandomizedMealItem(
     meal: CategoryDetails,
-    onMealClicked: (String, String) -> Unit,
+    openDetailsScreen: (String, String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val mealType = stringResource(R.string.category_type_popular)
@@ -80,7 +80,7 @@ internal fun RandomizedMealItem(
         modifier = modifier
             .clickable(
                 onClick = {
-                    onMealClicked(
+                    openDetailsScreen(
                         meal.mealId,
                         mealType
                     )
@@ -109,7 +109,7 @@ internal fun HighlightedCategories(
         items(categories) { category ->
             HighlightedCategoryItem(
                 category = category,
-                onMealClicked = openCategoryDetails
+                openDetailsScreen = openCategoryDetails
             )
         }
     }
@@ -118,7 +118,7 @@ internal fun HighlightedCategories(
 @Composable
 internal fun HighlightedCategoryItem(
     category: Category,
-    onMealClicked: (String, String) -> Unit,
+    openDetailsScreen: (String, String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val mealType = stringResource(R.string.category_type_popular)
@@ -127,7 +127,7 @@ internal fun HighlightedCategoryItem(
         modifier = modifier
             .clickable(
                 onClick = {
-                    onMealClicked(category.categoryId, mealType)
+                    openDetailsScreen(category.categoryId, mealType)
                 }
             )
             .fillMaxSize()
@@ -142,7 +142,7 @@ internal fun HighlightedCategoryItem(
 @Composable
 private fun Categories(
     meals: List<Category>,
-    onMealClicked: (String) -> Unit,
+    openDetailsScreen: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyRow(
@@ -153,7 +153,7 @@ private fun Categories(
         items(meals) { category ->
             CategoryItem(
                 category = category,
-                onMealClicked = onMealClicked
+                openDetailsScreen = openDetailsScreen
             )
         }
     }
@@ -162,7 +162,7 @@ private fun Categories(
 @Composable
 internal fun CategoryItem(
     category: Category,
-    onMealClicked: (String) -> Unit,
+    openDetailsScreen: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Surface(
@@ -175,7 +175,7 @@ internal fun CategoryItem(
         Column(
             horizontalAlignment = CenterHorizontally,
             modifier = Modifier
-                .clickable(onClick = { onMealClicked(category.categoryId) })
+                .clickable(onClick = { openDetailsScreen(category.categoryId) })
                 .padding(8.dp)
         ) {
             category.categoryImage?.let {

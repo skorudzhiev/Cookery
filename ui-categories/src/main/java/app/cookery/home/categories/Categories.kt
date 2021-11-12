@@ -26,9 +26,7 @@ import kotlinx.coroutines.flow.collect
 
 @Composable
 fun Categories(
-    openMealDetails: (String, String) -> Unit,
-    openCategoryDetails: (String, String) -> Unit,
-    openAreaDetails: (String, String) -> Unit
+    openDetailsScreen: (String, String) -> Unit
 ) {
     val viewModel: CategoriesViewModel = hiltViewModel()
     val viewState by rememberFlowWithLifecycle(viewModel.state)
@@ -39,9 +37,7 @@ fun Categories(
     Categories(
         state = viewState,
         refresh = { viewModel.submitAction(CategoriesAction.RefreshAction) },
-        openMealDetails = openMealDetails,
-        openCategoryDetails = openCategoryDetails,
-        openAreaDetails = openAreaDetails
+        openDetails = openDetailsScreen
     )
 }
 
@@ -67,9 +63,7 @@ internal fun InitializeAppData(viewModel: CategoriesViewModel) {
 internal fun Categories(
     state: CategoriesViewState,
     refresh: () -> Unit,
-    openMealDetails: (String, String) -> Unit,
-    openCategoryDetails: (String, String) -> Unit,
-    openAreaDetails: (String, String) -> Unit,
+    openDetails: (String, String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Surface(modifier = modifier.fillMaxSize()) {
@@ -96,9 +90,7 @@ internal fun Categories(
                         items = state.popularMeals,
                         title = stringResource(R.string.category_type_popular),
                         refreshing = state.randomCategoriesRefreshing,
-                        openMealDetails = openMealDetails,
-                        openCategoryDetails = openCategoryDetails,
-                        openAreaDetails = openAreaDetails
+                        openDetailsScreen = openDetails,
                     )
                 }
 
@@ -107,9 +99,7 @@ internal fun Categories(
                         items = state.mealCategories,
                         title = stringResource(R.string.category_type_all_categories),
                         refreshing = state.categoriesRefreshing,
-                        openMealDetails = openMealDetails,
-                        openCategoryDetails = openCategoryDetails,
-                        openAreaDetails = openAreaDetails
+                        openDetailsScreen = openDetails
                     )
                 }
 
@@ -118,9 +108,7 @@ internal fun Categories(
                         items = state.recommendedMeals,
                         title = stringResource(R.string.category_type_recommended),
                         refreshing = state.randomAreasRefreshing,
-                        openMealDetails = openMealDetails,
-                        openCategoryDetails = openCategoryDetails,
-                        openAreaDetails = openAreaDetails
+                        openDetailsScreen = openDetails
                     )
                 }
 
@@ -129,9 +117,7 @@ internal fun Categories(
                         items = state.areaMeals.take(14),
                         title = stringResource(R.string.category_type_areas),
                         refreshing = state.areasRefreshing,
-                        openMealDetails = openMealDetails,
-                        openCategoryDetails = openCategoryDetails,
-                        openAreaDetails = openAreaDetails
+                        openDetailsScreen = openDetails
                     )
                 }
 
@@ -139,9 +125,7 @@ internal fun Categories(
                     Collection(
                         items = state.areaMeals.takeLast(13),
                         title = stringResource(R.string.category_type_areas),
-                        openMealDetails = openMealDetails,
-                        openCategoryDetails = openCategoryDetails,
-                        openAreaDetails = openAreaDetails
+                        openDetailsScreen = openDetails
                     )
                 }
             }

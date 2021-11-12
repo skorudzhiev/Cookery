@@ -37,9 +37,7 @@ fun NavGraphBuilder.addHomeGraph(
 ) {
     composable(HomeSections.CATEGORIES.route) { from ->
         Categories(
-            openMealDetails = { id, type -> onItemSelected(id, type, from) },
-            openAreaDetails = { id, type -> onItemSelected(id, type, from) },
-            openCategoryDetails = { id, type -> onItemSelected(id, type, from) }
+            openDetailsScreen = { id, type -> onItemSelected(id, type, from) }
         )
     }
     composable(HomeSections.SEARCH.route) { from ->
