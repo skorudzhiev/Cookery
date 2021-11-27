@@ -6,14 +6,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
-import app.cookery.DataStoreManager
 import com.cookery.common.compose.components.Collection
 import com.cookery.common.compose.components.CollectionWithHeader
 import com.cookery.common.compose.modifiers.Layout
@@ -22,7 +19,6 @@ import com.cookery.common.compose.rememberFlowWithLifecycle
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import kotlinx.coroutines.flow.collect
 
 @Composable
 fun Categories(
@@ -32,30 +28,10 @@ fun Categories(
     val viewState by rememberFlowWithLifecycle(viewModel.state)
         .collectAsState(initial = CategoriesViewState.Empty)
 
-    InitializeAppData(viewModel)
-
     Categories(
         state = viewState,
         refresh = { viewModel.submitAction(CategoriesAction.RefreshAction) },
         openDetails = openDetailsScreen
-    )
-}
-
-@Composable
-internal fun InitializeAppData(viewModel: CategoriesViewModel) {
-    val context = LocalContext.current
-    val dataStore = DataStoreManager(context)
-
-    LaunchedEffect(
-        key1 = Unit,
-        block = {
-            dataStore.isAppDataInitialized().collect { isAppDataInitialized ->
-                if (!isAppDataInitialized) {
-                    viewModel.submitAction(CategoriesAction.InitializeData)
-                    dataStore.saveAppInitializationState(true)
-                }
-            }
-        }
     )
 }
 

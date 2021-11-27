@@ -2,6 +2,7 @@ package app.cookery.home.categories
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.cookery.DataStore
 import app.cookery.domain.interactors.UpdateAllMealCategories
 import app.cookery.domain.interactors.UpdateAreas
 import app.cookery.domain.interactors.UpdateMealsByArea
@@ -24,6 +25,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class CategoriesViewModel @Inject constructor(
+    dataStore: DataStore,
     private val updateAllMealCategories: UpdateAllMealCategories,
     private val updateMealsByCategory: UpdateMealsByCategory,
     private val updateMealsByArea: UpdateMealsByArea,
@@ -68,6 +70,15 @@ internal class CategoriesViewModel @Inject constructor(
     )
 
     init {
+        viewModelScope.launch(viewModelScope.coroutineContext) {
+            dataStore.isAppDataInitialized().collect { isInitialized ->
+                if (!isInitialized) {
+                    fetchData()
+                    dataStore.setAppInitializationState(true)
+                }
+            }
+        }
+
         observeCategories(ObserveCategories.Params())
         observeAreas(ObserveAreas.Params())
         observeRandomCategoryMeals(ObserveRandomCategoryMeals.Params())
@@ -101,6 +112,7 @@ internal class CategoriesViewModel @Inject constructor(
         }
     }
 
+    // TODO: This should be wrapped into a singleUseCase
     private fun fetchData() {
         viewModelScope.launch {
             updateAllMealCategories(UpdateAllMealCategories.Params())
