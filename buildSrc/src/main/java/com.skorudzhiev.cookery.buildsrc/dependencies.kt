@@ -10,7 +10,7 @@ object Libs {
     const val timber = "com.jakewharton.timber:timber:4.7.1"
     const val mockwebserver = "com.squareup.okhttp3:mockwebserver:4.1.0"
     const val mock = "io.mockk:mockk:1.9.3"
-
+    const val threeTenAbp = "com.jakewharton.threetenabp:threetenabp:1.3.1"
 
     object Kotlin {
         private const val version = "1.5.30"

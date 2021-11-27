@@ -25,6 +25,7 @@ dependencies {
     implementation Libs.AndroidX.coreKtx
     implementation Libs.AndroidX.viewModel
     implementation Libs.Coroutines.core
+    implementation Libs.threeTenAbp
 
     implementation Libs.Hilt.hiltAndroid
 }

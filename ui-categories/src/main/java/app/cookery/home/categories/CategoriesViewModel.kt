@@ -3,6 +3,11 @@ package app.cookery.home.categories
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.cookery.DataStore
+import app.cookery.Logger
+import app.cookery.data.InvokeError
+import app.cookery.data.InvokeStarted
+import app.cookery.data.InvokeStatus
+import app.cookery.data.InvokeSuccess
 import app.cookery.domain.interactors.InitializeHomeScreenData
 import app.cookery.domain.interactors.UpdateAllMealCategories
 import app.cookery.domain.interactors.UpdateAreas
@@ -11,9 +16,11 @@ import app.cookery.domain.observers.ObserveCategories
 import app.cookery.domain.observers.ObserveRandomAreaMeals
 import app.cookery.domain.observers.ObserveRandomCategoryMeals
 import app.cookery.extensions.combine
+import com.cookery.api.UiError
+import com.cookery.ui.SnackbarManager
 import com.cookery.util.ObservableLoadingCounter
-import com.cookery.util.collectInfo
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -24,10 +31,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class CategoriesViewModel @Inject constructor(
+    private val initializeHomeScreenData: InitializeHomeScreenData,
     private val updateAllMealCategories: UpdateAllMealCategories,
     private val updateAreas: UpdateAreas,
-    private val initializeHomeScreenData: InitializeHomeScreenData,
+    private val snackbarManager: SnackbarManager,
     private val dataStore: DataStore,
+    private val logger: Logger,
     observeCategories: ObserveCategories,
     observeAreas: ObserveAreas,
     observeRandomCategoryMeals: ObserveRandomCategoryMeals,
@@ -46,11 +55,12 @@ internal class CategoriesViewModel @Inject constructor(
         areasLoadingState.observable,
         randomCategoriesLoadingState.observable,
         randomAreasLoadingState.observable,
+        snackbarManager.errors,
         observeCategories.flow,
         observeAreas.flow,
         observeRandomCategoryMeals.flow,
         observeRandomAreaMeals.flow
-    ) { categoriesLoad, areasLoad, randomCategoriesLoad, randomAreasLoad, categories, areas, randomCategoriesMeals, randomAreaMeals ->
+    ) { categoriesLoad, areasLoad, randomCategoriesLoad, randomAreasLoad, errors, categories, areas, randomCategoriesMeals, randomAreaMeals ->
         CategoriesViewState(
             mealCategories = categories,
             categoriesRefreshing = categoriesLoad,
@@ -59,7 +69,8 @@ internal class CategoriesViewModel @Inject constructor(
             popularMeals = randomCategoriesMeals,
             randomCategoriesRefreshing = randomCategoriesLoad,
             recommendedMeals = randomAreaMeals,
-            randomAreasRefreshing = randomAreasLoad
+            randomAreasRefreshing = randomAreasLoad,
+            error = errors
         )
     }.stateIn(
         scope = viewModelScope,
@@ -85,18 +96,11 @@ internal class CategoriesViewModel @Inject constructor(
             pendingActions.collect { action ->
                 when (action) {
                     CategoriesAction.RefreshAction -> refresh()
+                    CategoriesAction.ClearError -> snackbarManager.removeCurrentError()
                     else -> {}
                 }
             }
         }
-    }
-
-    private suspend fun initializeData() {
-        viewModelScope.launch {
-            initializeHomeScreenData(InitializeHomeScreenData.Params())
-                .collectInfo(categoriesLoadingState)
-        }
-        dataStore.setAppInitializationState(true)
     }
 
     fun submitAction(action: CategoriesAction) {
@@ -105,14 +109,51 @@ internal class CategoriesViewModel @Inject constructor(
         }
     }
 
+    private fun initializeData() {
+        viewModelScope.launch {
+            initializeHomeScreenData(InitializeHomeScreenData.Params()).collect { status ->
+                when (status) {
+                    InvokeStarted -> categoriesLoadingState.addLoader()
+                    InvokeSuccess -> {
+                        categoriesLoadingState.removeLoader()
+                        dataStore.setAppInitializationState(true)
+                    }
+                    is InvokeError -> {
+                        logger.i(status.throwable)
+                        snackbarManager.addError(UiError(status.throwable))
+                        categoriesLoadingState.removeLoader()
+                    }
+                }
+            }
+        }
+    }
+
     private fun refresh() {
         viewModelScope.launch {
             updateAllMealCategories(UpdateAllMealCategories.Params())
-                .collectInfo(categoriesLoadingState)
+                .watchStatus(categoriesLoadingState)
         }
         viewModelScope.launch {
             updateAreas(UpdateAreas.Params())
-                .collectInfo(areasLoadingState)
+                .watchStatus(areasLoadingState)
+        }
+    }
+
+    private fun Flow<InvokeStatus>.watchStatus(loadingCounter: ObservableLoadingCounter) {
+        viewModelScope.launch { collectStatus(loadingCounter) }
+    }
+
+    private suspend fun Flow<InvokeStatus>.collectStatus(loadingCounter: ObservableLoadingCounter) {
+        collect { status ->
+            when (status) {
+                InvokeStarted -> loadingCounter.addLoader()
+                InvokeSuccess -> loadingCounter.removeLoader()
+                is InvokeError -> {
+                    logger.i(status.throwable)
+                    snackbarManager.addError(UiError(status.throwable))
+                    loadingCounter.removeLoader()
+                }
+            }
         }
     }
 }
