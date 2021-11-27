@@ -3,10 +3,9 @@ package app.cookery.home.categories
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.cookery.DataStore
+import app.cookery.domain.interactors.InitializeHomeScreenData
 import app.cookery.domain.interactors.UpdateAllMealCategories
 import app.cookery.domain.interactors.UpdateAreas
-import app.cookery.domain.interactors.UpdateMealsByArea
-import app.cookery.domain.interactors.UpdateMealsByCategory
 import app.cookery.domain.observers.ObserveAreas
 import app.cookery.domain.observers.ObserveCategories
 import app.cookery.domain.observers.ObserveRandomAreaMeals
@@ -25,11 +24,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class CategoriesViewModel @Inject constructor(
-    dataStore: DataStore,
     private val updateAllMealCategories: UpdateAllMealCategories,
-    private val updateMealsByCategory: UpdateMealsByCategory,
-    private val updateMealsByArea: UpdateMealsByArea,
     private val updateAreas: UpdateAreas,
+    private val initializeHomeScreenData: InitializeHomeScreenData,
+    private val dataStore: DataStore,
     observeCategories: ObserveCategories,
     observeAreas: ObserveAreas,
     observeRandomCategoryMeals: ObserveRandomCategoryMeals,
@@ -73,8 +71,7 @@ internal class CategoriesViewModel @Inject constructor(
         viewModelScope.launch(viewModelScope.coroutineContext) {
             dataStore.isAppDataInitialized().collect { isInitialized ->
                 if (!isInitialized) {
-                    fetchData()
-                    dataStore.setAppInitializationState(true)
+                    initializeData()
                 }
             }
         }
@@ -88,11 +85,18 @@ internal class CategoriesViewModel @Inject constructor(
             pendingActions.collect { action ->
                 when (action) {
                     CategoriesAction.RefreshAction -> refresh()
-                    CategoriesAction.InitializeData -> fetchData()
                     else -> {}
                 }
             }
         }
+    }
+
+    private suspend fun initializeData() {
+        viewModelScope.launch {
+            initializeHomeScreenData(InitializeHomeScreenData.Params())
+                .collectInfo(categoriesLoadingState)
+        }
+        dataStore.setAppInitializationState(true)
     }
 
     fun submitAction(action: CategoriesAction) {
@@ -108,53 +112,6 @@ internal class CategoriesViewModel @Inject constructor(
         }
         viewModelScope.launch {
             updateAreas(UpdateAreas.Params())
-                .collectInfo(areasLoadingState)
-        }
-    }
-
-    // TODO: This should be wrapped into a singleUseCase
-    private fun fetchData() {
-        viewModelScope.launch {
-            updateAllMealCategories(UpdateAllMealCategories.Params())
-                .collectInfo(categoriesLoadingState)
-        }
-        viewModelScope.launch {
-            updateAreas(UpdateAreas.Params())
-                .collectInfo(areasLoadingState)
-        }
-
-        viewModelScope.launch {
-            updateMealsByCategory(UpdateMealsByCategory.Params("Pasta"))
-                .collectInfo(categoriesLoadingState)
-        }
-
-        viewModelScope.launch {
-            updateMealsByCategory(UpdateMealsByCategory.Params("Starter"))
-                .collectInfo(categoriesLoadingState)
-        }
-
-        viewModelScope.launch {
-            updateMealsByCategory(UpdateMealsByCategory.Params("Dessert"))
-                .collectInfo(categoriesLoadingState)
-        }
-
-        viewModelScope.launch {
-            updateMealsByArea(UpdateMealsByArea.Params("Italian"))
-                .collectInfo(areasLoadingState)
-        }
-
-        viewModelScope.launch {
-            updateMealsByArea(UpdateMealsByArea.Params("Thai"))
-                .collectInfo(areasLoadingState)
-        }
-
-        viewModelScope.launch {
-            updateMealsByArea(UpdateMealsByArea.Params("Mexican"))
-                .collectInfo(areasLoadingState)
-        }
-
-        viewModelScope.launch {
-            updateMealsByArea(UpdateMealsByArea.Params("American"))
                 .collectInfo(areasLoadingState)
         }
     }
