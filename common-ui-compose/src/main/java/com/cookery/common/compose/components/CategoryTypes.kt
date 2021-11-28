@@ -28,7 +28,7 @@ import com.cookery.common.compose.theme.getThemePrimaryColor
 @Composable
 internal fun Areas(
     areas: List<Area>,
-    openAreaDetails: (String, String) -> Unit,
+    openAreaDetails: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyRow(
@@ -50,7 +50,7 @@ internal fun Areas(
 @Composable
 internal fun RandomizedMeals(
     categoryMeals: List<CategoryDetails>,
-    openDetailsScreen: (String, String) -> Unit,
+    openMealDetails: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyRow(
@@ -62,7 +62,7 @@ internal fun RandomizedMeals(
         items(categoryMeals) { meal ->
             RandomizedMealItem(
                 meal = meal,
-                openDetailsScreen = openDetailsScreen
+                openMealDetails = openMealDetails
             )
         }
     }
@@ -71,7 +71,7 @@ internal fun RandomizedMeals(
 @Composable
 internal fun RandomizedMealItem(
     meal: CategoryDetails,
-    openDetailsScreen: (String, String) -> Unit,
+    openMealDetails: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val mealType = stringResource(R.string.category_type_popular)
@@ -80,10 +80,7 @@ internal fun RandomizedMealItem(
         modifier = modifier
             .clickable(
                 onClick = {
-                    openDetailsScreen(
-                        meal.mealId,
-                        mealType
-                    )
+                    openMealDetails(meal.mealId)
                 }
             )
             .fillMaxSize()
@@ -98,7 +95,7 @@ internal fun RandomizedMealItem(
 @Composable
 internal fun HighlightedCategories(
     categories: List<Category>,
-    openCategoryDetails: (String, String) -> Unit,
+    openCategoryDetails: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyRow(
@@ -109,7 +106,7 @@ internal fun HighlightedCategories(
         items(categories) { category ->
             HighlightedCategoryItem(
                 category = category,
-                openDetailsScreen = openCategoryDetails
+                openCategoryDetails = openCategoryDetails
             )
         }
     }
@@ -118,16 +115,14 @@ internal fun HighlightedCategories(
 @Composable
 internal fun HighlightedCategoryItem(
     category: Category,
-    openDetailsScreen: (String, String) -> Unit,
+    openCategoryDetails: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val mealType = stringResource(R.string.category_type_popular)
-
     Box(
         modifier = modifier
             .clickable(
                 onClick = {
-                    openDetailsScreen(category.categoryId, mealType)
+                    openCategoryDetails(category.categoryId)
                 }
             )
             .fillMaxSize()

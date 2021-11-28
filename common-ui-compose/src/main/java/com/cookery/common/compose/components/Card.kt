@@ -21,17 +21,14 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
-import com.cookery.common.compose.R
 import com.cookery.common.compose.theme.CookeryDarkColors
 import com.cookery.common.compose.theme.CookeryLightColors
 import com.cookery.common.compose.theme.getThemeColorForImageBorder
@@ -39,11 +36,9 @@ import com.cookery.common.compose.theme.getThemeColorForImageBorder
 @Composable
 fun AreaItem(
     area: String,
-    onAreaClicked: (String, String) -> Unit,
+    onAreaClicked: (String) -> Unit,
     modifier: Modifier
 ) {
-    val areaType = stringResource(R.string.category_type_areas)
-
     CookeryCard(
         modifier = modifier
             .size(
@@ -52,10 +47,7 @@ fun AreaItem(
             )
             .clickable(
                 onClick = {
-                    onAreaClicked(
-                        area,
-                        areaType
-                    )
+                    onAreaClicked(area)
                 }
             ),
         shape = RoundedCornerShape(

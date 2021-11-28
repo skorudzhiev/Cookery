@@ -9,7 +9,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.cookery.common.compose.theme.CookeryTheme
 import com.google.accompanist.insets.ProvideWindowInsets
-import com.skorudzhiev.cookery.ui.navigation.CookeryNavGraph
+import com.skorudzhiev.cookery.ui.navigation.AppNavigation
+import com.skorudzhiev.cookery.ui.navigation.CookeryBottomNavigationBar
+import com.skorudzhiev.cookery.ui.navigation.HomeSections
 
 @Preview
 @Composable
@@ -21,7 +23,7 @@ fun CookeryApp() {
             Scaffold(
                 bottomBar = { CookeryBottomNavigationBar(navController = navController, tabs = tabs) }
             ) { innerPaddingModifier ->
-                CookeryNavGraph(
+                AppNavigation(
                     navController = navController,
                     modifier = Modifier.padding(innerPaddingModifier)
                 )

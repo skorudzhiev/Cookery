@@ -1,12 +1,15 @@
-package com.skorudzhiev.cookery.ui
+package com.skorudzhiev.cookery.ui.navigation
 
+import androidx.annotation.DrawableRes
 import androidx.annotation.FloatRange
+import androidx.annotation.StringRes
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationSpec
 import androidx.compose.animation.core.SpringSpec
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.border
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Spacer
@@ -45,8 +48,12 @@ import androidx.core.os.ConfigurationCompat
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph
+import androidx.navigation.compose.currentBackStackEntryAsState
+import com.cookery.common.compose.theme.CookeryDarkColors
+import com.cookery.common.compose.theme.CookeryLightColors
 import com.cookery.common.compose.theme.getThemePrimaryColor
 import com.google.accompanist.insets.navigationBarsPadding
+import com.skorudzhiev.cookery.R
 
 private const val indicatorId = "indicator"
 private const val itemNavLayoutIconId = "icon"
@@ -56,6 +63,69 @@ private val textIconSpacing = 2.dp
 private val bottomNavigationItemPadding = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
 private val bottomNavIndicatorShape = RoundedCornerShape(percent = 50)
 private val bottomNavLabelTransformOrigin = TransformOrigin(0f, 0.5f)
+
+private const val route_home = "home/categories"
+private const val route_search = "home/search"
+private const val route_favorites = "home/favorites"
+private const val route_random = "home/random"
+
+enum class HomeSections(
+    @StringRes val title: Int,
+    @DrawableRes val icon: Int,
+    val route: String
+) {
+    HOME(R.string.home_categories, R.drawable.ic_home, route_home),
+    SEARCH(R.string.home_search, R.drawable.ic_search, route_search),
+    FAVORITES(R.string.home_favorites, R.drawable.ic_favorite, route_favorites),
+    RANDOM(R.string.home_random, R.drawable.ic_dice, route_random)
+}
+
+@Composable
+fun CookeryBottomNavigationBar(
+    navController: NavController,
+    tabs: Array<HomeSections>,
+    color: Color = bottomNavBarColor(isContent = false),
+    contentColor: Color = bottomNavBarColor(isContent = true)
+) {
+
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
+
+    val sections = remember { HomeSections.values() }
+    val routes = remember { sections.map { it.route } }
+
+    if (currentRoute in routes) {
+        val currentSection = sections.first { it.route == currentRoute }
+
+        BottomNavigation(
+            color = color,
+            contentColor = contentColor,
+            selectedIndex = currentSection.ordinal,
+            itemCount = routes.size,
+            tabs = tabs,
+            currentSection = currentSection,
+            currentRoute = currentRoute,
+            navController = navController
+        )
+    }
+}
+
+@Composable
+private fun bottomNavBarColor(isContent: Boolean): Color {
+    return if (isContent) {
+        if (isSystemInDarkTheme()) {
+            CookeryDarkColors.primary
+        } else {
+            CookeryLightColors.primary
+        }
+    } else {
+        if (isSystemInDarkTheme()) {
+            CookeryLightColors.primary
+        } else {
+            CookeryLightColors.background
+        }
+    }
+}
 
 @Composable
 fun BottomNavigation(

@@ -33,7 +33,9 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
 @Composable
 fun Categories(
-    openDetailsScreen: (String, String) -> Unit
+    openMealsDetails: (String) -> Unit,
+    openCategoryDetails: (String) -> Unit,
+    openAreaDetails: (String) -> Unit
 ) {
     val viewModel: CategoriesViewModel = hiltViewModel()
     val viewState by rememberFlowWithLifecycle(viewModel.state)
@@ -43,7 +45,9 @@ fun Categories(
         state = viewState,
         refresh = { viewModel.submitAction(CategoriesAction.RefreshAction) },
         clearError = { viewModel.submitAction(CategoriesAction.ClearError) },
-        openDetails = openDetailsScreen
+        openMealsDetails = openMealsDetails,
+        openCategoryDetails = openCategoryDetails,
+        openAreaDetails = openAreaDetails
     )
 }
 
@@ -52,7 +56,9 @@ internal fun Categories(
     state: CategoriesViewState,
     refresh: () -> Unit,
     clearError: (CategoriesAction) -> Unit,
-    openDetails: (String, String) -> Unit,
+    openMealsDetails: (String) -> Unit,
+    openCategoryDetails: (String) -> Unit,
+    openAreaDetails: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Surface(modifier = modifier.fillMaxSize()) {
@@ -79,7 +85,9 @@ internal fun Categories(
                         items = state.popularMeals,
                         title = stringResource(R.string.category_type_popular),
                         refreshing = state.randomCategoriesRefreshing,
-                        openDetailsScreen = openDetails,
+                        openMealsDetails = openMealsDetails,
+                        openCategoryDetails = openCategoryDetails,
+                        openAreaDetails = openAreaDetails
                     )
                 }
 
@@ -88,7 +96,9 @@ internal fun Categories(
                         items = state.mealCategories,
                         title = stringResource(R.string.category_type_all_categories),
                         refreshing = state.categoriesRefreshing,
-                        openDetailsScreen = openDetails
+                        openMealsDetails = openMealsDetails,
+                        openCategoryDetails = openCategoryDetails,
+                        openAreaDetails = openAreaDetails
                     )
                 }
 
@@ -97,7 +107,9 @@ internal fun Categories(
                         items = state.recommendedMeals,
                         title = stringResource(R.string.category_type_recommended),
                         refreshing = state.randomAreasRefreshing,
-                        openDetailsScreen = openDetails
+                        openMealsDetails = openMealsDetails,
+                        openCategoryDetails = openCategoryDetails,
+                        openAreaDetails = openAreaDetails
                     )
                 }
 
@@ -106,7 +118,9 @@ internal fun Categories(
                         items = state.areaMeals.take(14),
                         title = stringResource(R.string.category_type_areas),
                         refreshing = state.areasRefreshing,
-                        openDetailsScreen = openDetails
+                        openMealsDetails = openMealsDetails,
+                        openCategoryDetails = openCategoryDetails,
+                        openAreaDetails = openAreaDetails
                     )
                 }
 
@@ -114,7 +128,9 @@ internal fun Categories(
                     Collection(
                         items = state.areaMeals.takeLast(13),
                         title = stringResource(R.string.category_type_areas),
-                        openDetailsScreen = openDetails
+                        openMealDetails = openMealsDetails,
+                        openCategoryDetails = openCategoryDetails,
+                        openAreaDetails = openAreaDetails
                     )
                 }
             }
