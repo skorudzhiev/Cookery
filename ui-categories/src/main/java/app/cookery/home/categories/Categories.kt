@@ -1,13 +1,9 @@
 package app.cookery.home.categories
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.SnackbarHost
 import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -15,18 +11,15 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.cookery.common.compose.components.Collection
 import com.cookery.common.compose.components.CollectionWithHeader
-import com.cookery.common.compose.components.SwipeDismissSnackbar
+import com.cookery.common.compose.components.SnackBar
 import com.cookery.common.compose.modifiers.Layout
 import com.cookery.common.compose.modifiers.bodyWidth
 import com.cookery.common.compose.rememberFlowWithLifecycle
-import com.google.accompanist.insets.navigationBarsPadding
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
@@ -55,12 +48,14 @@ fun Categories(
 internal fun Categories(
     state: CategoriesViewState,
     refresh: () -> Unit,
-    clearError: (CategoriesAction) -> Unit,
+    clearError: () -> Unit,
     openMealsDetails: (String) -> Unit,
     openCategoryDetails: (String) -> Unit,
     openAreaDetails: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val snackbarHostState = remember { SnackbarHostState() }
+
     Surface(modifier = modifier.fillMaxSize()) {
         SwipeRefresh(
             state = rememberSwipeRefreshState(isRefreshing = state.refreshing),
@@ -135,42 +130,15 @@ internal fun Categories(
                 }
             }
 
-            SnackBar(
-                state = state,
-                clearError = clearError
-            )
-        }
-    }
-}
-
-@Composable
-private fun SnackBar(
-    state: CategoriesViewState,
-    clearError: (CategoriesAction) -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Box {
-        val snackbarHostState = remember { SnackbarHostState() }
-
-        SnackbarHost(
-            hostState = snackbarHostState,
-            snackbar = {
-                SwipeDismissSnackbar(
-                    data = it,
-                    onDismiss = { clearError(CategoriesAction.ClearError) }
-                )
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .align(Alignment.BottomCenter)
-                .navigationBarsPadding()
-                .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
-        )
-
-        LaunchedEffect(state.error) {
-            state.error?.let { error ->
-                snackbarHostState.showSnackbar(error.message)
+            LaunchedEffect(state.error) {
+                state.error?.let { error ->
+                    snackbarHostState.showSnackbar(error.message)
+                }
             }
+            SnackBar(
+                clearError = clearError,
+                snackbarHostState
+            )
         }
     }
 }

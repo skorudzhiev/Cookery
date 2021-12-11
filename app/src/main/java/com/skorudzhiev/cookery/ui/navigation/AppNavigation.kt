@@ -20,6 +20,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
+import app.cookery.details.CategoryDetails
 import app.cookery.home.categories.Categories
 
 object Destinations {
@@ -91,7 +92,11 @@ private fun NavGraphBuilder.addCategoryDetails(
             navArgument(Destinations.CATEGORY_ARGUMENT) { type = NavType.StringType }
         )
     ) {
-        // TODO: Start the composable
+        CategoryDetails(
+            navigateUp = navController::navigateUp,
+            openMealDetails = { mealId ->
+            }
+        )
     }
 }
 

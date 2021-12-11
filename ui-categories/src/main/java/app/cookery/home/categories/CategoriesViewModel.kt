@@ -6,7 +6,6 @@ import app.cookery.DataStore
 import app.cookery.Logger
 import app.cookery.data.InvokeError
 import app.cookery.data.InvokeStarted
-import app.cookery.data.InvokeStatus
 import app.cookery.data.InvokeSuccess
 import app.cookery.domain.interactors.InitializeHomeScreenData
 import app.cookery.domain.interactors.UpdateAllMealCategories
@@ -19,8 +18,8 @@ import app.cookery.extensions.combine
 import com.cookery.api.UiError
 import com.cookery.ui.SnackbarManager
 import com.cookery.util.ObservableLoadingCounter
+import com.cookery.watchStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -131,29 +130,21 @@ internal class CategoriesViewModel @Inject constructor(
     private fun refresh() {
         viewModelScope.launch {
             updateAllMealCategories(UpdateAllMealCategories.Params())
-                .watchStatus(categoriesLoadingState)
+                .watchStatus(
+                    loadingCounter = categoriesLoadingState,
+                    viewModelScope = viewModelScope,
+                    logger = logger,
+                    snackbarManager = snackbarManager
+                )
         }
         viewModelScope.launch {
             updateAreas(UpdateAreas.Params())
-                .watchStatus(areasLoadingState)
-        }
-    }
-
-    private fun Flow<InvokeStatus>.watchStatus(loadingCounter: ObservableLoadingCounter) {
-        viewModelScope.launch { collectStatus(loadingCounter) }
-    }
-
-    private suspend fun Flow<InvokeStatus>.collectStatus(loadingCounter: ObservableLoadingCounter) {
-        collect { status ->
-            when (status) {
-                InvokeStarted -> loadingCounter.addLoader()
-                InvokeSuccess -> loadingCounter.removeLoader()
-                is InvokeError -> {
-                    logger.i(status.throwable)
-                    snackbarManager.addError(UiError(status.throwable))
-                    loadingCounter.removeLoader()
-                }
-            }
+                .watchStatus(
+                    loadingCounter = categoriesLoadingState,
+                    viewModelScope = viewModelScope,
+                    logger = logger,
+                    snackbarManager = snackbarManager
+                )
         }
     }
 }

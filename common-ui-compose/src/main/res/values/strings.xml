@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Home screen -->
     <string name="category_type_popular">Popular meals</string>
     <string name="category_type_all_categories">Category meals</string>
     <string name="category_type_recommended">Recommended meals</string>
     <string name="category_type_areas">Areas</string>
+
+    <!-- Category details -->
+    <string name="category_details_description_header">Category details</string>
+
+
+    <string name="cd_navigate_up">Navigate up</string>
+    <string name="cd_category_backdrop">Backdrop image</string>
 </resources>

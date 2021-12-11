@@ -49,6 +49,7 @@ dependencies {
     implementation Libs.Compose.tooling
     implementation Libs.Accompanist.insets
     implementation Libs.Accompanist.swipe_refresh
+    implementation Libs.Coil.compose
 
     implementation Libs.AndroidX.hiltCompose
     implementation Libs.Hilt.hiltAndroid

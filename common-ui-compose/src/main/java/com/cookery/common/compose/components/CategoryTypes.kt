@@ -16,12 +16,10 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import app.cookery.data.entities.categories.Area
 import app.cookery.data.entities.categories.Category
 import app.cookery.data.entities.categories.CategoryDetails
-import com.cookery.common.compose.R
 import com.cookery.common.compose.theme.getThemeColorForImageBorder
 import com.cookery.common.compose.theme.getThemePrimaryColor
 
@@ -74,8 +72,6 @@ internal fun RandomizedMealItem(
     openMealDetails: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val mealType = stringResource(R.string.category_type_popular)
-
     Box(
         modifier = modifier
             .clickable(
@@ -122,7 +118,7 @@ internal fun HighlightedCategoryItem(
         modifier = modifier
             .clickable(
                 onClick = {
-                    openCategoryDetails(category.categoryId)
+                    openCategoryDetails(category.categoryName)
                 }
             )
             .fillMaxSize()

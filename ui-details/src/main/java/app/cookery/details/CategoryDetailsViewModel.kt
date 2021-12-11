@@ -1,33 +1,84 @@
 package app.cookery.details
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.cookery.Logger
+import app.cookery.domain.interactors.UpdateMealsByCategory
 import app.cookery.domain.observers.ObserveCategoryWithCategoryDetails
 import app.cookery.extensions.combine
+import com.cookery.ui.SnackbarManager
 import com.cookery.util.ObservableLoadingCounter
+import com.cookery.watchStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class CategoryDetailsViewModel @Inject constructor(
-    observeCategoryWithCategoryDetails: ObserveCategoryWithCategoryDetails
+    savedStateHandle: SavedStateHandle,
+    private val observeCategoryWithCategoryDetails: ObserveCategoryWithCategoryDetails,
+    private val updateMealsByCategory: UpdateMealsByCategory,
+    private val snackbarManager: SnackbarManager,
+    private val logger: Logger
 ) : ViewModel() {
 
+    private val category: String = savedStateHandle.get("categoryName")!!
     private val categoriesLoadingState = ObservableLoadingCounter()
+    private val pendingActions = MutableSharedFlow<CategoryDetailsAction>()
 
     val state: StateFlow<CategoryDetailsViewState> = combine(
         observeCategoryWithCategoryDetails.flow,
         categoriesLoadingState.observable
-    ) { categoryDetails, _ ->
+    ) { categoryDetails, categoriesLoad ->
         CategoryDetailsViewState(
-            categoryWithCategoryDetails = categoryDetails
+            categoryWithCategoryDetails = categoryDetails,
+            categoriesLoad
         )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
         initialValue = CategoryDetailsViewState.Empty,
     )
+
+    init {
+        observeCategoryWithCategoryDetails(ObserveCategoryWithCategoryDetails.Params(category))
+
+        viewModelScope.launch {
+            updateCategoryDetails(category)
+        }
+
+        viewModelScope.launch {
+            pendingActions.collect { action ->
+                when (action) {
+                    CategoryDetailsAction.ClearError -> snackbarManager.removeCurrentError()
+                }
+            }
+        }
+    }
+
+    fun submitAction(action: CategoryDetailsAction) {
+        viewModelScope.launch {
+            pendingActions.emit(action)
+        }
+    }
+
+    private suspend fun updateCategoryDetails(categoryName: String) {
+        observeCategoryWithCategoryDetails.flow.collect {
+            if (it.isEmpty()) {
+                updateMealsByCategory(UpdateMealsByCategory.Params(categoryName))
+                    .watchStatus(
+                        loadingCounter = categoriesLoadingState,
+                        viewModelScope = viewModelScope,
+                        logger = logger,
+                        snackbarManager = snackbarManager
+                    )
+            }
+        }
+    }
 }

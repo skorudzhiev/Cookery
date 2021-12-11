@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -177,7 +179,7 @@ private fun DrawCircle(
 }
 
 @Composable
-private fun getThemeColorForCardImage(): Color {
+fun getThemeColorForCardImage(): Color {
     return if (isSystemInDarkTheme()) {
         CookeryLightColors.background
     } else {
@@ -218,7 +220,48 @@ private fun BorderlessCircularImage(
 }
 
 @Composable
-private fun CookeryCard(
+fun CategoryDetailsItem(
+    imageUrl: String?,
+    mealDescription: String?,
+    modifier: Modifier = Modifier
+) {
+    CookeryCard(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(80.dp),
+        shape = RoundedCornerShape(corner = CornerSize(5.dp)),
+        color = getThemeColorForCardImage()
+    ) {
+        Row(
+            modifier = modifier
+                .padding(start = 4.dp),
+            verticalAlignment = CenterVertically
+        ) {
+            imageUrl?.let {
+                CircularBorderImage(
+                    modifier = modifier
+                        .size(70.dp),
+                    imageUrl = it,
+                    contentDescription = null,
+                    borderStrokeColor = getThemeCardColor(),
+                    borderStrokeSize = 1.dp
+                )
+            }
+            mealDescription?.let {
+                Text(
+                    text = it,
+                    style = MaterialTheme.typography.caption,
+                    maxLines = 4,
+                    modifier = modifier
+                        .padding(start = 8.dp)
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun CookeryCard(
     modifier: Modifier = Modifier,
     shape: CornerBasedShape = RoundedCornerShape(corner = CornerSize(15.dp)),
     color: Color = getThemeCardColor(),
@@ -239,7 +282,7 @@ private fun CookeryCard(
 }
 
 @Composable
-private fun getThemeCardColor(): Color {
+fun getThemeCardColor(): Color {
     return if (isSystemInDarkTheme()) {
         CookeryDarkColors.primary
     } else {
