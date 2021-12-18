@@ -6,6 +6,7 @@ import app.cookery.data.daos.categories.CategoryDetailsDao
 import app.cookery.data.entities.categories.Area
 import app.cookery.data.entities.categories.Category
 import app.cookery.data.entities.categories.CategoryDetails
+import app.cookery.data.entities.relations.AreaWithCategoryDetails
 import app.cookery.data.entities.relations.CategoryWithCategoryDetails
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -25,6 +26,9 @@ class CategoriesStore @Inject constructor(
         categoryName: String
     ): Flow<List<CategoryWithCategoryDetails>> =
         categoriesDao.getCategoryWithCategoryDetails(categoryName)
+
+    fun observeAreaWithCategoryDetails(areaName: String): Flow<List<AreaWithCategoryDetails>> =
+        areaDao.getAreaWithCategoryDetails(areaName)
 
     fun observeCategoryDetailsByName(categoryName: String): Flow<CategoryDetails> {
         return categoryDetailsDao.getCategoryDetailsByName(categoryName = categoryName)

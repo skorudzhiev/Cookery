@@ -17,6 +17,9 @@ class CategoriesRepository @Inject constructor(
     fun observeCategoryWithCategoryDetails(categoryName: String) =
         store.observeCategoryWithCategoryDetails(categoryName)
 
+    fun observeAreaWithCategoryDetails(areaName: String) =
+        store.observeAreaWithCategoryDetails(areaName)
+
     fun observeAreaMeals() = store.observeAreaMeals()
 
     suspend fun fetchAllMealCategories() {
