@@ -1,4 +1,4 @@
-package app.cookery.details
+package app.cookery.details.category
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel

@@ -1,4 +1,4 @@
-package app.cookery.details
+package app.cookery.details.category
 
 import androidx.compose.runtime.Immutable
 import app.cookery.data.entities.relations.CategoryWithCategoryDetails

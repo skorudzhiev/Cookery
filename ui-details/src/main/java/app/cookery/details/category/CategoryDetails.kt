@@ -1,4 +1,4 @@
-package app.cookery.details
+package app.cookery.details.category
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.background

@@ -20,7 +20,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
-import app.cookery.details.CategoryDetails
+import app.cookery.details.category.CategoryDetails
 import app.cookery.home.categories.Categories
 
 object Destinations {
