@@ -1,4 +1,4 @@
-package app.cookery.details.category
+package app.cookery.details.area
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -29,11 +29,10 @@ import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.max
 import androidx.hilt.navigation.compose.hiltViewModel
-import app.cookery.data.entities.relations.CategoryWithCategoryDetails
+import app.cookery.data.entities.relations.AreaWithCategoryDetails
 import com.cookery.common.compose.components.BackdropImage
 import com.cookery.common.compose.components.CategoryDetailsAppBar
 import com.cookery.common.compose.components.CategoryDetailsItem
-import com.cookery.common.compose.components.ExpandingText
 import com.cookery.common.compose.components.Header
 import com.cookery.common.compose.components.SnackBar
 import com.cookery.common.compose.components.getAppBarColor
@@ -43,11 +42,11 @@ import com.cookery.common.compose.modifiers.copy
 import com.cookery.common.compose.rememberFlowWithLifecycle
 
 @Composable
-fun CategoryDetails(
+fun AreaDetails(
     navigateUp: () -> Unit,
     openMealDetails: (String) -> Unit
 ) {
-    CategoryDetails(
+    AreaDetails(
         viewModel = hiltViewModel(),
         navigateUp = navigateUp,
         openMealDetails = openMealDetails
@@ -55,13 +54,15 @@ fun CategoryDetails(
 }
 
 @Composable
-private fun CategoryDetails(
-    viewModel: CategoryDetailsViewModel,
+private fun AreaDetails(
+    viewModel: AreaDetailsViewModel,
     navigateUp: () -> Unit,
     openMealDetails: (String) -> Unit
 ) {
     val viewState by rememberFlowWithLifecycle(viewModel.state)
-        .collectAsState(initial = CategoryDetailsViewState.Empty)
+        .collectAsState(initial = AreaDetailsViewState.Empty)
+
+    val title = viewState.areaWithCategoryDetails.getOrNull(0)?.area
 
     val scaffoldState = rememberScaffoldState()
     val listState = rememberLazyListState()
@@ -91,9 +92,9 @@ private fun CategoryDetails(
 
     Scaffold(
         topBar = {
-            viewState.categoryWithCategoryDetails.getOrNull(0)?.categoryName?.let { title ->
+            title?.let {
                 CategoryDetailsAppBar(
-                    title = title,
+                    title = it,
                     showAppBarBackground = showAppBarBackground,
                     onNavigateUp = navigateUp,
                     modifier = Modifier
@@ -104,14 +105,14 @@ private fun CategoryDetails(
         },
         snackbarHost = { snackBarHostState ->
             SnackBar(
-                clearError = { viewModel.submitAction(CategoryDetailsAction.ClearError) },
+                clearError = { viewModel.clearError() },
                 snackbarHostState = snackBarHostState
             )
         },
     ) { contentPadding ->
         Surface(modifier = Modifier.bodyWidth()) {
-            CategoryDetails(
-                categoryDetails = viewState.categoryWithCategoryDetails,
+            AreaDetails(
+                areaDetails = viewState.areaWithCategoryDetails,
                 listState = listState,
                 showAppBarBackground = showAppBarBackground,
                 openMealDetails = openMealDetails,
@@ -122,16 +123,22 @@ private fun CategoryDetails(
 }
 
 @Composable
-private fun CategoryDetails(
-    categoryDetails: List<CategoryWithCategoryDetails>,
+private fun AreaDetails(
+    areaDetails: List<AreaWithCategoryDetails>,
     listState: LazyListState,
     showAppBarBackground: Boolean,
     openMealDetails: (String) -> Unit,
-    contentPadding: PaddingValues,
-    modifier: Modifier = Modifier,
+    contentPadding: PaddingValues
 ) {
     val gutter = Layout.gutter
     val bodyMargin = Layout.bodyMargin
+    var backdrop: String?
+    var title: String?
+
+    areaDetails.getOrNull(0).let {
+        backdrop = it?.mealImage
+        title = it?.area
+    }
 
     LazyColumn(
         state = listState,
@@ -139,9 +146,9 @@ private fun CategoryDetails(
         modifier = Modifier.background(getAppBarColor())
     ) {
         item {
-            categoryDetails.getOrNull(0)?.let { categoryDetails ->
+            backdrop?.let {
                 BackdropImage(
-                    backdropImage = categoryDetails.categoryImage,
+                    backdropImage = it,
                     listState = listState
                 )
             }
@@ -152,27 +159,12 @@ private fun CategoryDetails(
         }
 
         item {
-            categoryDetails.getOrNull(0)?.categoryName?.let { Header(it, showAppBarBackground) }
+            title?.let { Header(it, showAppBarBackground) }
         }
 
-        val description = categoryDetails.getOrNull(0)?.categoryDescription
-        if (description != null) {
-            item {
-                ExpandingText(
-                    text = description,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            horizontal = Layout.bodyMargin,
-                            vertical = Layout.gutter
-                        )
-                )
-            }
-        }
-
-        items(categoryDetails) { meal ->
+        items(areaDetails) { meal ->
             Box(
-                modifier = modifier
+                modifier = Modifier
                     .clickable(onClick = { openMealDetails(meal.mealId) })
                     .fillMaxSize()
                     .padding(
@@ -183,7 +175,7 @@ private fun CategoryDetails(
                 CategoryDetailsItem(
                     imageUrl = meal.mealImage,
                     mealDescription = meal.mealName,
-                    modifier = modifier
+                    modifier = Modifier
                 )
             }
         }

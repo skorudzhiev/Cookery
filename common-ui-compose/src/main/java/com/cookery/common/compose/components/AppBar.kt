@@ -11,9 +11,11 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -25,10 +27,12 @@ import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import com.cookery.common.compose.R
+import com.cookery.common.compose.modifiers.Layout
 import com.cookery.common.compose.modifiers.drawForegroundGradientScrim
 import com.cookery.common.compose.theme.CookeryDarkColors
 import com.cookery.common.compose.theme.CookeryLightColors
@@ -112,6 +116,30 @@ fun BackdropImage(
                 modifier = Modifier
                     .fillMaxSize()
                     .drawForegroundGradientScrim(Color.Black.copy(alpha = 0.7f))
+            )
+        }
+    }
+}
+
+@Composable
+fun Header(
+    title: String,
+    showAppBarBackground: Boolean
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = Layout.bodyMargin, vertical = Layout.gutter)
+    ) {
+        val originalTextStyle = MaterialTheme.typography.h5
+
+        Crossfade(!showAppBarBackground) { show ->
+            if (show) Text(
+                text = title,
+                style = originalTextStyle.copy(
+                    color = CookeryDarkColors.secondary,
+                ),
+                fontWeight = FontWeight.ExtraBold
             )
         }
     }

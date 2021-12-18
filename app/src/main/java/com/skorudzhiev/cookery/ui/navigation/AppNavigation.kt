@@ -20,6 +20,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
+import app.cookery.details.area.AreaDetails
 import app.cookery.details.category.CategoryDetails
 import app.cookery.home.categories.Categories
 
@@ -65,6 +66,7 @@ fun NavGraphBuilder.addHomeGraph(
     addRandom(navController)
 
     addCategoryDetails(navController)
+    addAreaDetails(navController)
 }
 
 private fun NavGraphBuilder.addHome(
@@ -78,6 +80,7 @@ private fun NavGraphBuilder.addHome(
                 navController.navigate("${Destinations.CATEGORY_DETAILS}/$categoryName")
             },
             openAreaDetails = { areaName ->
+                navController.navigate("${Destinations.AREA_DETAILS}/$areaName")
             }
         )
     }
@@ -93,6 +96,23 @@ private fun NavGraphBuilder.addCategoryDetails(
         )
     ) {
         CategoryDetails(
+            navigateUp = navController::navigateUp,
+            openMealDetails = { mealId ->
+            }
+        )
+    }
+}
+
+private fun NavGraphBuilder.addAreaDetails(
+    navController: NavController
+) {
+    composable(
+        route = "${Destinations.AREA_DETAILS}/{${Destinations.AREA_ARGUMENT}}",
+        arguments = listOf(
+            navArgument(Destinations.AREA_ARGUMENT) { type = NavType.StringType }
+        )
+    ) {
+        AreaDetails(
             navigateUp = navController::navigateUp,
             openMealDetails = { mealId ->
             }
