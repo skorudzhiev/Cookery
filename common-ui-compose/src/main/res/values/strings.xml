@@ -9,7 +9,20 @@
     <!-- Category details -->
     <string name="category_details_description_header">Category details</string>
 
+    <!-- Meal details -->
+    <string name="meal_details_youtube_text">Watch on YouTube</string>
+    <string name="meal_details_category_type">Category -</string>
+    <string name="meal_details_area_type">Origin -</string>
+    <string name="meal_details_ingredients_label">Ingredients:</string>
+    <string name="meal_details_directions_label">Instructions:</string>
 
+    <!-- Expanding text -->
+    <string name="see_more">SEE MORE</string>
+    <string name="see_less">SEE LESS</string>
+
+    <!-- Content description -->
     <string name="cd_navigate_up">Navigate up</string>
     <string name="cd_category_backdrop">Backdrop image</string>
+    <string name="cd_youtube_button">Youtube button</string>
+    <string name="cd_favorites_button">Favorites button</string>
 </resources>

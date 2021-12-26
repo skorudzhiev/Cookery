@@ -109,6 +109,7 @@ object Libs {
         const val insets_ui = "com.google.accompanist:accompanist-insets-ui:$version"
         const val swipe_refresh = "com.google.accompanist:accompanist-swiperefresh:$version"
         const val navigationAnimation = "com.google.accompanist:accompanist-navigation-animation:$version"
+        const val flowLayout = "com.google.accompanist:accompanist-flowlayout:$version"
     }
 
     object Coil {

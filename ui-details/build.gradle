@@ -47,8 +47,10 @@ dependencies {
     implementation Libs.Compose.material
     implementation Libs.Compose.animation
     implementation Libs.Compose.tooling
+    implementation Libs.Compose.util
     implementation Libs.Accompanist.insets
     implementation Libs.Accompanist.swipe_refresh
+    implementation Libs.Accompanist.flowLayout
     implementation Libs.Coil.compose
 
     implementation Libs.AndroidX.hiltCompose

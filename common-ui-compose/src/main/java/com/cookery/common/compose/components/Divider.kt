@@ -1,6 +1,5 @@
 package com.cookery.common.compose.components
 
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -19,11 +18,7 @@ fun CookeryDivider(
     startIndent: Dp = 0.dp
 ) {
     Divider(
-        modifier = modifier
-            .padding(
-                start = 24.dp,
-                end = 24.dp
-            ),
+        modifier = modifier,
         color = color,
         thickness = thickness,
         startIndent = startIndent

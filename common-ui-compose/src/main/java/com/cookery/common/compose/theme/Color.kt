@@ -6,6 +6,7 @@ import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
+val youTubeButtonColor = Color(240, 58, 58)
 private val WebOrange = Color(255, 168, 0)
 private val Silver = Color(203, 203, 203)
 

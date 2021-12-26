@@ -11,10 +11,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.cookery.common.compose.modifiers.drawColoredShadow
 import com.cookery.common.compose.theme.getThemeColorForImageBorder
 
+@ExperimentalCoilApi
 @Composable
 fun CircularBorderImage(
     imageUrl: String,
