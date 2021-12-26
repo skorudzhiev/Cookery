@@ -8,9 +8,9 @@ import javax.inject.Inject
 
 class ObserveMealDetails @Inject constructor(
     private val repository: MealRepository
-) : SubjectInteractor<ObserveMealDetails.Params, MealDetails>() {
+) : SubjectInteractor<ObserveMealDetails.Params, MealDetails?>() {
 
-    override fun createObservable(params: Params): Flow<MealDetails> {
+    override fun createObservable(params: Params): Flow<MealDetails?> {
         return repository.observeMealDetails(params.mealId)
     }
 
