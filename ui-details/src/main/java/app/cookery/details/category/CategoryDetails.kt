@@ -26,10 +26,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.max
 import androidx.hilt.navigation.compose.hiltViewModel
 import app.cookery.data.entities.relations.CategoryWithCategoryDetails
+import app.cookery.details.R
 import com.cookery.common.compose.components.BackdropImage
 import com.cookery.common.compose.components.CategoryDetailsAppBar
 import com.cookery.common.compose.components.CategoryDetailsItem
@@ -136,7 +139,9 @@ private fun CategoryDetails(
     LazyColumn(
         state = listState,
         contentPadding = contentPadding.copy(copyTop = false),
-        modifier = Modifier.background(getAppBarColor())
+        modifier = Modifier
+            .background(getAppBarColor())
+            .testTag(stringResource(R.string.cd_category_details))
     ) {
         item {
             categoryDetails.getOrNull(0)?.let { categoryDetails ->

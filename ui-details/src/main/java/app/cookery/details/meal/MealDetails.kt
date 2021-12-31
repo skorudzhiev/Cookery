@@ -38,6 +38,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -154,7 +155,9 @@ private fun Body(
                 .height(MinTitleOffset)
         )
         Column(
-            modifier = Modifier.verticalScroll(scroll)
+            modifier = Modifier
+                .verticalScroll(scroll)
+                .testTag(stringResource(R.string.cd_meal_details))
         ) {
             Spacer(Modifier.height(GradientScroll))
             Surface(Modifier.fillMaxWidth()) {
@@ -255,6 +258,8 @@ private fun MealDetails(mealDetails: MealDetails?) {
             YouTubeButton(mealYouTubeId = mealDetails?.mealYoutube)
 
             Ingredients(mealDetails)
+            Spacer(Modifier.height(8.dp))
+            CookeryDivider()
             mealDetails?.cookingInstructions?.let {
                 Text(
                     text = stringResource(R.string.meal_details_directions_label),

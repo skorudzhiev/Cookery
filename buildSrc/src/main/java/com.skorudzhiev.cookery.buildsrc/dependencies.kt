@@ -101,6 +101,7 @@ object Libs {
         const val tooling = "androidx.compose.ui:ui-tooling:$version"
         const val viewBinding = "androidx.compose.ui:ui-viewbinding:$version"
         const val util = "androidx.compose.ui:ui-util:$version"
+        const val uiTest = "androidx.compose.ui:ui-test-junit4:$version"
     }
 
     object Accompanist {

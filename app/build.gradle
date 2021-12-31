@@ -99,5 +99,6 @@ dependencies {
     androidTestImplementation Libs.Google.truth
     androidTestImplementation Libs.Mockito.core
     androidTestImplementation Libs.Hilt.testing
+    androidTestImplementation Libs.Compose.uiTest
     kaptAndroidTest Libs.Hilt.hiltAndroidCompiler
 }

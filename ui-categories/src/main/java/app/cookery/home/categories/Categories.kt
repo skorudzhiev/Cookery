@@ -12,6 +12,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.cookery.common.compose.components.Collection
@@ -82,7 +83,8 @@ internal fun Categories(
                         refreshing = state.randomCategoriesRefreshing,
                         openMealsDetails = openMealsDetails,
                         openCategoryDetails = openCategoryDetails,
-                        openAreaDetails = openAreaDetails
+                        openAreaDetails = openAreaDetails,
+                        modifier = Modifier.testTag(stringResource(R.string.cd_popular_meals))
                     )
                 }
 
@@ -93,7 +95,8 @@ internal fun Categories(
                         refreshing = state.categoriesRefreshing,
                         openMealsDetails = openMealsDetails,
                         openCategoryDetails = openCategoryDetails,
-                        openAreaDetails = openAreaDetails
+                        openAreaDetails = openAreaDetails,
+                        modifier = Modifier.testTag(stringResource(R.string.cd_all_categories))
                     )
                 }
 
@@ -104,7 +107,8 @@ internal fun Categories(
                         refreshing = state.randomAreasRefreshing,
                         openMealsDetails = openMealsDetails,
                         openCategoryDetails = openCategoryDetails,
-                        openAreaDetails = openAreaDetails
+                        openAreaDetails = openAreaDetails,
+                        modifier = Modifier.testTag(stringResource(R.string.cd_recommended_meals))
                     )
                 }
 

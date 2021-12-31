@@ -21,6 +21,12 @@
     <string name="see_less">SEE LESS</string>
 
     <!-- Content description -->
+    <string name="cd_popular_meals">Popular meals list</string>
+    <string name="cd_all_categories">All meals categories list</string>
+    <string name="cd_recommended_meals">Recommended meals list</string>
+    <string name="cd_meal_details">Meal details</string>
+    <string name="cd_category_details">Category details</string>
+
     <string name="cd_navigate_up">Navigate up</string>
     <string name="cd_category_backdrop">Backdrop image</string>
     <string name="cd_youtube_button">Youtube button</string>
