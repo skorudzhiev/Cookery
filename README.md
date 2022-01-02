@@ -32,6 +32,15 @@ Dark theme             |  Light theme
 :-------------------------:|:-------------------------:
 ![](https://user-images.githubusercontent.com/26792749/141307913-81b12728-b49e-45b7-a54b-4f79a0617258.png)  |  ![](https://user-images.githubusercontent.com/26792749/141307992-484d602e-2c36-4782-b1d3-027f1be9688f.png)
  
+### Details screens
+Category details - dark | Category details - light 
+:-------------------------:|:-------------------------:
+![](https://user-images.githubusercontent.com/26792749/147881620-9ac22851-95f7-418b-a766-f9d931ebc8c9.png)  |  ![](https://user-images.githubusercontent.com/26792749/147881641-e8899704-65ce-4fb7-8feb-5ac234113ede.png)
+Meal details - dark| Meal details - light 
+![](https://user-images.githubusercontent.com/26792749/147881726-d3834e8e-e940-451b-9011-67d59523bbe0.png)  |  ![](https://user-images.githubusercontent.com/26792749/147881741-39e750e1-5811-4908-a384-dbb9d4b5cf68.png)
+Meal details - dark| Meal details - light 
+![](https://user-images.githubusercontent.com/26792749/147881817-24dcb49d-55b7-4c50-850f-625d256aaf36.png)  |  ![](https://user-images.githubusercontent.com/26792749/147881828-a84a973e-872a-4a18-a4d1-59a21f257d15.png)
+ 
 ## Contributions
 If you're interested in contributions to this project, make sure to read the project's [Wiki](https://github.com/skorudzhiev/Cookery/wiki/Git-Workflow)
 
