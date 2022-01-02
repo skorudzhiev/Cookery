@@ -40,6 +40,8 @@ import com.cookery.common.compose.modifiers.Layout
 import com.cookery.common.compose.modifiers.bodyWidth
 import com.cookery.common.compose.modifiers.copy
 import com.cookery.common.compose.rememberFlowWithLifecycle
+import com.google.accompanist.insets.LocalWindowInsets
+import com.google.accompanist.insets.rememberInsetsPaddingValues
 
 @Composable
 fun AreaDetails(
@@ -110,7 +112,17 @@ private fun AreaDetails(
             )
         },
     ) { contentPadding ->
-        Surface(modifier = Modifier.bodyWidth()) {
+        Surface(
+            modifier = Modifier
+                .bodyWidth()
+                .padding(
+                    rememberInsetsPaddingValues(
+                        insets = LocalWindowInsets.current.systemBars,
+                        applyBottom = true,
+                        applyTop = false,
+                    )
+                )
+        ) {
             AreaDetails(
                 areaDetails = viewState.areaWithCategoryDetails,
                 listState = listState,

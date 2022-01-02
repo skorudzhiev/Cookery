@@ -64,7 +64,9 @@ import com.cookery.common.compose.theme.CookeryLightColors
 import com.cookery.common.compose.theme.CookeryTypography
 import com.cookery.common.compose.theme.youTubeButtonColor
 import com.google.accompanist.flowlayout.FlowRow
+import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.navigationBarsPadding
+import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.google.accompanist.insets.statusBarsPadding
 import kotlin.math.max
 import kotlin.math.min
@@ -112,7 +114,13 @@ private fun MealDetails(
     Box(
         Modifier
             .fillMaxSize()
-            .padding(bottom = 56.dp)
+            .padding(
+                rememberInsetsPaddingValues(
+                    insets = LocalWindowInsets.current.systemBars,
+                    applyBottom = true,
+                    applyTop = false,
+                )
+            )
     ) {
         Spacer(
             modifier = Modifier
