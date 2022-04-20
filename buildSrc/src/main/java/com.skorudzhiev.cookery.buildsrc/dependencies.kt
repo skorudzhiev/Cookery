@@ -5,7 +5,7 @@ object Versions {
 }
 
 object Libs {
-    const val androidGradlePlugin = "com.android.tools.build:gradle:7.1.0-alpha11"
+    const val androidGradlePlugin = "com.android.tools.build:gradle:7.1.3"
     const val hiltGradlePlugin = "com.google.dagger:hilt-android-gradle-plugin:${Hilt.version}"
     const val timber = "com.jakewharton.timber:timber:4.7.1"
     const val mockwebserver = "com.squareup.okhttp3:mockwebserver:4.1.0"
@@ -92,7 +92,7 @@ object Libs {
     }
 
     object Compose {
-        const val version = "1.1.0-rc01"
+        const val version = "1.2.0-alpha08"
         const val ui = "androidx.compose.ui:ui:$version"
         const val foundation = "androidx.compose.foundation:foundation:$version"
         const val layout = "androidx.compose.foundation:foundation-layout:$version"
