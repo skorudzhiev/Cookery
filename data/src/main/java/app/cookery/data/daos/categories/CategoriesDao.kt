@@ -19,7 +19,8 @@ interface CategoriesDao {
             SELECT CategoryDetails.mealId, mealName, mealImage,
                    Category.categoryName, categoryImage, categoryDescription
             FROM Category
-            INNER JOIN CategoryDetails ON Category.categoryName = CategoryDetails.categoryName
+            INNER JOIN CategoryDetails
+            ON Category.categoryName = CategoryDetails.categoryName
             WHERE Category.categoryName = :categoryName
         """
     )
