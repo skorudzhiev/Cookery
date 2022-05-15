@@ -22,8 +22,6 @@ android {
         versionName "1.0"
 
         resConfigs "en"
-
-        testInstrumentationRunner "com.skorudzhiev.cookery.HiltTestRunner"
     }
 
     buildTypes {
