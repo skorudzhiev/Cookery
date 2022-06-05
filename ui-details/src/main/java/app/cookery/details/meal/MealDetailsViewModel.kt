@@ -11,10 +11,10 @@ import com.cookery.ui.SnackbarManager
 import com.cookery.util.ObservableLoadingCounter
 import com.cookery.watchStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -34,11 +34,13 @@ class MealDetailsViewModel @Inject constructor(
 
     val state: StateFlow<MealDetailsViewState> = combine(
         observeMealDetails.flow,
-        mealLoadingState.observable
-    ) { mealDetails, mealLoading ->
+        mealLoadingState.observable,
+        observeMealFavoriteState()
+    ) { mealDetails, mealLoading, favoriteMeal ->
         MealDetailsViewState(
             mealDetails = mealDetails,
-            refreshing = mealLoading
+            refreshing = mealLoading,
+            isMealMarkedAsFavorite = isFavorite(favoriteMeal)
         )
     }.stateIn(
         scope = viewModelScope,
@@ -47,16 +49,12 @@ class MealDetailsViewModel @Inject constructor(
     )
 
     init {
-        observeMealDetails(ObserveMealDetails.Params(meal))
+        observeMealDetails(ObserveMealDetails.Params(mealId = meal))
+
+        collectPendingActions()
 
         viewModelScope.launch {
             retrieveMealDetails()
-
-            pendingActions.collect { action ->
-                when (action) {
-                    MealDetailsAction.ClearError -> snackbarManager.removeCurrentError()
-                }
-            }
         }
     }
 
@@ -65,6 +63,32 @@ class MealDetailsViewModel @Inject constructor(
             pendingActions.emit(action)
         }
     }
+
+    private fun collectPendingActions() {
+        viewModelScope.launch {
+            pendingActions.collect { action ->
+                when (action) {
+                    MealDetailsAction.ClearError -> snackbarManager.removeCurrentError()
+                    MealDetailsAction.UpdateFavoriteMeal -> updateFavoriteMeal()
+                }
+            }
+        }
+    }
+
+    private fun updateFavoriteMeal() {
+        viewModelScope.launch {
+            updateMealDetails.updateFavoriteMeal(
+                UpdateMealDetails.Params(mealId = meal),
+                isMarkedAsFavorite = state.value.isMealMarkedAsFavorite
+            )
+        }
+    }
+
+    private fun observeMealFavoriteState(): Flow<String> = observeMealDetails.isMarkedAsFavorite(
+        ObserveMealDetails.Params(mealId = meal)
+    )
+
+    private fun isFavorite(storedMealId: String?): Boolean = let { storedMealId == meal }
 
     private suspend fun retrieveMealDetails() {
         observeMealDetails.flow.collect {

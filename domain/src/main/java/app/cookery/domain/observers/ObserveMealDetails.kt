@@ -14,5 +14,8 @@ class ObserveMealDetails @Inject constructor(
         return repository.observeMealDetails(params.mealId)
     }
 
+    fun isMarkedAsFavorite(params: Params): Flow<String> =
+        repository.isMealMarkedAsFavorite(params.mealId)
+
     data class Params(val mealId: String)
 }

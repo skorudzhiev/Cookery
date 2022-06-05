@@ -10,5 +10,9 @@ class FavoritesStore @Inject constructor(private val dao: FavoritesDao) {
 
     fun observeFavoriteMeals(): Flow<List<CategoryDetails>> = dao.getFavoriteMeals()
 
-    suspend fun saveFavoriteMeal(favoriteMeal: Favorites) = dao.insert(favoriteMeal)
+    fun observeFavoriteMeal(mealId: String) = dao.getMealId(mealId)
+
+    suspend fun addFavoriteMeal(favoriteMeal: Favorites) = dao.insert(favoriteMeal)
+
+    suspend fun removeFavoriteMeal(favoriteMeal: Favorites) = dao.delete(favoriteMeal)
 }

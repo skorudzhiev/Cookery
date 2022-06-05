@@ -20,4 +20,7 @@ interface FavoritesDao : CookeryDao<Favorites> {
         """
     )
     fun getFavoriteMeals(): Flow<List<CategoryDetails>>
+
+    @Query("SELECT * from Favorites WHERE idMeal = :mealId")
+    fun getMealId(mealId: String): Flow<String>
 }

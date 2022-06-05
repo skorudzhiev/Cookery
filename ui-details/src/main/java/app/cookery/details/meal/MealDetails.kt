@@ -27,6 +27,8 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -51,6 +53,8 @@ import app.cookery.data.entities.Ingredient
 import app.cookery.data.entities.MealDetails
 import app.cookery.data.entities.getIngredients
 import app.cookery.details.R
+import app.cookery.details.meal.MealDetailsAction.ClearError
+import app.cookery.details.meal.MealDetailsAction.UpdateFavoriteMeal
 import app.cookery.details.utils.openYoutubeLink
 import coil.annotation.ExperimentalCoilApi
 import com.cookery.common.compose.components.CaptionText
@@ -84,30 +88,36 @@ private val HzPadding = Modifier.padding(horizontal = 24.dp)
 fun MealDetails(
     navigateUp: () -> Unit
 ) {
+    val viewModel: MealDetailsViewModel = hiltViewModel()
+    val viewState by rememberFlowWithLifecycle(viewModel.state)
+        .collectAsState(initial = MealDetailsViewState.Empty)
+
     MealDetails(
-        viewModel = hiltViewModel(),
-        navigateUp = navigateUp
+        state = viewState,
+        navigateUp = navigateUp,
+        updateFavoriteMeal = { viewModel.submitAction(UpdateFavoriteMeal) },
+        clearError = { viewModel.submitAction(ClearError) }
     )
 }
 
 @Composable
 private fun MealDetails(
-    viewModel: MealDetailsViewModel,
-    navigateUp: () -> Unit
+    state: MealDetailsViewState,
+    navigateUp: () -> Unit,
+    updateFavoriteMeal: () -> Unit,
+    clearError: () -> Unit
 ) {
     val scroll = rememberScrollState(0)
     val snackbarHostState = remember { SnackbarHostState() }
-    val viewState by rememberFlowWithLifecycle(viewModel.state)
-        .collectAsState(initial = MealDetailsViewState.Empty)
 
-    LaunchedEffect(viewState.error) {
-        viewState.error?.let { error ->
+    LaunchedEffect(state.error) {
+        state.error?.let { error ->
             snackbarHostState.showSnackbar(error.message)
         }
     }
 
     SnackBar(
-        clearError = { viewModel.submitAction(MealDetailsAction.ClearError) },
+        clearError = clearError,
         snackbarHostState = snackbarHostState
     )
 
@@ -145,15 +155,22 @@ private fun MealDetails(
                 contentDescription = stringResource(R.string.cd_navigate_up)
             )
         }
-        Body(viewState.mealDetails, scroll)
-        Image(viewState.mealDetails?.mealImage, scroll.value)
+        Body(
+            state.mealDetails,
+            scroll,
+            onFavoriteButtonPressed = updateFavoriteMeal,
+            isFavoritesButtonSelected = state.isMealMarkedAsFavorite
+        )
+        Image(state.mealDetails?.mealImage, scroll.value)
     }
 }
 
 @Composable
 private fun Body(
     mealDetails: MealDetails?,
-    scroll: ScrollState
+    scroll: ScrollState,
+    onFavoriteButtonPressed: () -> Unit,
+    isFavoritesButtonSelected: Boolean
 ) {
     Column {
         Spacer(
@@ -173,7 +190,11 @@ private fun Body(
                     Spacer(Modifier.height(ImageOverlap))
                     Spacer(Modifier.height(16.dp))
 
-                    MealDetails(mealDetails)
+                    MealDetails(
+                        mealDetails,
+                        onFavoriteButtonPressed = onFavoriteButtonPressed,
+                        isFavoritesButtonSelected = isFavoritesButtonSelected
+                    )
 
                     Spacer(
                         modifier = Modifier
@@ -243,7 +264,11 @@ private fun CollapsingImageLayout(
 }
 
 @Composable
-private fun MealDetails(mealDetails: MealDetails?) {
+private fun MealDetails(
+    mealDetails: MealDetails?,
+    onFavoriteButtonPressed: () -> Unit,
+    isFavoritesButtonSelected: Boolean
+) {
     Surface(
         Modifier
             .fillMaxWidth()
@@ -262,7 +287,12 @@ private fun MealDetails(mealDetails: MealDetails?) {
             }
             CookeryDivider()
 
-            MealType(mealDetails?.mealCategory, mealDetails?.mealArea)
+            MealType(
+                mealDetails?.mealCategory,
+                mealDetails?.mealArea,
+                onFavoriteButtonPressed = onFavoriteButtonPressed,
+                isFavoritesButtonSelected = isFavoritesButtonSelected,
+            )
             YouTubeButton(mealYouTubeId = mealDetails?.mealYoutube)
 
             Ingredients(mealDetails)
@@ -299,7 +329,9 @@ private fun MealDetails(mealDetails: MealDetails?) {
 @Composable
 private fun MealType(
     mealCategory: String?,
-    mealArea: String?
+    mealArea: String?,
+    onFavoriteButtonPressed: () -> Unit,
+    isFavoritesButtonSelected: Boolean
 ) {
     Row(
         Modifier.fillMaxWidth(),
@@ -318,12 +350,23 @@ private fun MealType(
         DrawCircle(paddingStart = 16.dp, size = 8f)
         Spacer(Modifier.width(16.dp))
 
-        IconButton(onClick = { /* TODO Handle favorite's button logic */ }) {
-            Icon(
-                painter = painterResource(R.drawable.ic_favorite_border),
-                contentDescription = stringResource(R.string.cd_favorites_button)
-            )
-        }
+        FavoritesButton(
+            onFavoriteButtonPressed = onFavoriteButtonPressed,
+            isSelected = isFavoritesButtonSelected
+        )
+    }
+}
+
+@Composable
+fun FavoritesButton(
+    onFavoriteButtonPressed: () -> Unit,
+    isSelected: Boolean
+) {
+    IconButton(onClick = onFavoriteButtonPressed) {
+        Icon(
+            imageVector = if (isSelected) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+            contentDescription = stringResource(R.string.cd_favorites_button)
+        )
     }
 }
 
