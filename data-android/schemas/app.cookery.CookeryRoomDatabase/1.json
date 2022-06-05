@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "2338cbb5af33be46ae454f7cc696996f",
+    "identityHash": "0fb50cadc894bb36a2ce24d77e4f4ab8",
     "entities": [
       {
         "tableName": "Category",
@@ -437,12 +437,32 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "Favorites",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`idMeal` TEXT NOT NULL, PRIMARY KEY(`idMeal`))",
+        "fields": [
+          {
+            "fieldPath": "mealId",
+            "columnName": "idMeal",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "idMeal"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2338cbb5af33be46ae454f7cc696996f')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0fb50cadc894bb36a2ce24d77e4f4ab8')"
     ]
   }
 }
