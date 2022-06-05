@@ -29,6 +29,9 @@ object DatabaseDaoModule {
 
     @Provides
     fun provideMealDetailsDao(db: CookeryDatabase) = db.mealDetailsDao()
+
+    @Provides
+    fun provideFavoritesDao(db: CookeryDatabase) = db.favoritesDao()
 }
 
 @InstallIn(SingletonComponent::class)

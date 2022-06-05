@@ -1,5 +1,6 @@
 package app.cookery
 
+import app.cookery.data.daos.FavoritesDao
 import app.cookery.data.daos.MealDao
 import app.cookery.data.daos.categories.AreaDao
 import app.cookery.data.daos.categories.CategoriesDao
@@ -10,4 +11,5 @@ interface CookeryDatabase {
     fun categoriesDao(): CategoriesDao
     fun categoryDetailsDao(): CategoryDetailsDao
     fun mealDetailsDao(): MealDao
+    fun favoritesDao(): FavoritesDao
 }
