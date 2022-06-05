@@ -8,6 +8,7 @@ import com.cookery.api.UiError
 class MealDetailsViewState(
     val mealDetails: MealDetails? = null,
     val refreshing: Boolean = false,
+    val isMealMarkedAsFavorite: Boolean = false,
     val error: UiError? = null
 ) {
     companion object {

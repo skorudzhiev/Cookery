@@ -1,6 +1,7 @@
 package app.cookery.data
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 
@@ -18,4 +19,7 @@ interface CookeryDao<in T> where T : CookeryEntity {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(details: T)
+
+    @Delete
+    suspend fun delete(details: T)
 }
