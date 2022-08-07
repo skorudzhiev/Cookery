@@ -13,5 +13,5 @@ class ObserveFavoriteMeals @Inject constructor(
     override fun createObservable(params: Params): Flow<List<CategoryDetails>> =
         repository.observeFavoriteMeals()
 
-    data class Params(val favoriteMealId: String)
+    data class Params(val favoriteMealId: String? = null)
 }

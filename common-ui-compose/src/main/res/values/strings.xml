@@ -6,6 +6,9 @@
     <string name="category_type_recommended">Recommended meals</string>
     <string name="category_type_areas">Areas</string>
 
+    <!-- Favorites-->
+    <string name="favorites_screen_title">Favorite meals</string>
+
     <!-- Category details -->
     <string name="category_details_description_header">Category details</string>
 

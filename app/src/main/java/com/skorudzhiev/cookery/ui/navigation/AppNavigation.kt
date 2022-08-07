@@ -24,6 +24,7 @@ import app.cookery.details.area.AreaDetails
 import app.cookery.details.category.CategoryDetails
 import app.cookery.details.meal.MealDetails
 import app.cookery.home.categories.Categories
+import app.cookery.home.favorites.Favorites
 
 object Destinations {
     const val HOME = "home"
@@ -151,7 +152,11 @@ private fun NavGraphBuilder.addFavorites(
     navController: NavController
 ) {
     composable(HomeSections.FAVORITES.route) {
-        helloWorld(screen = stringResource(id = HomeSections.FAVORITES.title))
+        Favorites(
+            openMealDetails = { mealId ->
+                navController.navigate("${Destinations.MEAL_DETAILS}/$mealId")
+            }
+        )
     }
 }
 
