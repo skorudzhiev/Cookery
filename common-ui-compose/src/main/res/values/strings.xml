@@ -8,6 +8,7 @@
 
     <!-- Favorites-->
     <string name="favorites_screen_title">Favorite meals</string>
+    <string name="favorites_screen_placeholder">Your favorite recipes will appear here</string>
 
     <!-- Category details -->
     <string name="category_details_description_header">Category details</string>
