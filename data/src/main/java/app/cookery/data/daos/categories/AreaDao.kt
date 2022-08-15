@@ -1,15 +1,14 @@
 package app.cookery.data.daos.categories
 
 import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import app.cookery.data.CookeryDao
 import app.cookery.data.entities.categories.Area
 import app.cookery.data.entities.relations.AreaWithCategoryDetails
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface AreaDao {
+interface AreaDao : CookeryDao<Area> {
 
     @Query("SELECT * FROM Area")
     fun getMealAreas(): Flow<List<Area>>
@@ -23,13 +22,4 @@ interface AreaDao {
         """
     )
     fun getAreaWithCategoryDetails(areaName: String): Flow<List<AreaWithCategoryDetails>>
-
-    suspend fun insertAreas(areas: List<Area>) {
-        areas.forEach {
-            insert(it)
-        }
-    }
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(area: Area)
 }

@@ -3,6 +3,7 @@ package app.cookery.data.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import app.cookery.data.CookeryEntity
 
 @Entity
 data class MealDetails(
@@ -60,7 +61,7 @@ data class MealDetails(
     @ColumnInfo(name = "mealImageSource") val mealImageSource: String? = null,
     @ColumnInfo(name = "mealCreativeCommonsConfirmed") val mealCreativeCommonsConfirmed: String? = null,
     @ColumnInfo(name = "dateModified") val dateModified: String? = null
-)
+) : CookeryEntity
 
 data class Ingredient(
     val measure: String?,

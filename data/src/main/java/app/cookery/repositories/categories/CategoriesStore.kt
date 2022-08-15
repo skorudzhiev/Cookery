@@ -38,8 +38,8 @@ class CategoriesStore @Inject constructor(
         return categoryDetailsDao.getCategoryDetailsByArea(area = area)
     }
 
-    suspend fun saveAllMealCategories(categories: List<Category>) = categoriesDao.insertCategories(categories)
-    suspend fun saveAreaMeals(areas: List<Area>) = areaDao.insertAreas(areas)
+    suspend fun saveAllMealCategories(categories: List<Category>) = categoriesDao.insertDetails(categories)
+    suspend fun saveAreaMeals(areas: List<Area>) = areaDao.insertDetails(areas)
 
     suspend fun saveCategoryDetails(
         meals: List<CategoryDetails>,

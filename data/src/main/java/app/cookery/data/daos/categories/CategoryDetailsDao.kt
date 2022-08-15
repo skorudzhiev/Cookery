@@ -1,19 +1,20 @@
 package app.cookery.data.daos.categories
 
 import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import app.cookery.data.CookeryDao
 import app.cookery.data.entities.categories.CategoryDetails
 import kotlinx.coroutines.flow.Flow
 
-@Dao
-interface CategoryDetailsDao {
+private const val CURSOR_MAX_LIMIT = 20
 
-    @Query("SELECT * FROM CategoryDetails WHERE area = \"\" ORDER BY RANDOM() LIMIT 20")
+@Dao
+interface CategoryDetailsDao : CookeryDao<CategoryDetails> {
+
+    @Query("SELECT * FROM CategoryDetails WHERE area = \"\" ORDER BY RANDOM() LIMIT $CURSOR_MAX_LIMIT")
     fun getRandomCategoryMeals(): Flow<List<CategoryDetails>>
 
-    @Query("SELECT * FROM CategoryDetails WHERE categoryName = \"\" ORDER BY RANDOM() LIMIT 20")
+    @Query("SELECT * FROM CategoryDetails WHERE categoryName = \"\" ORDER BY RANDOM() LIMIT $CURSOR_MAX_LIMIT")
     fun getRandomAreaMeals(): Flow<List<CategoryDetails>>
 
     @Query("SELECT * FROM CategoryDetails WHERE categoryName = :categoryName")
@@ -33,7 +34,4 @@ interface CategoryDetailsDao {
             insert(it)
         }
     }
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(categoryDetails: CategoryDetails)
 }
