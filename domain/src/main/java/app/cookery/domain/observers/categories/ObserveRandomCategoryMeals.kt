@@ -1,4 +1,4 @@
-package app.cookery.domain.observers
+package app.cookery.domain.observers.categories
 
 import app.cookery.data.entities.categories.CategoryDetails
 import app.cookery.domain.SubjectInteractor
@@ -6,12 +6,12 @@ import app.cookery.repositories.categories.CategoriesRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class ObserveRandomAreaMeals @Inject constructor(
+class ObserveRandomCategoryMeals @Inject constructor(
     private val repository: CategoriesRepository
-) : SubjectInteractor<ObserveRandomAreaMeals.Params, List<CategoryDetails>>() {
+) : SubjectInteractor<ObserveRandomCategoryMeals.Params, List<CategoryDetails>>() {
 
     override fun createObservable(params: Params): Flow<List<CategoryDetails>> {
-        return repository.observeRandomAreaMeals()
+        return repository.observeRandomCategoryDetails()
     }
 
     data class Params(val meals: Int? = null)

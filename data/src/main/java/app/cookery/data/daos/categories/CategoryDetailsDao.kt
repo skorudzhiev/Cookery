@@ -17,12 +17,6 @@ interface CategoryDetailsDao : CookeryDao<CategoryDetails> {
     @Query("SELECT * FROM CategoryDetails WHERE categoryName = \"\" ORDER BY RANDOM() LIMIT $CURSOR_MAX_LIMIT")
     fun getRandomAreaMeals(): Flow<List<CategoryDetails>>
 
-    @Query("SELECT * FROM CategoryDetails WHERE categoryName = :categoryName")
-    fun getCategoryDetailsByName(categoryName: String): Flow<CategoryDetails>
-
-    @Query("SELECT * FROM CategoryDetails WHERE area = :area")
-    fun getCategoryDetailsByArea(area: String): Flow<CategoryDetails>
-
     suspend fun insertCategoryDetails(
         categoryDetailsList: List<CategoryDetails>,
         categoryName: String,

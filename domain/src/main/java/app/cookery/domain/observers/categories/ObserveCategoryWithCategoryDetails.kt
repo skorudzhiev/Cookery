@@ -1,4 +1,4 @@
-package app.cookery.domain.observers
+package app.cookery.domain.observers.categories
 
 import app.cookery.data.entities.relations.CategoryWithCategoryDetails
 import app.cookery.domain.SubjectInteractor

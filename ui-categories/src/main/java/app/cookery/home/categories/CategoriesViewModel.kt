@@ -8,12 +8,12 @@ import app.cookery.data.InvokeError
 import app.cookery.data.InvokeStarted
 import app.cookery.data.InvokeSuccess
 import app.cookery.domain.interactors.InitializeHomeScreenData
-import app.cookery.domain.interactors.UpdateAllMealCategories
-import app.cookery.domain.interactors.UpdateAreas
-import app.cookery.domain.observers.ObserveAreas
-import app.cookery.domain.observers.ObserveCategories
-import app.cookery.domain.observers.ObserveRandomAreaMeals
-import app.cookery.domain.observers.ObserveRandomCategoryMeals
+import app.cookery.domain.interactors.areas.UpdateAreas
+import app.cookery.domain.interactors.categories.UpdateAllMealCategories
+import app.cookery.domain.observers.areas.ObserveAreas
+import app.cookery.domain.observers.areas.ObserveRandomAreaMeals
+import app.cookery.domain.observers.categories.ObserveCategories
+import app.cookery.domain.observers.categories.ObserveRandomCategoryMeals
 import app.cookery.extensions.combine
 import com.cookery.api.UiError
 import com.cookery.ui.SnackbarManager
@@ -23,7 +23,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject

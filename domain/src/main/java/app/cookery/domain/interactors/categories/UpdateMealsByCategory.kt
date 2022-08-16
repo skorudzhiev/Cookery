@@ -1,4 +1,4 @@
-package app.cookery.domain.interactors
+package app.cookery.domain.interactors.categories
 
 import app.cookery.AppCoroutineDispatchers
 import app.cookery.domain.Interactor

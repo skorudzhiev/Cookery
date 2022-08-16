@@ -4,8 +4,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.cookery.Logger
-import app.cookery.domain.interactors.UpdateMealsByCategory
-import app.cookery.domain.observers.ObserveCategoryWithCategoryDetails
+import app.cookery.domain.interactors.categories.UpdateMealsByCategory
+import app.cookery.domain.observers.categories.ObserveCategoryWithCategoryDetails
 import app.cookery.extensions.combine
 import com.cookery.ui.SnackbarManager
 import com.cookery.util.ObservableLoadingCounter
@@ -14,7 +14,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject

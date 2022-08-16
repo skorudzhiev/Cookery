@@ -30,14 +30,6 @@ class CategoriesStore @Inject constructor(
     fun observeAreaWithCategoryDetails(areaName: String): Flow<List<AreaWithCategoryDetails>> =
         areaDao.getAreaWithCategoryDetails(areaName)
 
-    fun observeCategoryDetailsByName(categoryName: String): Flow<CategoryDetails> {
-        return categoryDetailsDao.getCategoryDetailsByName(categoryName = categoryName)
-    }
-
-    fun observeCategoryDetailsByArea(area: String): Flow<CategoryDetails> {
-        return categoryDetailsDao.getCategoryDetailsByArea(area = area)
-    }
-
     suspend fun saveAllMealCategories(categories: List<Category>) = categoriesDao.insertDetails(categories)
     suspend fun saveAreaMeals(areas: List<Area>) = areaDao.insertDetails(areas)
 

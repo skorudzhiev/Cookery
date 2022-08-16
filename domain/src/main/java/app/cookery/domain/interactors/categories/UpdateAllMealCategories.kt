@@ -1,8 +1,8 @@
-package app.cookery.domain.interactors
+package app.cookery.domain.interactors.categories
 
 import app.cookery.AppCoroutineDispatchers
 import app.cookery.domain.Interactor
-import app.cookery.domain.interactors.UpdateAllMealCategories.Params
+import app.cookery.domain.interactors.categories.UpdateAllMealCategories.Params
 import app.cookery.repositories.categories.CategoriesRepository
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
