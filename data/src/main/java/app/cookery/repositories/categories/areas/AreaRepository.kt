@@ -8,7 +8,8 @@ import javax.inject.Singleton
 @Singleton
 class AreaRepository @Inject constructor(
     private val dataSource: CategoriesDataSource,
-    private val store: CategoriesStore
+    private val store: AreaStore,
+    private val categoriesStore: CategoriesStore
 ) {
 
     fun observeRandomAreaMeals() = store.observeRandomAreaMeals()
@@ -25,7 +26,7 @@ class AreaRepository @Inject constructor(
 
     suspend fun fetchMealsByArea(area: String) {
         val response = dataSource.getMealsByArea(area).getOrThrow()
-        store.saveCategoryDetails(
+        categoriesStore.saveCategoryDetails(
             meals = response,
             categoryName = "",
             area = area
