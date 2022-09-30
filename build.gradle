@@ -25,7 +25,7 @@ buildscript {
         classpath Libs.androidGradlePlugin
         classpath Libs.Kotlin.gradlePlugin
         classpath Libs.hiltGradlePlugin
-        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.20'
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.20'
     }
 
     allprojects {
