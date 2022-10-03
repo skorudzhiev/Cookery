@@ -8,10 +8,8 @@ import javax.inject.Inject
 
 class ObserveFavoriteMeals @Inject constructor(
     private val repository: FavoritesRepository
-) : SubjectInteractor<ObserveFavoriteMeals.Params, List<CategoryDetails>>() {
+) : SubjectInteractor<Unit, List<CategoryDetails>>() {
 
-    override fun createObservable(params: Params): Flow<List<CategoryDetails>> =
+    override fun createObservable(params: Unit): Flow<List<CategoryDetails>> =
         repository.observeFavoriteMeals()
-
-    data class Params(val favoriteMealId: String? = null)
 }

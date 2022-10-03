@@ -36,7 +36,7 @@ internal class FavoritesViewModel @Inject constructor(
     )
 
     init {
-        observeFavoriteMeals(ObserveFavoriteMeals.Params())
+        observeFavoriteMeals(Unit)
     }
 
     internal fun clearError() {

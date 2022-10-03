@@ -85,10 +85,10 @@ internal class CategoriesViewModel @Inject constructor(
             }
         }
 
-        observeCategories(ObserveCategories.Params())
-        observeAreas(ObserveAreas.Params())
-        observeRandomCategoryMeals(ObserveRandomCategoryMeals.Params())
-        observeRandomAreaMeals(ObserveRandomAreaMeals.Params())
+        observeCategories(Unit)
+        observeAreas(Unit)
+        observeRandomCategoryMeals(Unit)
+        observeRandomAreaMeals(Unit)
 
         viewModelScope.launch {
             pendingActions.collect { action ->

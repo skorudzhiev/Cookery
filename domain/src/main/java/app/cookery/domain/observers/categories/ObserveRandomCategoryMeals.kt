@@ -8,11 +8,9 @@ import javax.inject.Inject
 
 class ObserveRandomCategoryMeals @Inject constructor(
     private val repository: CategoriesRepository
-) : SubjectInteractor<ObserveRandomCategoryMeals.Params, List<CategoryDetails>>() {
+) : SubjectInteractor<Unit, List<CategoryDetails>>() {
 
-    override fun createObservable(params: Params): Flow<List<CategoryDetails>> {
+    override fun createObservable(params: Unit): Flow<List<CategoryDetails>> {
         return repository.observeRandomCategoryDetails()
     }
-
-    data class Params(val meals: Int? = null)
 }

@@ -8,11 +8,9 @@ import javax.inject.Inject
 
 class ObserveAreas @Inject constructor(
     private val repository: AreaRepository
-) : SubjectInteractor<ObserveAreas.Params, List<Area>>() {
+) : SubjectInteractor<Unit, List<Area>>() {
 
-    override fun createObservable(params: Params): Flow<List<Area>> {
+    override fun createObservable(params: Unit): Flow<List<Area>> {
         return repository.observeAreaMeals()
     }
-
-    data class Params(val area: String? = null)
 }
