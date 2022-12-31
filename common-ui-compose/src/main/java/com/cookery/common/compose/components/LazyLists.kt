@@ -1,7 +1,6 @@
 package com.cookery.common.compose.components
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
@@ -93,7 +92,6 @@ internal fun <T> HandleCategoryTypes(
     }
 }
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 internal fun Header(
     title: String,
