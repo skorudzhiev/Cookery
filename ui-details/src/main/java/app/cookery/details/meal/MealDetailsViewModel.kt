@@ -78,7 +78,7 @@ class MealDetailsViewModel @Inject constructor(
     private fun updateFavoriteMeal() {
         viewModelScope.launch {
             updateMealDetails.updateFavoriteMeal(
-                UpdateMealDetails.Params(mealId = meal),
+                params = UpdateMealDetails.Params(mealId = meal),
                 isMarkedAsFavorite = state.value.isMealMarkedAsFavorite
             )
         }

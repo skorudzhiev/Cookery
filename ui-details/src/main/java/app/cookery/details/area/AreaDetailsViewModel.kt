@@ -48,11 +48,7 @@ class AreaDetailsViewModel @Inject constructor(
         updateAreaDetails()
     }
 
-    fun clearError() {
-        viewModelScope.launch {
-            snackbarManager.removeCurrentError()
-        }
-    }
+    internal fun clearError() = viewModelScope.launch { snackbarManager.removeCurrentError() }
 
     private fun updateAreaDetails() {
         viewModelScope.launch {

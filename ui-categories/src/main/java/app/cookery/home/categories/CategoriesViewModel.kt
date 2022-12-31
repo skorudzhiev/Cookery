@@ -35,10 +35,10 @@ internal class CategoriesViewModel @Inject constructor(
     private val snackbarManager: SnackbarManager,
     private val dataStore: DataStore,
     private val logger: Logger,
-    observeCategories: ObserveCategories,
-    observeAreas: ObserveAreas,
-    observeRandomCategoryMeals: ObserveRandomCategoryMeals,
-    observeRandomAreaMeals: ObserveRandomAreaMeals
+    private val observeCategories: ObserveCategories,
+    private val observeAreas: ObserveAreas,
+    private val observeRandomCategoryMeals: ObserveRandomCategoryMeals,
+    private val observeRandomAreaMeals: ObserveRandomAreaMeals
 ) : ViewModel() {
 
     private val categoriesLoadingState = ObservableLoadingCounter()
@@ -46,7 +46,7 @@ internal class CategoriesViewModel @Inject constructor(
     private val randomCategoriesLoadingState = ObservableLoadingCounter()
     private val randomAreasLoadingState = ObservableLoadingCounter()
 
-    private val pendingActions = MutableSharedFlow<CategoriesAction>()
+    private val pendingActions = MutableSharedFlow<CategoriesActions>()
 
     val state: StateFlow<CategoriesViewState> = combine(
         categoriesLoadingState.observable,
@@ -77,7 +77,7 @@ internal class CategoriesViewModel @Inject constructor(
     )
 
     init {
-        viewModelScope.launch(viewModelScope.coroutineContext) {
+        viewModelScope.launch {
             dataStore.isAppDataInitialized().collect { isInitialized ->
                 if (!isInitialized) {
                     initializeData()
@@ -85,23 +85,26 @@ internal class CategoriesViewModel @Inject constructor(
             }
         }
 
-        observeCategories(Unit)
-        observeAreas(Unit)
-        observeRandomCategoryMeals(Unit)
-        observeRandomAreaMeals(Unit)
+        observeData()
 
         viewModelScope.launch {
             pendingActions.collect { action ->
                 when (action) {
-                    CategoriesAction.RefreshAction -> refresh()
-                    CategoriesAction.ClearError -> snackbarManager.removeCurrentError()
-                    else -> {}
+                    CategoriesActions.RefreshActions -> refresh()
+                    CategoriesActions.ClearError -> snackbarManager.removeCurrentError()
                 }
             }
         }
     }
 
-    fun submitAction(action: CategoriesAction) {
+    private fun observeData() {
+        observeCategories(Unit)
+        observeAreas(Unit)
+        observeRandomCategoryMeals(Unit)
+        observeRandomAreaMeals(Unit)
+    }
+
+    fun submitAction(action: CategoriesActions) {
         viewModelScope.launch {
             pendingActions.emit(action)
         }

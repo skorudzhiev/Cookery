@@ -39,9 +39,5 @@ internal class FavoritesViewModel @Inject constructor(
         observeFavoriteMeals(Unit)
     }
 
-    internal fun clearError() {
-        viewModelScope.launch {
-            snackbarManager.removeCurrentError()
-        }
-    }
+    internal fun clearError() = viewModelScope.launch { snackbarManager.removeCurrentError() }
 }

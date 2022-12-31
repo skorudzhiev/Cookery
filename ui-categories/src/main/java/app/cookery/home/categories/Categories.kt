@@ -37,8 +37,8 @@ fun Categories(
 
     Categories(
         state = viewState,
-        refresh = { viewModel.submitAction(CategoriesAction.RefreshAction) },
-        clearError = { viewModel.submitAction(CategoriesAction.ClearError) },
+        refresh = { viewModel.submitAction(CategoriesActions.RefreshActions) },
+        clearError = { viewModel.submitAction(CategoriesActions.ClearError) },
         openMealsDetails = openMealsDetails,
         openCategoryDetails = openCategoryDetails,
         openAreaDetails = openAreaDetails
