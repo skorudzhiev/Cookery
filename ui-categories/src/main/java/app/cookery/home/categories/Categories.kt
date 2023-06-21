@@ -41,13 +41,15 @@ fun Categories(
 
     Categories(
         state = viewState,
-        listeners = CategoriesActionListeners(
-            refresh = { viewModel.submitAction(CategoriesActions.RefreshActions) },
-            clearError = { viewModel.submitAction(CategoriesActions.ClearError) },
-            openMealsDetails = openMealsDetails,
-            openCategoryDetails = openCategoryDetails,
-            openAreaDetails = openAreaDetails
-        )
+        listeners = remember {
+            CategoriesActionListeners(
+                refresh = { viewModel.submitAction(CategoriesActions.RefreshActions) },
+                clearError = { viewModel.submitAction(CategoriesActions.ClearError) },
+                openMealsDetails = openMealsDetails,
+                openCategoryDetails = openCategoryDetails,
+                openAreaDetails = openAreaDetails
+            )
+        }
     )
 }
 

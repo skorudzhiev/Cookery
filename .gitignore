@@ -48,6 +48,8 @@ captures/
 .idea/libraries
 .idea/codeStyles
 .idea/gradle.properties
+.idea/inspectionProfiles/
+.idea/kotlinc.xml
 
 # Android Studio 3 in .gitignore file.
 .idea/caches
