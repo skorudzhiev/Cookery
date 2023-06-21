@@ -4,140 +4,107 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
-import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.max
 import androidx.hilt.navigation.compose.hiltViewModel
 import app.cookery.data.entities.relations.CategoryWithCategoryDetails
 import app.cookery.details.R
-import com.cookery.common.compose.components.BackdropImage
-import com.cookery.common.compose.components.CategoryDetailsAppBar
+import app.cookery.details.utils.ScaffoldDetails
+import app.cookery.details.utils.backDropImage
+import app.cookery.details.utils.description
+import app.cookery.details.utils.spacer
+import app.cookery.details.utils.titleItem
 import com.cookery.common.compose.components.CategoryDetailsItem
-import com.cookery.common.compose.components.ExpandingText
-import com.cookery.common.compose.components.Header
-import com.cookery.common.compose.components.SnackBar
 import com.cookery.common.compose.components.getAppBarColor
 import com.cookery.common.compose.modifiers.Layout
 import com.cookery.common.compose.modifiers.bodyWidth
 import com.cookery.common.compose.modifiers.copy
+import com.cookery.common.compose.modifiers.pageDetailsPadding
 import com.cookery.common.compose.rememberFlowWithLifecycle
-import com.google.accompanist.insets.LocalWindowInsets
-import com.google.accompanist.insets.rememberInsetsPaddingValues
 
 @Composable
 fun CategoryDetails(
     navigateUp: () -> Unit,
     openMealDetails: (String) -> Unit
 ) {
+    val viewModel: CategoryDetailsViewModel = hiltViewModel()
+    val viewState by rememberFlowWithLifecycle(viewModel.state)
+        .collectAsState(initial = CategoryDetailsViewState.Empty)
+
     CategoryDetails(
-        viewModel = hiltViewModel(),
-        navigateUp = navigateUp,
-        openMealDetails = openMealDetails
+        viewState = viewState,
+        listeners = remember {
+            CategoryDetailsListeners(
+                onNavigateUp = navigateUp,
+                clearError = { viewModel.submitAction(CategoryDetailsAction.ClearError) },
+                openMealDetails = openMealDetails
+            )
+        }
     )
 }
 
 @Composable
 private fun CategoryDetails(
-    viewModel: CategoryDetailsViewModel,
-    navigateUp: () -> Unit,
-    openMealDetails: (String) -> Unit
+    viewState: CategoryDetailsViewState,
+    listeners: CategoryDetailsListeners
 ) {
-    val viewState by rememberFlowWithLifecycle(viewModel.state)
-        .collectAsState(initial = CategoryDetailsViewState.Empty)
+    val title = viewState.categoryWithCategoryDetails.getOrNull(0)?.categoryName
 
-    val scaffoldState = rememberScaffoldState()
-    val listState = rememberLazyListState()
-    var appBarHeight by remember { mutableStateOf(0) }
-    val showAppBarBackground by remember {
-        derivedStateOf {
-            val visibleItemsInfo = listState.layoutInfo.visibleItemsInfo
-            when {
-                visibleItemsInfo.isEmpty() -> false
-                appBarHeight <= 0 -> false
-                else -> {
-                    val firstVisibleItem = visibleItemsInfo[0]
-                    when {
-                        firstVisibleItem.index > 0 -> true
-                        else -> firstVisibleItem.size + firstVisibleItem.offset <= appBarHeight
-                    }
-                }
-            }
-        }
-    }
-
-    LaunchedEffect(viewState.error) {
-        viewState.error?.let { error ->
-            scaffoldState.snackbarHostState.showSnackbar(error.message)
-        }
-    }
-
-    Scaffold(
-        topBar = {
-            viewState.categoryWithCategoryDetails.getOrNull(0)?.categoryName?.let { title ->
-                CategoryDetailsAppBar(
-                    title = title,
-                    showAppBarBackground = showAppBarBackground,
-                    onNavigateUp = navigateUp,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .onSizeChanged { appBarHeight = it.height }
-                )
-            }
-        },
-        snackbarHost = { snackBarHostState ->
-            SnackBar(
-                clearError = { viewModel.submitAction(CategoryDetailsAction.ClearError) },
-                snackbarHostState = snackBarHostState
-            )
-        },
-    ) { contentPadding ->
-        Surface(
-            modifier = Modifier
-                .bodyWidth()
-                .padding(
-                    rememberInsetsPaddingValues(
-                        insets = LocalWindowInsets.current.systemBars,
-                        applyBottom = true,
-                        applyTop = false,
-                    )
-                )
-        ) {
-            CategoryDetails(
-                categoryDetails = viewState.categoryWithCategoryDetails,
+    ScaffoldDetails(
+        title = title,
+        uiError = viewState.error,
+        pageContent = { showAppBarBackground, contentPadding, listState ->
+            PageContent(
+                viewState = viewState,
                 listState = listState,
                 showAppBarBackground = showAppBarBackground,
-                openMealDetails = openMealDetails,
-                contentPadding = contentPadding
+                contentPadding = contentPadding,
+                openMealDetails = listeners.openMealDetails
             )
-        }
+        },
+        onNavigateUp = listeners.onNavigateUp,
+        onClearError = listeners.clearError
+    )
+}
+
+@Composable
+private fun PageContent(
+    viewState: CategoryDetailsViewState,
+    listState: LazyListState,
+    showAppBarBackground: Boolean,
+    contentPadding: PaddingValues,
+    openMealDetails: (String) -> Unit
+) {
+    Surface(
+        modifier = Modifier
+            .bodyWidth()
+            .padding(pageDetailsPadding())
+    ) {
+        PageDetails(
+            categoryDetails = viewState.categoryWithCategoryDetails,
+            listState = listState,
+            showAppBarBackground = showAppBarBackground,
+            openMealDetails = openMealDetails,
+            contentPadding = contentPadding
+        )
     }
 }
 
 @Composable
-private fun CategoryDetails(
+private fun PageDetails(
     categoryDetails: List<CategoryWithCategoryDetails>,
     listState: LazyListState,
     showAppBarBackground: Boolean,
@@ -145,9 +112,6 @@ private fun CategoryDetails(
     contentPadding: PaddingValues,
     modifier: Modifier = Modifier,
 ) {
-    val gutter = Layout.gutter
-    val bodyMargin = Layout.bodyMargin
-
     LazyColumn(
         state = listState,
         contentPadding = contentPadding.copy(copyTop = false),
@@ -155,54 +119,42 @@ private fun CategoryDetails(
             .background(getAppBarColor())
             .testTag(stringResource(R.string.cd_category_details))
     ) {
-        item {
-            categoryDetails.getOrNull(0)?.let { categoryDetails ->
-                BackdropImage(
-                    backdropImage = categoryDetails.categoryImage,
-                    listState = listState
-                )
-            }
-        }
-
-        item {
-            Spacer(modifier = Modifier.height(max(gutter, bodyMargin)))
-        }
-
-        item {
-            categoryDetails.getOrNull(0)?.categoryName?.let { Header(it, showAppBarBackground) }
-        }
-
+        val image = categoryDetails.getOrNull(0)?.categoryImage
+        val title = categoryDetails.getOrNull(0)?.categoryName
         val description = categoryDetails.getOrNull(0)?.categoryDescription
-        if (description != null) {
-            item {
-                ExpandingText(
-                    text = description,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            horizontal = Layout.bodyMargin,
-                            vertical = Layout.gutter
-                        )
-                )
-            }
-        }
 
-        items(categoryDetails) { meal ->
-            Box(
-                modifier = modifier
-                    .clickable(onClick = { openMealDetails(meal.mealId) })
-                    .fillMaxSize()
-                    .padding(
-                        horizontal = Layout.bodyMargin,
-                        vertical = 2.dp
-                    )
-            ) {
-                CategoryDetailsItem(
-                    imageUrl = meal.mealImage,
-                    mealDescription = meal.mealName,
-                    modifier = modifier
-                )
-            }
-        }
+        backDropImage(image, listState)
+        spacer()
+        titleItem(title, showAppBarBackground)
+        description(description)
+        pageDetailsItems(categoryDetails, modifier, openMealDetails)
     }
 }
+
+private fun LazyListScope.pageDetailsItems(
+    categoryDetails: List<CategoryWithCategoryDetails>,
+    modifier: Modifier,
+    openMealDetails: (String) -> Unit
+) = items(categoryDetails) { meal ->
+    Box(
+        modifier = modifier
+            .clickable(onClick = { openMealDetails(meal.mealId) })
+            .fillMaxSize()
+            .padding(
+                horizontal = Layout.bodyMargin,
+                vertical = 2.dp
+            )
+    ) {
+        CategoryDetailsItem(
+            imageUrl = meal.mealImage,
+            mealDescription = meal.mealName,
+            modifier = modifier
+        )
+    }
+}
+
+private data class CategoryDetailsListeners(
+    val onNavigateUp: () -> Unit,
+    val openMealDetails: (String) -> Unit,
+    val clearError: () -> Unit
+)

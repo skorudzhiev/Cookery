@@ -4,9 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
@@ -18,15 +16,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.max
 import androidx.hilt.navigation.compose.hiltViewModel
 import app.cookery.data.entities.relations.AreaWithCategoryDetails
-import app.cookery.details.utils.DetailsScaffold
-import com.cookery.common.compose.components.BackdropImage
+import app.cookery.details.utils.ScaffoldDetails
+import app.cookery.details.utils.backDropImage
+import app.cookery.details.utils.spacer
+import app.cookery.details.utils.titleItem
 import com.cookery.common.compose.components.CategoryDetailsItem
-import com.cookery.common.compose.components.Header
 import com.cookery.common.compose.components.getAppBarColor
 import com.cookery.common.compose.modifiers.Layout
 import com.cookery.common.compose.modifiers.bodyWidth
@@ -62,7 +59,7 @@ private fun AreaDetails(
 ) {
     val title = viewState.areaWithCategoryDetails.getOrNull(0)?.area
 
-    DetailsScaffold(
+    ScaffoldDetails(
         title = title,
         uiError = viewState.error,
         pageContent = { showAppBackground, contentPadding, listState ->
@@ -110,8 +107,6 @@ private fun PageList(
     openMealDetails: (String) -> Unit,
     contentPadding: PaddingValues
 ) {
-    val gutter = Layout.gutter
-    val bodyMargin = Layout.bodyMargin
     var backdrop: String?
     var title: String?
 
@@ -126,41 +121,9 @@ private fun PageList(
         modifier = Modifier.background(getAppBarColor())
     ) {
         backDropImage(backdrop, listState)
-        spacer(gutter, bodyMargin)
+        spacer()
         titleItem(title, showAppBarBackground)
         pageDetailsItems(areaDetails, openMealDetails)
-    }
-}
-
-private fun LazyListScope.backDropImage(
-    backdrop: String?,
-    listState: LazyListState
-) {
-    item {
-        backdrop?.let {
-            BackdropImage(
-                backdropImage = it,
-                listState = listState
-            )
-        }
-    }
-}
-
-private fun LazyListScope.spacer(
-    gutter: Dp,
-    bodyMargin: Dp
-) {
-    item {
-        Spacer(modifier = Modifier.height(max(gutter, bodyMargin)))
-    }
-}
-
-private fun LazyListScope.titleItem(
-    title: String?,
-    showAppBarBackground: Boolean
-) {
-    item {
-        title?.let { Header(it, showAppBarBackground) }
     }
 }
 

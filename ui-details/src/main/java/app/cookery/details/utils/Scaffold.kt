@@ -22,7 +22,7 @@ import com.cookery.common.compose.components.SnackBar
 private var appBarHeight by mutableStateOf(0)
 
 @Composable
-fun DetailsScaffold(
+fun ScaffoldDetails(
     title: String?,
     uiError: UiError?,
     pageContent: @Composable (
@@ -45,7 +45,7 @@ fun DetailsScaffold(
                     val firstVisibleItem = visibleItemsInfo[0]
                     when {
                         firstVisibleItem.index > 0 -> true
-                        else -> firstVisibleItem.size + firstVisibleItem.offset <= appBarHeight
+                        else -> false
                     }
                 }
             }
