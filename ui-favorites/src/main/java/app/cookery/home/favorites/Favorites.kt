@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
@@ -18,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -37,20 +39,27 @@ import com.google.accompanist.insets.rememberInsetsPaddingValues
 
 @Composable
 fun Favorites(openMealDetails: (String) -> Unit) {
+    val viewModel: FavoritesViewModel = hiltViewModel()
+    val viewState by rememberFlowWithLifecycle(viewModel.state)
+        .collectAsState(initial = FavoritesViewState.Empty)
+
     Favorites(
-        viewModel = hiltViewModel(),
-        openMealDetails = openMealDetails
+        viewState = viewState,
+        listeners = remember {
+            FavoritesListeners(
+                onClearError = { viewModel.clearError() },
+                openMealDetails = openMealDetails
+            )
+        }
     )
 }
 
 @Composable
 private fun Favorites(
-    viewModel: FavoritesViewModel,
-    openMealDetails: (String) -> Unit
+    viewState: FavoritesViewState,
+    listeners: FavoritesListeners
 ) {
     val scaffoldState = rememberScaffoldState()
-    val viewState by rememberFlowWithLifecycle(viewModel.state)
-        .collectAsState(initial = FavoritesViewState.Empty)
 
     LaunchedEffect(viewState.error) {
         viewState.error?.let { error ->
@@ -61,7 +70,7 @@ private fun Favorites(
     Scaffold(
         snackbarHost = { state ->
             SnackBar(
-                clearError = { viewModel.clearError() },
+                clearError = listeners.onClearError,
                 snackbarHostState = state
             )
         }
@@ -82,26 +91,40 @@ private fun Favorites(
                 contentPadding = contentPadding
             ) {
                 if (viewState.favorites.isNotEmpty()) {
-                    item {
-                        Header(
-                            title = stringResource(R.string.favorites_screen_title),
-                            showAppBarBackground = false
-                        )
-                    }
-
-                    items(viewState.favorites) { meal ->
-                        DisplayFavoriteMeals(
-                            categoryDetails = meal,
-                            openMealDetails = openMealDetails
-                        )
-                    }
+                    headerItem()
+                    favoritesItem(viewState, listeners)
                 } else {
-                    item {
-                        DisplayPlaceholder(Modifier.fillParentMaxSize())
-                    }
+                    placeholderItem()
                 }
             }
         }
+    }
+}
+
+private fun LazyListScope.placeholderItem() {
+    item {
+        DisplayPlaceholder(Modifier.fillParentMaxSize())
+    }
+}
+
+private fun LazyListScope.headerItem() {
+    item {
+        Header(
+            title = stringResource(R.string.favorites_screen_title),
+            showAppBarBackground = false
+        )
+    }
+}
+
+private fun LazyListScope.favoritesItem(
+    viewState: FavoritesViewState,
+    listeners: FavoritesListeners
+) {
+    items(viewState.favorites) { meal ->
+        DisplayFavoriteMeals(
+            categoryDetails = meal,
+            openMealDetails = listeners.openMealDetails
+        )
     }
 }
 
@@ -143,3 +166,8 @@ private fun DisplayPlaceholder(modifier: Modifier) {
         )
     }
 }
+
+private data class FavoritesListeners(
+    val openMealDetails: (String) -> Unit,
+    val onClearError: () -> Unit
+)
