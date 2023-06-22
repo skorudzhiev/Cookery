@@ -57,6 +57,7 @@ import app.cookery.details.meal.MealDetailsAction.ClearError
 import app.cookery.details.meal.MealDetailsAction.UpdateFavoriteMeal
 import app.cookery.details.utils.openYoutubeLink
 import coil.annotation.ExperimentalCoilApi
+import com.cookery.api.UiError
 import com.cookery.common.compose.components.CaptionText
 import com.cookery.common.compose.components.CircularBorderImage
 import com.cookery.common.compose.components.CookeryDivider
@@ -94,31 +95,28 @@ fun MealDetails(
 
     MealDetails(
         state = viewState,
-        navigateUp = navigateUp,
-        updateFavoriteMeal = { viewModel.submitAction(UpdateFavoriteMeal) },
-        clearError = { viewModel.submitAction(ClearError) }
+        listeners = remember {
+            MealDetailsListeners(
+                navigateUp = navigateUp,
+                updateFavoriteMeal = { viewModel.submitAction(UpdateFavoriteMeal) },
+                clearError = { viewModel.submitAction(ClearError) }
+            )
+        }
     )
 }
 
 @Composable
 private fun MealDetails(
     state: MealDetailsViewState,
-    navigateUp: () -> Unit,
-    updateFavoriteMeal: () -> Unit,
-    clearError: () -> Unit
+    listeners: MealDetailsListeners
 ) {
     val scroll = rememberScrollState(0)
-    val snackbarHostState = remember { SnackbarHostState() }
-
-    LaunchedEffect(state.error) {
-        state.error?.let { error ->
-            snackbarHostState.showSnackbar(error.message)
-        }
-    }
+    val snackBarHostState = remember { SnackbarHostState() }
 
     SnackBar(
-        clearError = clearError,
-        snackbarHostState = snackbarHostState
+        error = state.error,
+        snackBarHostState = snackBarHostState,
+        onClearError = listeners.clearError
     )
 
     Box(
@@ -132,33 +130,12 @@ private fun MealDetails(
                 )
             )
     ) {
-        Spacer(
-            modifier = Modifier
-                .height(280.dp)
-                .fillMaxWidth()
-                .background(CookeryLightColors.background)
-        )
-        IconButton(
-            onClick = navigateUp,
-            modifier = Modifier
-                .statusBarsPadding()
-                .padding(horizontal = 16.dp, vertical = 10.dp)
-                .size(36.dp)
-                .background(
-                    color = Color.Transparent,
-                    shape = CircleShape
-                )
-        ) {
-            Icon(
-                imageVector = Icons.Default.ArrowBack,
-                tint = Color.Black,
-                contentDescription = stringResource(R.string.cd_navigate_up)
-            )
-        }
-        Body(
+        Spacer()
+        BackButton(listeners.navigateUp)
+        PageContent(
             state.mealDetails,
             scroll,
-            onFavoriteButtonPressed = updateFavoriteMeal,
+            onFavoriteButtonPressed = listeners.updateFavoriteMeal,
             isFavoritesButtonSelected = state.isMealMarkedAsFavorite
         )
         Image(state.mealDetails?.mealImage, scroll.value)
@@ -166,7 +143,56 @@ private fun MealDetails(
 }
 
 @Composable
-private fun Body(
+private fun BackButton(onNavigateUp: () -> Unit) {
+    IconButton(
+        onClick = onNavigateUp,
+        modifier = Modifier
+            .statusBarsPadding()
+            .padding(horizontal = 16.dp, vertical = 10.dp)
+            .size(36.dp)
+            .background(
+                color = Color.Transparent,
+                shape = CircleShape
+            )
+    ) {
+        Icon(
+            imageVector = Icons.Default.ArrowBack,
+            tint = Color.Black,
+            contentDescription = stringResource(R.string.cd_navigate_up)
+        )
+    }
+}
+
+@Composable
+private fun Spacer() {
+    Spacer(
+        modifier = Modifier
+            .height(280.dp)
+            .fillMaxWidth()
+            .background(CookeryLightColors.background)
+    )
+}
+
+@Composable
+private fun SnackBar(
+    error: UiError?,
+    snackBarHostState: SnackbarHostState,
+    onClearError: () -> Unit
+) {
+    LaunchedEffect(error) {
+        error?.let { error ->
+            snackBarHostState.showSnackbar(error.message)
+        }
+    }
+
+    SnackBar(
+        clearError = onClearError,
+        snackbarHostState = snackBarHostState
+    )
+}
+
+@Composable
+private fun PageContent(
     mealDetails: MealDetails?,
     scroll: ScrollState,
     onFavoriteButtonPressed: () -> Unit,
@@ -494,3 +520,9 @@ private fun Tag(
 private fun getThemeSecondaryColor(): Color {
     return CookeryLightColors.secondary
 }
+
+private data class MealDetailsListeners(
+    val navigateUp: () -> Unit,
+    val updateFavoriteMeal: () -> Unit,
+    val clearError: () -> Unit
+)
