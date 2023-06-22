@@ -12,6 +12,7 @@ import com.cookery.watchStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -52,7 +53,7 @@ class AreaDetailsViewModel @Inject constructor(
 
     private fun updateAreaDetails() {
         viewModelScope.launch {
-            observeAreaDetails.flow.collect {
+            observeAreaDetails.flow.collectLatest {
                 if (it.isEmpty()) {
                     updateMealsByArea(UpdateMealsByArea.Params(area))
                         .watchStatus(

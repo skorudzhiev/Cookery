@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -91,7 +92,7 @@ class MealDetailsViewModel @Inject constructor(
     private fun isFavorite(storedMealId: String?): Boolean = let { storedMealId == meal }
 
     private suspend fun retrieveMealDetails() {
-        observeMealDetails.flow.collect {
+        observeMealDetails.flow.collectLatest {
             if (it == null) {
                 updateMealDetails(UpdateMealDetails.Params(meal))
                     .watchStatus(

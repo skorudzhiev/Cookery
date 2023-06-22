@@ -14,6 +14,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -68,7 +69,7 @@ class CategoryDetailsViewModel @Inject constructor(
     }
 
     private suspend fun updateCategoryDetails(categoryName: String) {
-        observeCategoryWithCategoryDetails.flow.collect {
+        observeCategoryWithCategoryDetails.flow.collectLatest {
             if (it.isEmpty()) {
                 updateMealsByCategory(UpdateMealsByCategory.Params(categoryName))
                     .watchStatus(

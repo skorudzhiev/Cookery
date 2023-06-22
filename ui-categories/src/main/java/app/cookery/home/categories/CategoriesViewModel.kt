@@ -23,6 +23,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -78,7 +79,7 @@ internal class CategoriesViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            dataStore.isAppDataInitialized().collect { isInitialized ->
+            dataStore.isAppDataInitialized().collectLatest { isInitialized ->
                 if (!isInitialized) {
                     initializeData()
                 }
@@ -112,7 +113,7 @@ internal class CategoriesViewModel @Inject constructor(
 
     private fun initializeData() {
         viewModelScope.launch {
-            initializeHomeScreenData(InitializeHomeScreenData.Params()).collect { status ->
+            initializeHomeScreenData(InitializeHomeScreenData.Params()).collectLatest { status ->
                 when (status) {
                     InvokeStarted -> categoriesLoadingState.addLoader()
                     InvokeSuccess -> {
