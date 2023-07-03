@@ -24,4 +24,7 @@ interface TheMealDbApi {
 
     @GET("/api/json/v1/1/lookup.php")
     fun getMealDetails(@Query("i") mealId: String): Call<MealList>
+
+    @GET("/api/json/v1/1/random.php")
+    fun getRandomMeal(): Call<MealList>
 }
