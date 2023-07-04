@@ -14,6 +14,17 @@ interface RandomMealDao : CookeryDao<RandomMealEntity> {
     @Query(
         """
         SELECT idMeal FROM MealDetails
+        WHERE idMeal NOT IN (SELECT idMeal FROM Favorites)
+        AND idMeal NOT IN (SELECT idMeal FROM RandomMealEntity)
+        ORDER BY RANDOM()
+        LIMIT 1
+        """
+    )
+    fun getRandomOfflineMeal(): Flow<MealDetails?>
+
+    @Query(
+        """
+        SELECT idMeal FROM MealDetails
         WHERE (SELECT COUNT(*) FROM MealDetails) >= 30
           AND idMeal NOT IN (SELECT idMeal FROM Favorites)
           AND idMeal NOT IN (SELECT idMeal FROM RandomMealEntity)
@@ -21,7 +32,7 @@ interface RandomMealDao : CookeryDao<RandomMealEntity> {
         LIMIT 1
         """
     )
-    fun getRandomMeal(): Flow<MealDetails>?
+    fun getRandomMeal(): Flow<MealDetails?>
 
     @Query("SELECT COUNT(*) FROM RandomMealEntity")
     fun countEntities(): Int

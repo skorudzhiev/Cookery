@@ -8,7 +8,9 @@ import javax.inject.Inject
 
 class RandomMealStore @Inject constructor(private val dao: RandomMealDao) {
 
-    fun observeRandomMeal(): Flow<MealDetails>? = dao.getRandomMeal()
+    fun observeRandomOfflineMeal(): Flow<MealDetails?> = dao.getRandomOfflineMeal()
+
+    fun observeRandomMeal(): Flow<MealDetails?> = dao.getRandomMeal()
 
     suspend fun addRandomMeal(randomMeal: RandomMealEntity) = dao.saveEntityWithLimit(randomMeal)
 }
