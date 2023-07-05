@@ -37,7 +37,7 @@ interface RandomMealDao : CookeryDao<RandomMealEntity> {
     @Query("SELECT COUNT(*) FROM RandomMealEntity")
     fun countEntities(): Int
 
-    @Query("DROP TABLE IF EXISTS RandomMealEntity")
+    @Query("DELETE FROM RandomMealEntity")
     fun dropRandomMealTable()
 
     @Transaction
