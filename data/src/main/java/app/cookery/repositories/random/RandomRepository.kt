@@ -23,9 +23,9 @@ class RandomRepositoryImpl @Inject constructor(
 
     override fun observeRandomMeal(shouldUseOfflinePolicy: Boolean): Flow<MealDetails?> {
         val result = if (shouldUseOfflinePolicy) {
-            randomMealStore.observeRandomOfflineMeal().storeResponse()
+            randomMealStore.observeRandomOfflineMeal().storeAndEmitResponse()
         } else {
-            randomMealStore.observeRandomMeal().storeResponse()
+            randomMealStore.observeRandomMeal().storeAndEmitResponse()
         }
         return result
     }
@@ -35,7 +35,7 @@ class RandomRepositoryImpl @Inject constructor(
         mealStore.saveMeal(mealDetails = response)
     }
 
-    private fun Flow<MealDetails?>.storeResponse() =
+    private fun Flow<MealDetails?>.storeAndEmitResponse() =
         filterNotNull().transform { mealDetails ->
             randomMealStore.addRandomMeal(randomMeal = RandomMealEntity(mealId = mealDetails.mealId))
             emit(mealDetails)
