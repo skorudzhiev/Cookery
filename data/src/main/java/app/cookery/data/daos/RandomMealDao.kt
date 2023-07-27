@@ -13,7 +13,7 @@ interface RandomMealDao : CookeryDao<RandomMealEntity> {
 
     @Query(
         """
-        SELECT idMeal FROM MealDetails
+        SELECT * FROM MealDetails
         WHERE idMeal NOT IN (SELECT idMeal FROM Favorites)
         AND idMeal NOT IN (SELECT idMeal FROM RandomMealEntity)
         ORDER BY RANDOM()
@@ -24,7 +24,7 @@ interface RandomMealDao : CookeryDao<RandomMealEntity> {
 
     @Query(
         """
-        SELECT idMeal FROM MealDetails
+        SELECT * FROM MealDetails
         WHERE (SELECT COUNT(*) FROM MealDetails) >= 30
           AND idMeal NOT IN (SELECT idMeal FROM Favorites)
           AND idMeal NOT IN (SELECT idMeal FROM RandomMealEntity)
@@ -42,7 +42,7 @@ interface RandomMealDao : CookeryDao<RandomMealEntity> {
 
     @Transaction
     suspend fun saveEntityWithLimit(entity: RandomMealEntity) {
-        if (countEntities() < 5) {
+        if (countEntities() <= 5) {
             insert(entity)
         } else {
             dropRandomMealTable()

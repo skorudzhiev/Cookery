@@ -1,29 +1,28 @@
-package app.cookery.details.meal
+package app.cookery.home.random
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.SnackbarHostState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.hilt.navigation.compose.hiltViewModel
-import app.cookery.details.R
-import app.cookery.details.meal.MealDetailsAction.ClearError
-import app.cookery.details.meal.MealDetailsAction.UpdateFavoriteMeal
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.LifecycleOwner
+import app.cookery.home.random.RandomMealViewModel.Companion.RandomMealAction.ClearError
+import app.cookery.home.random.RandomMealViewModel.Companion.RandomMealAction.UpdateFavoriteMeal
+import app.cookery.home.random.RandomMealViewModel.Companion.RandomMealViewState
+import app.cookery.home.random.RandomMealViewModel.Companion.RandomMealViewState.Companion.Empty
 import com.cookery.common.compose.components.SnackBar
 import com.cookery.common.compose.rememberFlowWithLifecycle
 import com.cookery.details.CommonPageColumn
@@ -32,21 +31,25 @@ import com.cookery.details.MealDetails
 import com.cookery.details.SpacerMealDetails
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
-import com.google.accompanist.insets.statusBarsPadding
 
 @Composable
-fun MealDetails(
-    navigateUp: () -> Unit
-) {
-    val viewModel: MealDetailsViewModel = hiltViewModel()
-    val viewState by rememberFlowWithLifecycle(viewModel.state)
-        .collectAsState(initial = MealDetailsViewState.Empty)
+fun RandomMeal() {
 
-    MealDetails(
-        state = viewState,
+    val lifecycleEvent = rememberLifecycleEvent()
+    val viewModel: RandomMealViewModel = hiltViewModel()
+    val viewState by rememberFlowWithLifecycle(viewModel.state)
+        .collectAsState(initial = Empty)
+
+    LaunchedEffect(lifecycleEvent) {
+        if (lifecycleEvent == Lifecycle.Event.ON_RESUME) {
+            viewModel.retrieveRandomMeal()
+        }
+    }
+
+    RandomMeal(
+        viewState = viewState,
         listeners = remember {
-            MealDetailsListeners(
-                navigateUp = navigateUp,
+            RandomMealListeners(
                 updateFavoriteMeal = { viewModel.submitAction(UpdateFavoriteMeal) },
                 clearError = { viewModel.submitAction(ClearError) }
             )
@@ -55,15 +58,16 @@ fun MealDetails(
 }
 
 @Composable
-private fun MealDetails(
-    state: MealDetailsViewState,
-    listeners: MealDetailsListeners
+private fun RandomMeal(
+    viewState: RandomMealViewState,
+    listeners: RandomMealListeners
 ) {
+
     val scroll = rememberScrollState(0)
     val snackBarHostState = remember { SnackbarHostState() }
 
     SnackBar(
-        error = state.error,
+        error = viewState.error,
         snackBarHostState = snackBarHostState,
         onClearError = listeners.clearError
     )
@@ -80,44 +84,36 @@ private fun MealDetails(
             )
     ) {
         SpacerMealDetails()
-        BackButton(listeners.navigateUp)
         CommonPageColumn(scroll = scroll) {
             MealDetails(
-                mealDetails = state.mealDetails,
+                mealDetails = viewState.randomMeal,
                 onFavoriteButtonPressed = listeners.updateFavoriteMeal,
-                isFavoritesButtonSelected = state.isMealMarkedAsFavorite
+                isFavoritesButtonSelected = viewState.isMealMarkedAsFavorite
             )
         }
         ImageMealDetails(
-            imageUrl = state.mealDetails?.mealImage,
+            imageUrl = viewState.randomMeal?.mealImage,
             scroll = scroll.value
         )
     }
 }
 
 @Composable
-private fun BackButton(onNavigateUp: () -> Unit) {
-    IconButton(
-        onClick = onNavigateUp,
-        modifier = Modifier
-            .statusBarsPadding()
-            .padding(horizontal = 16.dp, vertical = 10.dp)
-            .size(36.dp)
-            .background(
-                color = Color.Transparent,
-                shape = CircleShape
-            )
-    ) {
-        Icon(
-            imageVector = Icons.Default.ArrowBack,
-            tint = Color.Black,
-            contentDescription = stringResource(R.string.cd_navigate_up)
-        )
+private fun rememberLifecycleEvent(lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.current): Lifecycle.Event {
+    var state by remember { mutableStateOf(Lifecycle.Event.ON_ANY) }
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            state = event
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
+        }
     }
+    return state
 }
 
-private data class MealDetailsListeners(
-    val navigateUp: () -> Unit,
+private data class RandomMealListeners(
     val updateFavoriteMeal: () -> Unit,
     val clearError: () -> Unit
 )

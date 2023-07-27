@@ -1,4 +1,4 @@
-package app.cookery.details.utils
+package com.cookery.details
 
 import android.content.ActivityNotFoundException
 import android.content.Context

@@ -25,6 +25,7 @@ import app.cookery.details.category.CategoryDetails
 import app.cookery.details.meal.MealDetails
 import app.cookery.home.categories.Categories
 import app.cookery.home.favorites.Favorites
+import app.cookery.home.random.RandomMeal
 
 object Destinations {
     const val HOME = "home"
@@ -65,7 +66,7 @@ fun NavGraphBuilder.addHomeGraph(
     addHome(navController)
     addSearch(navController)
     addFavorites(navController)
-    addRandom(navController)
+    addRandom()
 
     addCategoryDetails(navController)
     addAreaDetails(navController)
@@ -160,13 +161,7 @@ private fun NavGraphBuilder.addFavorites(
     }
 }
 
-private fun NavGraphBuilder.addRandom(
-    navController: NavController
-) {
-    composable(HomeSections.RANDOM.route) {
-        helloWorld(screen = stringResource(id = HomeSections.RANDOM.title))
-    }
-}
+private fun NavGraphBuilder.addRandom() = composable(HomeSections.RANDOM.route) { RandomMeal() }
 
 @Composable
 fun helloWorld(screen: String) {

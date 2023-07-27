@@ -13,10 +13,30 @@ import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.SwipeToDismiss
 import androidx.compose.material.rememberDismissState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.cookery.api.UiError
 import com.google.accompanist.insets.navigationBarsPadding
+
+@Composable
+fun SnackBar(
+    error: UiError?,
+    snackBarHostState: SnackbarHostState,
+    onClearError: () -> Unit
+) {
+    LaunchedEffect(error) {
+        error?.let { error ->
+            snackBarHostState.showSnackbar(error.message)
+        }
+    }
+
+    SnackBar(
+        clearError = onClearError,
+        snackbarHostState = snackBarHostState
+    )
+}
 
 @Composable
 fun SnackBar(

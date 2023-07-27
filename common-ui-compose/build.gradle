@@ -29,6 +29,7 @@ android {
 dependencies {
     implementation project(':base-android')
     implementation project(':data')
+    implementation project(':common-ui-view')
 
     implementation Libs.AndroidX.coreKtx
 
@@ -41,6 +42,7 @@ dependencies {
     implementation Libs.Compose.animation
     implementation Libs.Compose.tooling
     implementation Libs.Compose.util
+    implementation Libs.Accompanist.flowLayout
 
     implementation Libs.Kotlin.stdlib
 
