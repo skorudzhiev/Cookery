@@ -36,16 +36,6 @@ abstract class Interactor<in P> {
     suspend fun executeSync(params: P) = doWork(params)
 }
 
-abstract class ResultInteractor<in P, R> {
-    operator fun invoke(params: P): Flow<R> = flow {
-        emit(doWork(params))
-    }
-
-    suspend fun executeSync(params: P): R = doWork(params)
-
-    protected abstract suspend fun doWork(params: P): R
-}
-
 abstract class SubjectInteractor<P : Any, T> {
     private val paramState = MutableSharedFlow<P>(
         replay = 1,

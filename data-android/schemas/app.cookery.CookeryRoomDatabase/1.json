@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "1bca4506dee183136ab8b786fb44bee0",
+    "identityHash": "ac0110e99d1bf6d6d835d3e16f13a3e5",
     "entities": [
       {
         "tableName": "Category",
@@ -108,13 +108,19 @@
       },
       {
         "tableName": "MealDetails",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`idMeal` TEXT NOT NULL, `mealName` TEXT, `drinkAlternate` TEXT, `mealCategory` TEXT, `mealArea` TEXT, `cookingInstructions` TEXT, `mealImage` TEXT, `mealTags` TEXT, `mealYoutube` TEXT, `mealIngredient1` TEXT, `mealIngredient2` TEXT, `mealIngredient3` TEXT, `mealIngredient4` TEXT, `mealIngredient5` TEXT, `mealIngredient6` TEXT, `mealIngredient7` TEXT, `mealIngredient8` TEXT, `mealIngredient9` TEXT, `mealIngredient10` TEXT, `mealIngredient11` TEXT, `mealIngredient12` TEXT, `mealIngredient13` TEXT, `mealIngredient14` TEXT, `mealIngredient15` TEXT, `mealIngredient16` TEXT, `mealIngredient17` TEXT, `mealIngredient18` TEXT, `mealIngredient19` TEXT, `mealIngredient20` TEXT, `mealMeasure1` TEXT, `mealMeasure2` TEXT, `mealMeasure3` TEXT, `mealMeasure4` TEXT, `mealMeasure5` TEXT, `mealMeasure6` TEXT, `mealMeasure7` TEXT, `mealMeasure8` TEXT, `mealMeasure9` TEXT, `mealMeasure10` TEXT, `mealMeasure11` TEXT, `mealMeasure12` TEXT, `mealMeasure13` TEXT, `mealMeasure14` TEXT, `mealMeasure15` TEXT, `mealMeasure16` TEXT, `mealMeasure17` TEXT, `mealMeasure18` TEXT, `mealMeasure19` TEXT, `mealMeasure20` TEXT, `mealSource` TEXT, `mealImageSource` TEXT, `mealCreativeCommonsConfirmed` TEXT, `dateModified` TEXT, PRIMARY KEY(`idMeal`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`idMeal` TEXT NOT NULL, `insertedAt` INTEGER, `mealName` TEXT, `drinkAlternate` TEXT, `mealCategory` TEXT, `mealArea` TEXT, `cookingInstructions` TEXT, `mealImage` TEXT, `mealTags` TEXT, `mealYoutube` TEXT, `mealIngredient1` TEXT, `mealIngredient2` TEXT, `mealIngredient3` TEXT, `mealIngredient4` TEXT, `mealIngredient5` TEXT, `mealIngredient6` TEXT, `mealIngredient7` TEXT, `mealIngredient8` TEXT, `mealIngredient9` TEXT, `mealIngredient10` TEXT, `mealIngredient11` TEXT, `mealIngredient12` TEXT, `mealIngredient13` TEXT, `mealIngredient14` TEXT, `mealIngredient15` TEXT, `mealIngredient16` TEXT, `mealIngredient17` TEXT, `mealIngredient18` TEXT, `mealIngredient19` TEXT, `mealIngredient20` TEXT, `mealMeasure1` TEXT, `mealMeasure2` TEXT, `mealMeasure3` TEXT, `mealMeasure4` TEXT, `mealMeasure5` TEXT, `mealMeasure6` TEXT, `mealMeasure7` TEXT, `mealMeasure8` TEXT, `mealMeasure9` TEXT, `mealMeasure10` TEXT, `mealMeasure11` TEXT, `mealMeasure12` TEXT, `mealMeasure13` TEXT, `mealMeasure14` TEXT, `mealMeasure15` TEXT, `mealMeasure16` TEXT, `mealMeasure17` TEXT, `mealMeasure18` TEXT, `mealMeasure19` TEXT, `mealMeasure20` TEXT, `mealSource` TEXT, `mealImageSource` TEXT, `mealCreativeCommonsConfirmed` TEXT, `dateModified` TEXT, PRIMARY KEY(`idMeal`))",
         "fields": [
           {
             "fieldPath": "mealId",
             "columnName": "idMeal",
             "affinity": "TEXT",
             "notNull": true
+          },
+          {
+            "fieldPath": "insertedAt",
+            "columnName": "insertedAt",
+            "affinity": "INTEGER",
+            "notNull": false
           },
           {
             "fieldPath": "mealName",
@@ -457,32 +463,12 @@
         },
         "indices": [],
         "foreignKeys": []
-      },
-      {
-        "tableName": "RandomMealEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`idMeal` TEXT NOT NULL, PRIMARY KEY(`idMeal`))",
-        "fields": [
-          {
-            "fieldPath": "mealId",
-            "columnName": "idMeal",
-            "affinity": "TEXT",
-            "notNull": true
-          }
-        ],
-        "primaryKey": {
-          "columnNames": [
-            "idMeal"
-          ],
-          "autoGenerate": false
-        },
-        "indices": [],
-        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '1bca4506dee183136ab8b786fb44bee0')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ac0110e99d1bf6d6d835d3e16f13a3e5')"
     ]
   }
 }

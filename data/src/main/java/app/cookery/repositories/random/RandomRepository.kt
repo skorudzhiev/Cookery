@@ -1,43 +1,26 @@
 package app.cookery.repositories.random
 
 import app.cookery.data.entities.MealDetails
-import app.cookery.data.entities.RandomMealEntity
 import app.cookery.repositories.details.MealStore
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.transform
 import javax.inject.Inject
 
 interface RandomRepository {
 
-    fun observeRandomMeal(shouldUseOfflinePolicy: Boolean = false): Flow<MealDetails?>
+    fun observeLastMeal(): Flow<MealDetails?>
 
     suspend fun getRandomMeal()
 }
 
 class RandomRepositoryImpl @Inject constructor(
     private val randomDataSource: RandomDataSource,
-    private val randomMealStore: RandomMealStore,
     private val mealStore: MealStore
 ) : RandomRepository {
 
-    override fun observeRandomMeal(shouldUseOfflinePolicy: Boolean): Flow<MealDetails?> {
-        val result = if (shouldUseOfflinePolicy) {
-            randomMealStore.observeRandomOfflineMeal().storeAndEmitResponse()
-        } else {
-            randomMealStore.observeRandomMeal().storeAndEmitResponse()
-        }
-        return result
-    }
+    override fun observeLastMeal(): Flow<MealDetails?> = mealStore.observeLastMeal()
 
     override suspend fun getRandomMeal() {
         val response = randomDataSource.getRandomMeal().getOrThrow()
         mealStore.saveMeal(mealDetails = response)
     }
-
-    private fun Flow<MealDetails?>.storeAndEmitResponse() =
-        filterNotNull().transform { mealDetails ->
-            randomMealStore.addRandomMeal(randomMeal = RandomMealEntity(mealId = mealDetails.mealId))
-            emit(mealDetails)
-        }
 }

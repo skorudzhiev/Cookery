@@ -8,7 +8,7 @@ import app.cookery.data.entities.categories.CategoryDetails
 // www.themealdb.com/api/json/v1/1/lookup.php?i=52772
 val mealDetails = listOf(
     MealDetails(
-        "52772", "Teriyaki Chicken Casserole", "", "Chicken", "Japanese",
+        "52772", 0L, "Teriyaki Chicken Casserole", "", "Chicken", "Japanese",
         "", "", "", "", "", "",
         "", "", "", "", "", "",
         "", "", "", "", "", "",

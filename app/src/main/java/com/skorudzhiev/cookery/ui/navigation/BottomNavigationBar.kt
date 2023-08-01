@@ -375,7 +375,7 @@ private fun BottomNavigationLayout(
 
         layout(
             width = constraints.maxWidth,
-            height = itemPlaceables.maxByOrNull { it.height }?.height ?: 0
+            height = constraints.maxHeight
         ) {
             val indicatorLeft = indicatorIndex.value * unselectedWidth
             indicatorPlaceable.placeRelative(x = indicatorLeft.toInt(), y = 0)

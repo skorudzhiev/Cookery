@@ -2,7 +2,6 @@ package app.cookery.home.random
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.SnackbarHostState
 import androidx.compose.runtime.Composable
@@ -29,8 +28,6 @@ import com.cookery.details.CommonPageColumn
 import com.cookery.details.ImageMealDetails
 import com.cookery.details.MealDetails
 import com.cookery.details.SpacerMealDetails
-import com.google.accompanist.insets.LocalWindowInsets
-import com.google.accompanist.insets.rememberInsetsPaddingValues
 
 @Composable
 fun RandomMeal() {
@@ -42,7 +39,7 @@ fun RandomMeal() {
 
     LaunchedEffect(lifecycleEvent) {
         if (lifecycleEvent == Lifecycle.Event.ON_RESUME) {
-            viewModel.retrieveRandomMeal()
+            viewModel.getRandomMealFromRemote()
         }
     }
 
@@ -75,13 +72,6 @@ private fun RandomMeal(
     Box(
         Modifier
             .fillMaxSize()
-            .padding(
-                rememberInsetsPaddingValues(
-                    insets = LocalWindowInsets.current.systemBars,
-                    applyBottom = true,
-                    applyTop = false,
-                )
-            )
     ) {
         SpacerMealDetails()
         CommonPageColumn(scroll = scroll) {

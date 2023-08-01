@@ -11,4 +11,7 @@ interface MealDao : CookeryDao<MealDetails> {
 
     @Query("SELECT * from MealDetails WHERE idMeal = :mealId")
     fun getMealDetails(mealId: String): Flow<MealDetails>
+
+    @Query("SELECT * FROM MealDetails ORDER BY insertedAt DESC LIMIT 1")
+    fun getLastMeal(): Flow<MealDetails?>
 }

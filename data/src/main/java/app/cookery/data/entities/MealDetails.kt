@@ -9,6 +9,7 @@ import app.cookery.data.CookeryEntity
 data class MealDetails(
     @PrimaryKey
     @ColumnInfo(name = "idMeal") val mealId: String = "",
+    @ColumnInfo(name = "insertedAt") val insertedAt: Long? = null,
     @ColumnInfo(name = "mealName") val mealName: String? = null,
     @ColumnInfo(name = "drinkAlternate") val drinkAlternate: String? = null,
     @ColumnInfo(name = "mealCategory") val mealCategory: String? = null,

@@ -50,6 +50,10 @@ captures/
 .idea/gradle.properties
 .idea/inspectionProfiles/
 .idea/kotlinc.xml
+.idea/migrations.xml
+.idea/.gitignore
+.idea/compiler.xml
+
 
 # Android Studio 3 in .gitignore file.
 .idea/caches

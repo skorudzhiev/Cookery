@@ -17,6 +17,7 @@ class MealListToMealDetails @Inject constructor(
 class MealToMealDetails @Inject constructor() : Mapper<Meal, MealDetails> {
     override suspend fun map(from: Meal): MealDetails = MealDetails(
         mealId = from.mealId,
+        insertedAt = System.currentTimeMillis(),
         mealName = from.mealName,
         drinkAlternate = from.drinkAlternate,
         mealCategory = from.mealCategory,

@@ -4,7 +4,6 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import app.cookery.data.entities.Favorites
 import app.cookery.data.entities.MealDetails
-import app.cookery.data.entities.RandomMealEntity
 import app.cookery.data.entities.categories.Area
 import app.cookery.data.entities.categories.Category
 import app.cookery.data.entities.categories.CategoryDetails
@@ -15,8 +14,7 @@ import app.cookery.data.entities.categories.CategoryDetails
         Area::class,
         CategoryDetails::class,
         MealDetails::class,
-        Favorites::class,
-        RandomMealEntity::class
+        Favorites::class
     ],
     version = 1
 )

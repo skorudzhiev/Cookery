@@ -6,10 +6,9 @@ import app.cookery.repositories.random.RandomRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class ObserveRandomOfflineMeal @Inject constructor(
+class ObserveLastMeal @Inject constructor(
     private val randomRepository: RandomRepository
 ) : SubjectInteractor<Unit, MealDetails?>() {
 
-    override fun createObservable(params: Unit): Flow<MealDetails?> =
-        randomRepository.observeRandomMeal(shouldUseOfflinePolicy = true)
+    override fun createObservable(params: Unit): Flow<MealDetails?> = randomRepository.observeLastMeal()
 }
