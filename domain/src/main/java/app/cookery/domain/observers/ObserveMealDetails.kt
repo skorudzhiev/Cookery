@@ -1,6 +1,6 @@
 package app.cookery.domain.observers
 
-import app.cookery.data.entities.MealDetails
+import app.cookery.db.entities.MealDetails
 import app.cookery.domain.SubjectInteractor
 import app.cookery.repositories.details.MealRepository
 import kotlinx.coroutines.flow.Flow

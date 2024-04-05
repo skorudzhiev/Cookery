@@ -1,12 +1,13 @@
 package app.cookery.repositories.categories
 
+import app.cookery.repositories.categories.remote.CategoriesRemoteDataSource
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class CategoriesRepository @Inject constructor(
-    private val dataSource: CategoriesDataSource,
-    private val store: CategoriesStore
+    private val dataSource: CategoriesRemoteDataSource,
+    private val store: CategoriesLocalDataSource
 ) {
 
     fun observeRandomCategoryDetails() = store.observeRandomCategoryMeals()

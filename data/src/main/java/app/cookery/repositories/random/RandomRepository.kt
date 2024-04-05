@@ -1,7 +1,7 @@
 package app.cookery.repositories.random
 
-import app.cookery.data.entities.MealDetails
-import app.cookery.repositories.details.MealStore
+import app.cookery.db.entities.MealDetails
+import app.cookery.repositories.details.MealLocalDataSource
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -13,14 +13,14 @@ interface RandomRepository {
 }
 
 class RandomRepositoryImpl @Inject constructor(
-    private val randomDataSource: RandomDataSource,
-    private val mealStore: MealStore
+    private val randomRemoteDataSource: RandomRemoteDataSource,
+    private val mealLocalDataSource: MealLocalDataSource
 ) : RandomRepository {
 
-    override fun observeLastMeal(): Flow<MealDetails?> = mealStore.observeLastMeal()
+    override fun observeLastMeal(): Flow<MealDetails?> = mealLocalDataSource.observeLastMeal()
 
     override suspend fun getRandomMeal() {
-        val response = randomDataSource.getRandomMeal().getOrThrow()
-        mealStore.saveMeal(mealDetails = response)
+        val response = randomRemoteDataSource.getRandomMeal().getOrThrow()
+        mealLocalDataSource.saveMeal(mealDetails = response)
     }
 }

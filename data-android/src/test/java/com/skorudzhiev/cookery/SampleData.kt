@@ -1,9 +1,9 @@
 package com.skorudzhiev.cookery
 
-import app.cookery.data.entities.MealDetails
-import app.cookery.data.entities.categories.Area
-import app.cookery.data.entities.categories.Category
-import app.cookery.data.entities.categories.CategoryDetails
+import app.cookery.db.entities.MealDetails
+import app.cookery.db.entities.categories.Area
+import app.cookery.db.entities.categories.Category
+import app.cookery.db.entities.categories.CategoryDetails
 
 // www.themealdb.com/api/json/v1/1/lookup.php?i=52772
 val mealDetails = listOf(

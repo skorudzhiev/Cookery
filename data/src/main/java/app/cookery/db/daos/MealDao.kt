@@ -1,0 +1,17 @@
+package app.cookery.db.daos
+
+import androidx.room.Dao
+import androidx.room.Query
+import app.cookery.db.CookeryDao
+import app.cookery.db.entities.MealDetails
+import kotlinx.coroutines.flow.Flow
+
+@Dao
+interface MealDao : CookeryDao<MealDetails> {
+
+    @Query("SELECT * from MealDetails WHERE idMeal = :mealId")
+    fun getMealDetails(mealId: String): Flow<MealDetails>
+
+    @Query("SELECT * FROM MealDetails ORDER BY insertedAt DESC LIMIT 1")
+    fun getLastMeal(): Flow<MealDetails?>
+}

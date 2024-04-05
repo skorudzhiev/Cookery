@@ -3,7 +3,7 @@ package app.cookery.home.random
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.cookery.Logger
-import app.cookery.data.entities.MealDetails
+import app.cookery.db.entities.MealDetails
 import app.cookery.domain.interactors.UpdateMealDetails
 import app.cookery.domain.interactors.UpdateRandomMeal
 import app.cookery.domain.observers.random.ObserveLastMeal

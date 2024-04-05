@@ -1,9 +1,9 @@
 package app.cookery
 
-import app.cookery.data.models.Areas
-import app.cookery.data.models.Categories
-import app.cookery.data.models.FilteredCategoryDetails
-import app.cookery.data.models.MealList
+import app.cookery.dto.Areas
+import app.cookery.dto.Categories
+import app.cookery.dto.FilteredCategoryDetails
+import app.cookery.dto.MealList
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query

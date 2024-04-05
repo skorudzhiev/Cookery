@@ -1,8 +1,8 @@
 package app.cookery.domain.observers.areas
 
-import app.cookery.data.entities.categories.Area
+import app.cookery.db.entities.categories.Area
 import app.cookery.domain.SubjectInteractor
-import app.cookery.repositories.categories.areas.AreaRepository
+import app.cookery.repositories.areas.AreaRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

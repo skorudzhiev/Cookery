@@ -1,9 +1,9 @@
 package com.skorudzhiev.cookery.repositories
 
-import app.cookery.data.mappers.MealListToMealDetails
-import app.cookery.data.mappers.MealToMealDetails
-import app.cookery.repositories.random.RandomDataSource
-import app.cookery.repositories.random.RandomDataSourceImpl
+import app.cookery.mappers.MealListToMealDetails
+import app.cookery.mappers.MealToMealDetails
+import app.cookery.repositories.random.RandomRemoteDataSource
+import app.cookery.repositories.random.RandomRemoteDataSourceImpl
 import com.google.common.truth.Truth.assertThat
 import com.skorudzhiev.cookery.enqueueResponse
 import com.skorudzhiev.cookery.mealDetails
@@ -21,12 +21,12 @@ class RandomRepositoryTest {
     private val sourceFile = "meal-details.json"
 
     private lateinit var mockWebServer: MockWebServer
-    private lateinit var dataSource: RandomDataSource
+    private lateinit var dataSource: RandomRemoteDataSource
 
     @Before
     fun setup() {
         mockWebServer = MockWebServer()
-        dataSource = RandomDataSourceImpl(
+        dataSource = RandomRemoteDataSourceImpl(
             theMealDbApi = provideTheMealDbTestingApi(mockWebServer = mockWebServer),
             mealDetailsMapper = MealListToMealDetails(mapper = MealToMealDetails())
         )

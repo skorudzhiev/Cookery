@@ -1,7 +1,7 @@
 package app.cookery.details.category
 
 import androidx.compose.runtime.Immutable
-import app.cookery.data.entities.relations.CategoryWithCategoryDetails
+import app.cookery.db.entities.relations.CategoryWithCategoryDetails
 import com.cookery.api.UiError
 
 @Immutable

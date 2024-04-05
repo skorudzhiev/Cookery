@@ -1,9 +1,9 @@
 package app.cookery.home.categories
 
 import androidx.compose.runtime.Immutable
-import app.cookery.data.entities.categories.Area
-import app.cookery.data.entities.categories.Category
-import app.cookery.data.entities.categories.CategoryDetails
+import app.cookery.db.entities.categories.Area
+import app.cookery.db.entities.categories.Category
+import app.cookery.db.entities.categories.CategoryDetails
 import com.cookery.api.UiError
 
 @Immutable

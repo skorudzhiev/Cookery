@@ -1,12 +1,12 @@
 package com.skorudzhiev.cookery.repositories
 
-import app.cookery.data.mappers.AreasToArea
-import app.cookery.data.mappers.CategoriesToCategory
-import app.cookery.data.mappers.CategoryDetailsMapper
-import app.cookery.data.mappers.MealCategoryToCategory
-import app.cookery.data.mappers.MealsAreaToArea
-import app.cookery.data.mappers.MealsToCategoryDetails
-import app.cookery.repositories.categories.TheMealDbCategoryDataSource
+import app.cookery.mappers.AreasToArea
+import app.cookery.mappers.CategoriesToCategory
+import app.cookery.mappers.CategoryDetailsMapper
+import app.cookery.mappers.MealCategoryToCategory
+import app.cookery.mappers.MealsAreaToArea
+import app.cookery.mappers.MealsToCategoryDetails
+import app.cookery.repositories.categories.remote.CategoriesRemoteDataSourceImpl
 import com.google.common.truth.Truth.assertThat
 import com.skorudzhiev.cookery.allMealAreas
 import com.skorudzhiev.cookery.allMealCategories
@@ -25,7 +25,7 @@ import org.junit.Test
 class CategoriesRepositoryTest {
 
     private lateinit var mockWebServer: MockWebServer
-    private lateinit var dataSource: TheMealDbCategoryDataSource
+    private lateinit var dataSource: CategoriesRemoteDataSourceImpl
 
     private val allMealsCategoriesSourceFile = "all-meal-categories.json"
     private val allMealAreasSourceFile = "all-meal-areas.json"
@@ -37,7 +37,7 @@ class CategoriesRepositoryTest {
     @Before
     fun setup() {
         mockWebServer = MockWebServer()
-        dataSource = TheMealDbCategoryDataSource(
+        dataSource = CategoriesRemoteDataSourceImpl(
             provideTheMealDbTestingApi(mockWebServer),
             AreasToArea(mapper = MealsAreaToArea()),
             CategoriesToCategory(MealCategoryToCategory()),

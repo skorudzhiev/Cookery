@@ -1,6 +1,6 @@
 package app.cookery.domain.observers.categories
 
-import app.cookery.data.entities.categories.CategoryDetails
+import app.cookery.db.entities.categories.CategoryDetails
 import app.cookery.domain.SubjectInteractor
 import app.cookery.repositories.categories.CategoriesRepository
 import kotlinx.coroutines.flow.Flow

@@ -1,8 +1,8 @@
 package com.skorudzhiev.cookery.repositories
 
-import app.cookery.data.mappers.MealListToMealDetails
-import app.cookery.data.mappers.MealToMealDetails
-import app.cookery.repositories.details.TheMealDbMealDataSource
+import app.cookery.mappers.MealListToMealDetails
+import app.cookery.mappers.MealToMealDetails
+import app.cookery.repositories.details.remote.MealRemoteDataSourceImpl
 import com.google.common.truth.Truth.assertThat
 import com.skorudzhiev.cookery.enqueueResponse
 import com.skorudzhiev.cookery.mealDetails
@@ -18,14 +18,14 @@ import org.junit.Test
 class MealRepositoryTest {
 
     private lateinit var mockWebServer: MockWebServer
-    private lateinit var dataSource: TheMealDbMealDataSource
+    private lateinit var dataSource: MealRemoteDataSourceImpl
     private val sourceFile = "meal-details.json"
     private val mealId = "52772"
 
     @Before
     fun setup() {
         mockWebServer = MockWebServer()
-        dataSource = TheMealDbMealDataSource(
+        dataSource = MealRemoteDataSourceImpl(
             provideTheMealDbTestingApi(mockWebServer),
             MealListToMealDetails(MealToMealDetails())
         )

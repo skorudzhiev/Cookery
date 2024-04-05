@@ -18,7 +18,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import app.cookery.data.entities.relations.AreaWithCategoryDetails
+import app.cookery.db.entities.relations.AreaWithCategoryDetails
 import app.cookery.details.utils.ScaffoldDetails
 import app.cookery.details.utils.backDropImage
 import app.cookery.details.utils.spacer

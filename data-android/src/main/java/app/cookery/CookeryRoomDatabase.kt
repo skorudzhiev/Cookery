@@ -2,11 +2,12 @@ package app.cookery
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import app.cookery.data.entities.Favorites
-import app.cookery.data.entities.MealDetails
-import app.cookery.data.entities.categories.Area
-import app.cookery.data.entities.categories.Category
-import app.cookery.data.entities.categories.CategoryDetails
+import app.cookery.db.CookeryDatabase
+import app.cookery.db.entities.Favorites
+import app.cookery.db.entities.MealDetails
+import app.cookery.db.entities.categories.Area
+import app.cookery.db.entities.categories.Category
+import app.cookery.db.entities.categories.CategoryDetails
 
 @Database(
     entities = [

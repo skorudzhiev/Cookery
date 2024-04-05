@@ -3,10 +3,10 @@ package app.cookery.di
 import android.content.Context
 import android.os.Debug
 import androidx.room.Room
-import app.cookery.CookeryDatabase
 import app.cookery.CookeryRoomDatabase
-import app.cookery.DatabaseTransactionRunner
 import app.cookery.RoomTransactionRunner
+import app.cookery.db.CookeryDatabase
+import app.cookery.db.DatabaseTransactionRunner
 import dagger.Binds
 import dagger.Module
 import dagger.Provides

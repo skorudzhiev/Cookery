@@ -31,7 +31,7 @@ suspend inline fun <T> Call<T>.executeWithRetry(
                 // If we have a HttpException, check whether we have a Retry-After
                 // header to decide how long to delay
                 val retryAfterHeader = e.response()?.headers()?.get("Retry-After")
-                if (retryAfterHeader != null && retryAfterHeader.isNotEmpty()) {
+                if (!retryAfterHeader.isNullOrEmpty()) {
                     // Got a Retry-After value, try and parse it to an long
                     try {
                         nextDelay = (retryAfterHeader.toLong() + 10).coerceAtLeast(defaultDelay)
@@ -49,39 +49,25 @@ suspend inline fun <T> Call<T>.executeWithRetry(
     throw IllegalStateException("Unknown exception from executeWithRetry")
 }
 
-inline fun defaultShouldRetry(exception: Exception) = when (exception) {
+fun defaultShouldRetry(exception: Exception) = when (exception) {
     is HttpException -> exception.code() == 429
     is IOException -> true
     else -> false
 }
 
-inline fun <T> Response<T>.toResult(): Result<T> = try {
-    if (isSuccessful) {
-        Success(data = bodyOrThrow())
-    } else {
-        ErrorResult(toException())
-    }
-} catch (e: Exception) {
-    ErrorResult(e)
-}
+fun <T> Response<T>.toException() = HttpException(this)
 
-inline fun <T> Response<T>.toException() = HttpException(this)
-
-inline fun <T> Response<T>.bodyOrThrow(): T {
+fun <T> Response<T>.bodyOrThrow(): T {
     if (!isSuccessful) throw HttpException(this)
     return body()!!
 }
 
 suspend fun <T, E> Response<T>.toResult(mapper: suspend (T) -> E): Result<E> = try {
     if (isSuccessful) {
-        Success(data = mapper(bodyOrThrow()), responseModified = isFromNetwork())
+        Success(data = mapper(bodyOrThrow()))
     } else {
         ErrorResult(toException())
     }
 } catch (e: Exception) {
     ErrorResult(e)
-}
-
-inline fun <T> Response<T>.isFromNetwork(): Boolean {
-    return raw().cacheResponse == null
 }

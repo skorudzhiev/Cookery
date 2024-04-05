@@ -17,9 +17,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import app.cookery.data.entities.categories.Area
-import app.cookery.data.entities.categories.Category
-import app.cookery.data.entities.categories.CategoryDetails
+import app.cookery.db.entities.categories.Area
+import app.cookery.db.entities.categories.Category
+import app.cookery.db.entities.categories.CategoryDetails
 import com.cookery.common.compose.R
 import com.cookery.common.compose.modifiers.Layout
 import com.cookery.common.compose.theme.getThemePrimaryColor
