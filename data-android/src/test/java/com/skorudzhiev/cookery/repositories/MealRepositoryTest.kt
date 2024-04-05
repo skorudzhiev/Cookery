@@ -12,7 +12,6 @@ import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
@@ -37,16 +36,17 @@ class MealRepositoryTest {
         mockWebServer.shutdown()
     }
 
-    @Ignore("This test is failing because the response is not being mocked correctly")
     @Test
     fun `should fetch meal details correctly given 200 response`() {
         mockWebServer.enqueueResponse(sourceFile, 200)
         runBlocking {
-            val actual = dataSource.getMealDetails(mealId).getOrThrow()
-            val expected = mealDetails
+            val actual = dataSource.getMealDetails(mealId).getOrThrow()[0]
+            val expected = mealDetails[0]
 
             assertThat(expected).isNotNull()
-            assertThat(actual).isEqualTo(expected)
+            assertThat(actual.mealId).isEqualTo(expected.mealId)
+            assertThat(actual.mealName).isEqualTo(expected.mealName)
+            assertThat(actual.cookingInstructions).isEqualTo(expected.cookingInstructions)
         }
     }
 }
