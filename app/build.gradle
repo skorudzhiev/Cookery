@@ -64,10 +64,10 @@ dependencies {
     implementation project(':domain')
     implementation project(':common-ui-view')
     implementation project(':common-ui-compose')
-    implementation project(':ui-categories')
-    implementation project(':ui-details')
-    implementation project(':ui-favorites')
-    implementation project(':ui-random')
+    implementation project(':features:ui-categories')
+    implementation project(':features:ui-details')
+    implementation project(':features:ui-favorites')
+    implementation project(':features:ui-random')
 
     implementation Libs.AndroidX.activityCompose
     implementation Libs.AndroidX.navigationCompose
