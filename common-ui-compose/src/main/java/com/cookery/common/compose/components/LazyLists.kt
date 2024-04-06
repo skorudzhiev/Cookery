@@ -20,9 +20,9 @@ import androidx.compose.ui.unit.dp
 import app.cookery.db.entities.categories.Area
 import app.cookery.db.entities.categories.Category
 import app.cookery.db.entities.categories.CategoryDetails
-import com.cookery.common.compose.R
 import com.cookery.common.compose.modifiers.Layout
 import com.cookery.common.compose.theme.getThemePrimaryColor
+import com.skorudzhiev.cookery.common.ui.compose.R
 
 @Composable
 fun <T> CollectionWithHeader(

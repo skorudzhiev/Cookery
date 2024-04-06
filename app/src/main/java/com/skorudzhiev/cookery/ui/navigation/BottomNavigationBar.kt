@@ -38,13 +38,11 @@ import androidx.compose.ui.layout.MeasureResult
 import androidx.compose.ui.layout.MeasureScope
 import androidx.compose.ui.layout.Placeable
 import androidx.compose.ui.layout.layoutId
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
-import androidx.core.os.ConfigurationCompat
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph
@@ -53,7 +51,7 @@ import com.cookery.common.compose.theme.CookeryDarkColors
 import com.cookery.common.compose.theme.CookeryLightColors
 import com.cookery.common.compose.theme.getThemePrimaryColor
 import com.google.accompanist.insets.navigationBarsPadding
-import com.skorudzhiev.cookery.R
+import com.skorudzhiev.cookery.app.R
 
 private const val indicatorId = "indicator"
 private const val itemNavLayoutIconId = "icon"
@@ -172,11 +170,7 @@ fun BottomNavigation(
                     },
                     text = {
                         Text(
-                            text = stringResource(section.title).uppercase(
-                                ConfigurationCompat.getLocales(
-                                    LocalConfiguration.current
-                                ).get(0)
-                            ),
+                            text = stringResource(section.title).uppercase(),
                             color = tint,
                             style = MaterialTheme.typography.button,
                             maxLines = 1

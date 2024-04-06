@@ -5,9 +5,9 @@ import com.skorudzhiev.cookery.buildsrc.Versions
 
 buildscript {
     ext.buildConfig = [
-            'compileSdk' : 33,
+            'compileSdk' : 34,
             'minSdk'     : 26,
-            'targetSdk'  : 33,
+            'targetSdk'  : 34,
     ]
 
     repositories {

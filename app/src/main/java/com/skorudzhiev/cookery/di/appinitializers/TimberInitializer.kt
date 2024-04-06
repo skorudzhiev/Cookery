@@ -1,9 +1,9 @@
 package com.skorudzhiev.cookery.di.appinitializers
 
 import android.app.Application
-import app.cookery.BuildConfig
 import app.cookery.appinitializers.AppInitializer
 import app.cookery.appinitializers.CookeryLogger
+import com.skorudzhiev.cookery.app.BuildConfig
 import javax.inject.Inject
 
 class TimberInitializer @Inject constructor(

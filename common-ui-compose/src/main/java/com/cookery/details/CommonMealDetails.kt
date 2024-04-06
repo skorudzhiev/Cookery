@@ -34,7 +34,6 @@ import androidx.compose.ui.unit.dp
 import app.cookery.db.entities.Ingredient
 import app.cookery.db.entities.MealDetails
 import app.cookery.db.entities.getIngredients
-import com.cookery.common.compose.R
 import com.cookery.common.compose.components.CaptionText
 import com.cookery.common.compose.components.CookeryDivider
 import com.cookery.common.compose.components.DrawCircle
@@ -44,6 +43,7 @@ import com.cookery.common.compose.theme.CookeryTypography
 import com.cookery.common.compose.theme.youTubeButtonColor
 import com.google.accompanist.flowlayout.FlowRow
 import com.google.accompanist.insets.navigationBarsPadding
+import com.skorudzhiev.cookery.common.ui.compose.R
 
 @Composable
 fun CommonPageColumn(

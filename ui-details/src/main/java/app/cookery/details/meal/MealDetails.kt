@@ -21,7 +21,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import app.cookery.details.R
 import app.cookery.details.meal.MealDetailsAction.ClearError
 import app.cookery.details.meal.MealDetailsAction.UpdateFavoriteMeal
 import com.cookery.common.compose.components.SnackBar
@@ -33,6 +32,7 @@ import com.cookery.details.SpacerMealDetails
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.google.accompanist.insets.statusBarsPadding
+import com.skorudzhiev.cookery.common.ui.compose.R
 
 @Composable
 fun MealDetails(

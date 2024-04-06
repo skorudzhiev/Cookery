@@ -25,6 +25,7 @@ import com.cookery.common.compose.rememberFlowWithLifecycle
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import com.skorudzhiev.cookery.common.ui.compose.R
 
 private const val firstHalfAreas = 14
 private const val secondHalfAreas = 13

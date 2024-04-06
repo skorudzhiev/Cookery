@@ -21,7 +21,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import app.cookery.db.entities.relations.CategoryWithCategoryDetails
-import app.cookery.details.R
 import app.cookery.details.utils.ScaffoldDetails
 import app.cookery.details.utils.backDropImage
 import app.cookery.details.utils.description
@@ -34,6 +33,7 @@ import com.cookery.common.compose.modifiers.bodyWidth
 import com.cookery.common.compose.modifiers.copy
 import com.cookery.common.compose.modifiers.pageDetailsPadding
 import com.cookery.common.compose.rememberFlowWithLifecycle
+import com.skorudzhiev.cookery.common.ui.compose.R
 
 @Composable
 fun CategoryDetails(

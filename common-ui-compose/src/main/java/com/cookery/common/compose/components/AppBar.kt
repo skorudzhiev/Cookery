@@ -31,7 +31,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
-import com.cookery.common.compose.R
 import com.cookery.common.compose.modifiers.Layout
 import com.cookery.common.compose.modifiers.drawForegroundGradientScrim
 import com.cookery.common.compose.theme.CookeryDarkColors
@@ -39,6 +38,7 @@ import com.cookery.common.compose.theme.CookeryLightColors
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.google.accompanist.insets.ui.TopAppBar
+import com.skorudzhiev.cookery.common.ui.compose.R
 
 @Composable
 fun CategoryDetailsAppBar(

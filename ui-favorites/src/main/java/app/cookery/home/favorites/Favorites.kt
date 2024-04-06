@@ -36,6 +36,8 @@ import com.cookery.common.compose.modifiers.bodyWidth
 import com.cookery.common.compose.rememberFlowWithLifecycle
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
+import com.skorudzhiev.cookery.common.ui.compose.R
+import com.skorudzhiev.cookery.ui.favorites.R as FavoritesRes
 
 @Composable
 fun Favorites(openMealDetails: (String) -> Unit) {
@@ -157,7 +159,7 @@ private fun DisplayPlaceholder(modifier: Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Image(
-            painter = painterResource(R.drawable.ic_favorites_placeholder),
+            painter = painterResource(FavoritesRes.drawable.ic_favorites_placeholder),
             contentDescription = ""
         )
         Text(

@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.skorudzhiev.cookery">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.INTERNET" />
     <application
-        android:name=".Cookery"
+        android:name="com.skorudzhiev.cookery.Cookery"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -11,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Cookery">
         <activity
-            android:name=".MainActivity"
+            android:name="com.skorudzhiev.cookery.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

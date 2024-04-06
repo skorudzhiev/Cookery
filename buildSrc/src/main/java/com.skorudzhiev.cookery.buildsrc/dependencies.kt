@@ -5,7 +5,7 @@ object Versions {
 }
 
 object Libs {
-    const val androidGradlePlugin = "com.android.tools.build:gradle:7.1.3"
+    const val androidGradlePlugin = "com.android.tools.build:gradle:8.3.0"
     const val hiltGradlePlugin = "com.google.dagger:hilt-android-gradle-plugin:${Hilt.version}"
     const val timber = "com.jakewharton.timber:timber:4.7.1"
     const val mockwebserver = "com.squareup.okhttp3:mockwebserver:4.1.0"
@@ -13,7 +13,7 @@ object Libs {
     const val threeTenAbp = "com.jakewharton.threetenabp:threetenabp:1.3.1"
 
     object Kotlin {
-        private const val version = "1.5.30"
+        private const val version = "1.9.23"
         const val stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$version"
         const val gradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$version"
         const val extensions = "org.jetbrains.kotlin:kotlin-android-extensions:$version"
@@ -26,7 +26,7 @@ object Libs {
         const val constraintLayout = "androidx.constraintlayout:constraintlayout:2.0.4"
         const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1"
         const val activityCompose = "androidx.activity:activity-compose:1.3.1"
-        const val navigationCompose = "androidx.navigation:navigation-compose:2.4.0-alpha07"
+        const val navigationCompose = "androidx.navigation:navigation-compose:2.5.3"
         const val hiltCompose = "androidx.hilt:hilt-navigation-compose:1.0.0-alpha03"
         const val datastorePrefs = "androidx.datastore:datastore-preferences:1.0.0"
 
@@ -47,13 +47,13 @@ object Libs {
     }
 
     object Dagger {
-        private const val version = "2.35.1"
+        private const val version = "2.48.1"
         const val dagger = "com.google.dagger:dagger:$version"
         const val compiler = "com.google.dagger:dagger-compiler:$version"
     }
 
     object Hilt {
-        const val version = "2.38.1"
+        const val version = "2.51.1"
         const val hiltAndroid = "com.google.dagger:hilt-android:$version"
         const val hiltAndroidCompiler = "com.google.dagger:hilt-android-compiler:$version"
         const val hiltGradlePlugin = "com.google.dagger:hilt-android-gradle-plugin:$version"
@@ -61,7 +61,7 @@ object Libs {
     }
 
     object Coroutines {
-        private const val version = "1.4.3"
+        private const val version = "1.7.1"
         const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version"
         const val android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version"
         const val test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.1"
@@ -80,7 +80,7 @@ object Libs {
     }
 
     object Room {
-        private const val version = "2.3.0"
+        private const val version = "2.6.1"
         const val common = "androidx.room:room-common:$version"
         const val compiler = "androidx.room:room-compiler:$version"
         const val runtime = "androidx.room:room-runtime:$version"
@@ -92,7 +92,9 @@ object Libs {
     }
 
     object Compose {
-        const val version = "1.2.0-alpha08"
+        const val version = "1.6.5"
+        const val compilerVersion = "1.5.11"
+
         const val ui = "androidx.compose.ui:ui:$version"
         const val foundation = "androidx.compose.foundation:foundation:$version"
         const val layout = "androidx.compose.foundation:foundation-layout:$version"
