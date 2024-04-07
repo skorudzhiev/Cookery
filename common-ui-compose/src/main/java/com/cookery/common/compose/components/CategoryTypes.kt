@@ -17,9 +17,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import app.cookery.db.entities.categories.Area
-import app.cookery.db.entities.categories.Category
-import app.cookery.db.entities.categories.CategoryDetails
+import app.cookery.domain.model.Area
+import app.cookery.domain.model.Category
+import app.cookery.domain.model.CategoryDetails
 import com.cookery.common.compose.theme.getThemeColorForImageBorder
 import com.cookery.common.compose.theme.getThemePrimaryColor
 

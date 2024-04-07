@@ -31,9 +31,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import app.cookery.db.entities.Ingredient
-import app.cookery.db.entities.MealDetails
-import app.cookery.db.entities.getIngredients
+import app.cookery.domain.model.Ingredient
+import app.cookery.domain.model.MealDetails
 import com.cookery.common.compose.components.CaptionText
 import com.cookery.common.compose.components.CookeryDivider
 import com.cookery.common.compose.components.DrawCircle
@@ -222,7 +221,7 @@ private fun YouTubeButton(mealYouTubeId: String?) {
 
 @Composable
 private fun Ingredients(mealDetails: MealDetails?) {
-    val ingredients = getIngredients(mealDetails)
+    val ingredients = mealDetails?.getIngredientsList()
 
     Text(
         text = stringResource(R.string.meal_details_ingredients_label),
@@ -231,13 +230,12 @@ private fun Ingredients(mealDetails: MealDetails?) {
             bottom = 8.dp
         )
     )
-    for (ingredient in ingredients) {
-        if (ingredient?.ingredient.isNullOrEmpty()) {
-            return
+    ingredients?.let {
+        for (ingredient in it) {
+            if (ingredient.ingredient?.isNotBlank() == true) {
+                Ingredient(ingredient)
+            }
         }
-        Ingredient(
-            ingredient = ingredient
-        )
     }
 }
 

@@ -20,12 +20,12 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import app.cookery.db.entities.relations.CategoryWithCategoryDetails
 import app.cookery.details.utils.ScaffoldDetails
 import app.cookery.details.utils.backDropImage
 import app.cookery.details.utils.description
 import app.cookery.details.utils.spacer
 import app.cookery.details.utils.titleItem
+import app.cookery.domain.model.CategoryWithCategoryDetails
 import com.cookery.common.compose.components.CategoryDetailsItem
 import com.cookery.common.compose.components.getAppBarColor
 import com.cookery.common.compose.modifiers.Layout

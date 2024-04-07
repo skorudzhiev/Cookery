@@ -1,7 +1,7 @@
 package app.cookery.details.area
 
 import androidx.compose.runtime.Immutable
-import app.cookery.db.entities.relations.AreaWithCategoryDetails
+import app.cookery.domain.model.AreaWithCategoryDetails
 import com.cookery.api.UiError
 
 @Immutable

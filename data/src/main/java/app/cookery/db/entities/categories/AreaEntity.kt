@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import app.cookery.db.CookeryEntity
 
 @Entity
-data class Area(
+data class AreaEntity(
     @PrimaryKey
     @ColumnInfo(name = "area") val area: String
 ) : CookeryEntity

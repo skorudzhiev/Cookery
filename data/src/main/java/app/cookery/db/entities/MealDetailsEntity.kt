@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import app.cookery.db.CookeryEntity
 
 @Entity
-data class MealDetails(
+data class MealDetailsEntity(
     @PrimaryKey
     @ColumnInfo(name = "idMeal") val mealId: String = "",
     @ColumnInfo(name = "insertedAt") val insertedAt: Long? = null,
@@ -63,94 +63,3 @@ data class MealDetails(
     @ColumnInfo(name = "mealCreativeCommonsConfirmed") val mealCreativeCommonsConfirmed: String? = null,
     @ColumnInfo(name = "dateModified") val dateModified: String? = null
 ) : CookeryEntity
-
-data class Ingredient(
-    val measure: String?,
-    val ingredient: String?
-)
-
-fun getIngredients(mealDetails: MealDetails?): List<Ingredient?> {
-    return listOf(
-        Ingredient(
-            measure = mealDetails?.mealMeasure1,
-            ingredient = mealDetails?.mealIngredient1
-        ),
-        Ingredient(
-            measure = mealDetails?.mealMeasure2,
-            ingredient = mealDetails?.mealIngredient2
-        ),
-        Ingredient(
-            measure = mealDetails?.mealMeasure3,
-            ingredient = mealDetails?.mealIngredient3
-        ),
-        Ingredient(
-            measure = mealDetails?.mealMeasure4,
-            ingredient = mealDetails?.mealIngredient4
-        ),
-        Ingredient(
-            measure = mealDetails?.mealMeasure5,
-            ingredient = mealDetails?.mealIngredient5
-        ),
-        Ingredient(
-            measure = mealDetails?.mealMeasure6,
-            ingredient = mealDetails?.mealIngredient6
-        ),
-        Ingredient(
-            measure = mealDetails?.mealMeasure7,
-            ingredient = mealDetails?.mealIngredient7
-        ),
-        Ingredient(
-            measure = mealDetails?.mealMeasure8,
-            ingredient = mealDetails?.mealIngredient8
-        ),
-        Ingredient(
-            measure = mealDetails?.mealMeasure9,
-            ingredient = mealDetails?.mealIngredient9
-        ),
-        Ingredient(
-            measure = mealDetails?.mealMeasure10,
-            ingredient = mealDetails?.mealIngredient10
-        ),
-        Ingredient(
-            measure = mealDetails?.mealMeasure11,
-            ingredient = mealDetails?.mealIngredient11
-        ),
-        Ingredient(
-            measure = mealDetails?.mealMeasure12,
-            ingredient = mealDetails?.mealIngredient12
-        ),
-        Ingredient(
-            measure = mealDetails?.mealMeasure13,
-            ingredient = mealDetails?.mealIngredient13
-        ),
-        Ingredient(
-            measure = mealDetails?.mealMeasure14,
-            ingredient = mealDetails?.mealIngredient14
-        ),
-        Ingredient(
-            measure = mealDetails?.mealMeasure15,
-            ingredient = mealDetails?.mealIngredient15
-        ),
-        Ingredient(
-            measure = mealDetails?.mealMeasure16,
-            ingredient = mealDetails?.mealIngredient16,
-
-        ),
-        Ingredient(
-            measure = mealDetails?.mealMeasure17,
-            ingredient = mealDetails?.mealIngredient17
-        ),
-        Ingredient(
-            measure = mealDetails?.mealMeasure18,
-            ingredient = mealDetails?.mealIngredient18
-        ),
-        Ingredient(
-            measure = mealDetails?.mealMeasure19,
-            ingredient = mealDetails?.mealIngredient19
-        ),
-        Ingredient(
-            measure = mealDetails?.mealMeasure20,
-            ingredient = mealDetails?.mealIngredient20
-        )
-    )
-}

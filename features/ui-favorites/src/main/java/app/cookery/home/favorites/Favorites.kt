@@ -26,7 +26,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import app.cookery.db.entities.categories.CategoryDetails
+import app.cookery.domain.model.CategoryDetails
 import com.cookery.common.compose.components.CategoryDetailsItem
 import com.cookery.common.compose.components.Header
 import com.cookery.common.compose.components.SnackBar

@@ -29,7 +29,7 @@ class MealDetailsViewModel @Inject constructor(
     private val logger: Logger
 ) : ViewModel() {
 
-    private val meal: String = savedStateHandle.get("mealId")!!
+    private val meal: String = savedStateHandle["mealId"]!!
     private val mealLoadingState = ObservableLoadingCounter()
     private val pendingActions = MutableSharedFlow<MealDetailsAction>()
 

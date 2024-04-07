@@ -3,9 +3,9 @@ package app.cookery.home.random
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.cookery.Logger
-import app.cookery.db.entities.MealDetails
 import app.cookery.domain.interactors.UpdateMealDetails
 import app.cookery.domain.interactors.UpdateRandomMeal
+import app.cookery.domain.model.MealDetails
 import app.cookery.domain.observers.random.ObserveLastMeal
 import app.cookery.extensions.combine
 import app.cookery.home.random.RandomMealViewModel.Companion.RandomMealAction.ClearError
@@ -86,19 +86,19 @@ internal class RandomMealViewModel @Inject constructor(
         getRandomMealFromRemote()
         viewModelScope.launch {
             updateMealDetails.updateFavoriteMeal(
-                params = UpdateMealDetails.Params(mealId = getRandomMealId()),
+                params = UpdateMealDetails.Params(mealId = getRandomMealId().toString()),
                 isMarkedAsFavorite = state.value.isMealMarkedAsFavorite
             )
         }
     }
 
-    private fun getRandomMealId() = state.value.randomMeal!!.mealId
+    private fun getRandomMealId() = state.value.randomMeal?.mealId
 
     companion object {
 
         sealed class RandomMealAction {
-            object ClearError : RandomMealAction()
-            object UpdateFavoriteMeal : RandomMealAction()
+            data object ClearError : RandomMealAction()
+            data object UpdateFavoriteMeal : RandomMealAction()
         }
 
         internal data class RandomMealViewState(

@@ -2,8 +2,8 @@ package app.cookery.domain.interactors
 
 import app.cookery.AppCoroutineDispatchers
 import app.cookery.domain.Interactor
-import app.cookery.repositories.areas.AreaRepository
-import app.cookery.repositories.categories.CategoriesRepository
+import app.cookery.domain.repositories.AreaRepository
+import app.cookery.domain.repositories.CategoriesRepository
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 

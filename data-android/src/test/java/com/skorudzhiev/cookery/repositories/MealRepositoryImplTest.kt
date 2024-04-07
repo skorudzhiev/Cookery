@@ -1,11 +1,11 @@
 package com.skorudzhiev.cookery.repositories
 
-import app.cookery.mappers.MealListToMealDetails
-import app.cookery.mappers.MealToMealDetails
+import app.cookery.mappers.meal.MealDetailsEntityMapper
+import app.cookery.mappers.meal.MealListToMealDetails
 import app.cookery.repositories.details.remote.MealRemoteDataSourceImpl
 import com.google.common.truth.Truth.assertThat
 import com.skorudzhiev.cookery.enqueueResponse
-import com.skorudzhiev.cookery.mealDetails
+import com.skorudzhiev.cookery.mealDetailEntities
 import com.skorudzhiev.cookery.provideTheMealDbTestingApi
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
@@ -15,7 +15,7 @@ import org.junit.Before
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
-class MealRepositoryTest {
+class MealRepositoryImplTest {
 
     private lateinit var mockWebServer: MockWebServer
     private lateinit var dataSource: MealRemoteDataSourceImpl
@@ -27,7 +27,7 @@ class MealRepositoryTest {
         mockWebServer = MockWebServer()
         dataSource = MealRemoteDataSourceImpl(
             provideTheMealDbTestingApi(mockWebServer),
-            MealListToMealDetails(MealToMealDetails())
+            MealListToMealDetails(MealDetailsEntityMapper())
         )
     }
 
@@ -41,7 +41,7 @@ class MealRepositoryTest {
         mockWebServer.enqueueResponse(sourceFile, 200)
         runBlocking {
             val actual = dataSource.getMealDetails(mealId).getOrThrow()[0]
-            val expected = mealDetails[0]
+            val expected = mealDetailEntities[0]
 
             assertThat(expected).isNotNull()
             assertThat(actual.mealId).isEqualTo(expected.mealId)

@@ -37,6 +37,7 @@ dependencies {
     implementation project(':base')
     implementation project(':base-android')
     api project(':data')
+    implementation project(':domain')
 
     api Libs.Room.runtime
     implementation Libs.Room.ktx

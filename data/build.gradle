@@ -4,6 +4,7 @@ import com.skorudzhiev.cookery.buildsrc.Libs
 
 dependencies {
     api project(':base')
+    implementation project(':domain')
 
     api Libs.Room.common
 }

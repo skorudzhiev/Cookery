@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import app.cookery.db.CookeryEntity
 
 @Entity
-data class Favorites(
+data class FavoritesEntity(
 
     @PrimaryKey
     @ColumnInfo(name = "idMeal") val mealId: String

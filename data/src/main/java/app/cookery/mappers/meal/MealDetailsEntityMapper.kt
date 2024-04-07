@@ -1,6 +1,7 @@
-package app.cookery.mappers
+package app.cookery.mappers.meal
 
-import app.cookery.db.entities.MealDetails
+import app.cookery.data.Mapper
+import app.cookery.db.entities.MealDetailsEntity
 import app.cookery.dto.Meal
 import app.cookery.dto.MealList
 import javax.inject.Inject
@@ -8,14 +9,14 @@ import javax.inject.Singleton
 
 @Singleton
 class MealListToMealDetails @Inject constructor(
-    private val mapper: MealToMealDetails
-) : Mapper<MealList, List<MealDetails>> {
-    override suspend fun map(from: MealList): List<MealDetails> = from.mealsList.map { mapper.map(it) }
+    private val mapper: MealDetailsEntityMapper
+) : Mapper<MealList, List<MealDetailsEntity>> {
+    override suspend fun map(from: MealList): List<MealDetailsEntity> = from.mealsList.map { mapper.map(it) }
 }
 
 @Singleton
-class MealToMealDetails @Inject constructor() : Mapper<Meal, MealDetails> {
-    override suspend fun map(from: Meal): MealDetails = MealDetails(
+class MealDetailsEntityMapper @Inject constructor() : Mapper<Meal, MealDetailsEntity> {
+    override suspend fun map(from: Meal): MealDetailsEntity = MealDetailsEntity(
         mealId = from.mealId,
         insertedAt = System.currentTimeMillis(),
         mealName = from.mealName,

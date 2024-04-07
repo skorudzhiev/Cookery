@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import app.cookery.db.CookeryEntity
 
 @Entity
-data class CategoryDetails(
+data class CategoryDetailsEntity(
     @PrimaryKey
     @ColumnInfo(name = "mealId") val mealId: String,
     @ColumnInfo(name = "mealName") val mealName: String,

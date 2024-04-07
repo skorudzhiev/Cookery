@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -18,11 +17,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import app.cookery.db.entities.relations.AreaWithCategoryDetails
 import app.cookery.details.utils.ScaffoldDetails
 import app.cookery.details.utils.backDropImage
 import app.cookery.details.utils.spacer
 import app.cookery.details.utils.titleItem
+import app.cookery.domain.model.AreaWithCategoryDetails
 import com.cookery.common.compose.components.CategoryDetailsItem
 import com.cookery.common.compose.components.getAppBarColor
 import com.cookery.common.compose.modifiers.Layout
@@ -131,10 +130,10 @@ private fun LazyListScope.pageDetailsItems(
     areaDetails: List<AreaWithCategoryDetails>,
     openMealDetails: (String) -> Unit
 ) {
-    items(areaDetails) { meal ->
+    items(areaDetails.size) { meal ->
         Box(
             modifier = Modifier
-                .clickable(onClick = { openMealDetails(meal.mealId) })
+                .clickable(onClick = { openMealDetails(areaDetails[meal].mealId) })
                 .fillMaxSize()
                 .padding(
                     horizontal = Layout.bodyMargin,
@@ -142,8 +141,8 @@ private fun LazyListScope.pageDetailsItems(
                 )
         ) {
             CategoryDetailsItem(
-                imageUrl = meal.mealImage,
-                mealDescription = meal.mealName,
+                imageUrl = areaDetails[meal].mealImage,
+                mealDescription = areaDetails[meal].mealName,
                 modifier = Modifier
             )
         }

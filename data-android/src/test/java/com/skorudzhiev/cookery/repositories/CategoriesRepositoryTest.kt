@@ -1,14 +1,14 @@
 package com.skorudzhiev.cookery.repositories
 
-import app.cookery.mappers.AreasToArea
-import app.cookery.mappers.CategoriesToCategory
-import app.cookery.mappers.CategoryDetailsMapper
-import app.cookery.mappers.MealCategoryToCategory
-import app.cookery.mappers.MealsAreaToArea
-import app.cookery.mappers.MealsToCategoryDetails
+import app.cookery.mappers.area.AreaEntityMapper
+import app.cookery.mappers.area.AreasToArea
+import app.cookery.mappers.category.CategoriesToCategory
+import app.cookery.mappers.category.CategoryDetailsEntityMapper
+import app.cookery.mappers.category.MealCategoryToCategory
+import app.cookery.mappers.category.MealsToCategoryDetails
 import app.cookery.repositories.categories.remote.CategoriesRemoteDataSourceImpl
 import com.google.common.truth.Truth.assertThat
-import com.skorudzhiev.cookery.allMealAreas
+import com.skorudzhiev.cookery.allMealAreaEntities
 import com.skorudzhiev.cookery.allMealCategories
 import com.skorudzhiev.cookery.enqueueResponse
 import com.skorudzhiev.cookery.mealsFilteredByArea
@@ -39,9 +39,9 @@ class CategoriesRepositoryTest {
         mockWebServer = MockWebServer()
         dataSource = CategoriesRemoteDataSourceImpl(
             provideTheMealDbTestingApi(mockWebServer),
-            AreasToArea(mapper = MealsAreaToArea()),
+            AreasToArea(mapper = AreaEntityMapper()),
             CategoriesToCategory(MealCategoryToCategory()),
-            MealsToCategoryDetails(CategoryDetailsMapper())
+            MealsToCategoryDetails(CategoryDetailsEntityMapper())
         )
     }
 
@@ -67,7 +67,7 @@ class CategoriesRepositoryTest {
         mockWebServer.enqueueResponse(allMealAreasSourceFile, 200)
         runBlocking {
             val actual = dataSource.getMealAreas().getOrThrow()
-            val expected = allMealAreas
+            val expected = allMealAreaEntities
 
             assertThat(expected).isNotNull()
             assertThat(actual).isEqualTo(expected)

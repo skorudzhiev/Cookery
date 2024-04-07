@@ -1,12 +1,12 @@
 package com.skorudzhiev.cookery.repositories
 
-import app.cookery.mappers.MealListToMealDetails
-import app.cookery.mappers.MealToMealDetails
+import app.cookery.mappers.meal.MealDetailsEntityMapper
+import app.cookery.mappers.meal.MealListToMealDetails
 import app.cookery.repositories.random.RandomRemoteDataSource
 import app.cookery.repositories.random.RandomRemoteDataSourceImpl
 import com.google.common.truth.Truth.assertThat
 import com.skorudzhiev.cookery.enqueueResponse
-import com.skorudzhiev.cookery.mealDetails
+import com.skorudzhiev.cookery.mealDetailEntities
 import com.skorudzhiev.cookery.provideTheMealDbTestingApi
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
@@ -28,7 +28,7 @@ class RandomRepositoryTest {
         mockWebServer = MockWebServer()
         dataSource = RandomRemoteDataSourceImpl(
             theMealDbApi = provideTheMealDbTestingApi(mockWebServer = mockWebServer),
-            mealDetailsMapper = MealListToMealDetails(mapper = MealToMealDetails())
+            mealDetailsMapper = MealListToMealDetails(mapper = MealDetailsEntityMapper())
         )
     }
 
@@ -42,7 +42,7 @@ class RandomRepositoryTest {
         mockWebServer.enqueueResponse(fileName = sourceFile, code = 200)
         runBlocking {
             val actual = dataSource.getRandomMeal().getOrThrow()[0]
-            val expected = mealDetails[0]
+            val expected = mealDetailEntities[0]
 
             assertThat(expected).isNotNull()
             assertThat(actual.mealId).isEqualTo(expected.mealId)

@@ -1,7 +1,7 @@
 package app.cookery.details.meal
 
 import androidx.compose.runtime.Immutable
-import app.cookery.db.entities.MealDetails
+import app.cookery.domain.model.MealDetails
 import com.cookery.api.UiError
 
 @Immutable

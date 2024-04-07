@@ -13,7 +13,7 @@ kapt {
 }
 
 android {
-    namespace 'com.skorudzhiev.cookery'
+    namespace 'com.skorudzhiev.cookery.ui.random'
     compileSdk buildConfig.compileSdk
 
     defaultConfig {

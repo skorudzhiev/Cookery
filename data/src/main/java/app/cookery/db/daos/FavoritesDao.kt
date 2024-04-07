@@ -3,24 +3,24 @@ package app.cookery.db.daos
 import androidx.room.Dao
 import androidx.room.Query
 import app.cookery.db.CookeryDao
-import app.cookery.db.entities.Favorites
-import app.cookery.db.entities.categories.CategoryDetails
+import app.cookery.db.entities.FavoritesEntity
+import app.cookery.db.entities.categories.CategoryDetailsEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface FavoritesDao : CookeryDao<Favorites> {
+interface FavoritesDao : CookeryDao<FavoritesEntity> {
 
     @Query(
         """
             SELECT *
-            FROM Favorites
-            LEFT JOIN CategoryDetails
-            ON Favorites.idMeal = CategoryDetails.mealId
+            FROM FavoritesEntity
+            LEFT JOIN CategoryDetailsEntity
+            ON FavoritesEntity.idMeal = CategoryDetailsEntity.mealId
 
         """
     )
-    fun getFavoriteMeals(): Flow<List<CategoryDetails>>
+    fun getFavoriteMeals(): Flow<List<CategoryDetailsEntity>>
 
-    @Query("SELECT * from Favorites WHERE idMeal = :mealId")
+    @Query("SELECT * from FavoritesEntity WHERE idMeal = :mealId")
     fun getMealId(mealId: String): Flow<String>
 }

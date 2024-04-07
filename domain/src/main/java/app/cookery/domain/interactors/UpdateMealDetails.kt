@@ -2,7 +2,7 @@ package app.cookery.domain.interactors
 
 import app.cookery.AppCoroutineDispatchers
 import app.cookery.domain.Interactor
-import app.cookery.repositories.details.MealRepository
+import app.cookery.domain.repositories.MealRepository
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 

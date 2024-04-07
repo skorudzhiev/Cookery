@@ -1,26 +1,36 @@
 package app.cookery.repositories.categories
 
+import app.cookery.domain.repositories.CategoriesRepository
+import app.cookery.mappers.category.CategoryDetailsMapper
+import app.cookery.mappers.category.CategoryMapper
 import app.cookery.repositories.categories.remote.CategoriesRemoteDataSource
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class CategoriesRepository @Inject constructor(
+class CategoriesRepositoryImpl @Inject constructor(
     private val dataSource: CategoriesRemoteDataSource,
-    private val store: CategoriesLocalDataSource
-) {
+    private val store: CategoriesLocalDataSource,
+    private val categoryDetailsMapper: CategoryDetailsMapper,
+    private val categoryMapper: CategoryMapper,
+) : CategoriesRepository {
 
-    fun observeRandomCategoryDetails() = store.observeRandomCategoryMeals()
-    fun observeAllMealCategories() = store.observeAllMealCategories()
-    fun observeCategoryWithCategoryDetails(categoryName: String) =
+    override fun observeRandomCategoryDetails() = store.observeRandomCategoryMeals()
+        .map { list -> list.map { categoryDetailsMapper.map(it) } }
+
+    override fun observeAllMealCategories() = store.observeAllMealCategories()
+        .map { list -> list.map { categoryMapper.map(it) } }
+
+    override fun observeCategoryWithCategoryDetails(categoryName: String) =
         store.observeCategoryWithCategoryDetails(categoryName)
 
-    suspend fun fetchAllMealCategories() {
+    override suspend fun fetchAllMealCategories() {
         val response = dataSource.getAllMealCategories().getOrThrow()
         store.saveAllMealCategories(response)
     }
 
-    suspend fun fetchMealsByCategory(categoryName: String) {
+    override suspend fun fetchMealsByCategory(categoryName: String) {
         val response = dataSource.getMealsByCategory(categoryName).getOrThrow()
         store.saveCategoryDetails(
             meals = response,

@@ -2,10 +2,10 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "ac0110e99d1bf6d6d835d3e16f13a3e5",
+    "identityHash": "f8477a3e3c6438cb453c51cdef25d2a3",
     "entities": [
       {
-        "tableName": "Category",
+        "tableName": "CategoryEntity",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`categoryName` TEXT NOT NULL, `categoryId` TEXT NOT NULL, `categoryImage` TEXT, `categoryDescription` TEXT, PRIMARY KEY(`categoryName`))",
         "fields": [
           {
@@ -34,16 +34,16 @@
           }
         ],
         "primaryKey": {
+          "autoGenerate": false,
           "columnNames": [
             "categoryName"
-          ],
-          "autoGenerate": false
+          ]
         },
         "indices": [],
         "foreignKeys": []
       },
       {
-        "tableName": "Area",
+        "tableName": "AreaEntity",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`area` TEXT NOT NULL, PRIMARY KEY(`area`))",
         "fields": [
           {
@@ -54,16 +54,16 @@
           }
         ],
         "primaryKey": {
+          "autoGenerate": false,
           "columnNames": [
             "area"
-          ],
-          "autoGenerate": false
+          ]
         },
         "indices": [],
         "foreignKeys": []
       },
       {
-        "tableName": "CategoryDetails",
+        "tableName": "CategoryDetailsEntity",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`mealId` TEXT NOT NULL, `mealName` TEXT NOT NULL, `mealImage` TEXT NOT NULL, `categoryName` TEXT, `area` TEXT, PRIMARY KEY(`mealId`))",
         "fields": [
           {
@@ -98,16 +98,16 @@
           }
         ],
         "primaryKey": {
+          "autoGenerate": false,
           "columnNames": [
             "mealId"
-          ],
-          "autoGenerate": false
+          ]
         },
         "indices": [],
         "foreignKeys": []
       },
       {
-        "tableName": "MealDetails",
+        "tableName": "MealDetailsEntity",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`idMeal` TEXT NOT NULL, `insertedAt` INTEGER, `mealName` TEXT, `drinkAlternate` TEXT, `mealCategory` TEXT, `mealArea` TEXT, `cookingInstructions` TEXT, `mealImage` TEXT, `mealTags` TEXT, `mealYoutube` TEXT, `mealIngredient1` TEXT, `mealIngredient2` TEXT, `mealIngredient3` TEXT, `mealIngredient4` TEXT, `mealIngredient5` TEXT, `mealIngredient6` TEXT, `mealIngredient7` TEXT, `mealIngredient8` TEXT, `mealIngredient9` TEXT, `mealIngredient10` TEXT, `mealIngredient11` TEXT, `mealIngredient12` TEXT, `mealIngredient13` TEXT, `mealIngredient14` TEXT, `mealIngredient15` TEXT, `mealIngredient16` TEXT, `mealIngredient17` TEXT, `mealIngredient18` TEXT, `mealIngredient19` TEXT, `mealIngredient20` TEXT, `mealMeasure1` TEXT, `mealMeasure2` TEXT, `mealMeasure3` TEXT, `mealMeasure4` TEXT, `mealMeasure5` TEXT, `mealMeasure6` TEXT, `mealMeasure7` TEXT, `mealMeasure8` TEXT, `mealMeasure9` TEXT, `mealMeasure10` TEXT, `mealMeasure11` TEXT, `mealMeasure12` TEXT, `mealMeasure13` TEXT, `mealMeasure14` TEXT, `mealMeasure15` TEXT, `mealMeasure16` TEXT, `mealMeasure17` TEXT, `mealMeasure18` TEXT, `mealMeasure19` TEXT, `mealMeasure20` TEXT, `mealSource` TEXT, `mealImageSource` TEXT, `mealCreativeCommonsConfirmed` TEXT, `dateModified` TEXT, PRIMARY KEY(`idMeal`))",
         "fields": [
           {
@@ -436,16 +436,16 @@
           }
         ],
         "primaryKey": {
+          "autoGenerate": false,
           "columnNames": [
             "idMeal"
-          ],
-          "autoGenerate": false
+          ]
         },
         "indices": [],
         "foreignKeys": []
       },
       {
-        "tableName": "Favorites",
+        "tableName": "FavoritesEntity",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`idMeal` TEXT NOT NULL, PRIMARY KEY(`idMeal`))",
         "fields": [
           {
@@ -456,10 +456,10 @@
           }
         ],
         "primaryKey": {
+          "autoGenerate": false,
           "columnNames": [
             "idMeal"
-          ],
-          "autoGenerate": false
+          ]
         },
         "indices": [],
         "foreignKeys": []
@@ -468,7 +468,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ac0110e99d1bf6d6d835d3e16f13a3e5')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f8477a3e3c6438cb453c51cdef25d2a3')"
     ]
   }
 }
