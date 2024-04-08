@@ -97,7 +97,6 @@ class MealDetailsViewModel @Inject constructor(
                 updateMealDetails(UpdateMealDetails.Params(meal))
                     .watchStatus(
                         loadingCounter = mealLoadingState,
-                        viewModelScope = viewModelScope,
                         logger = logger,
                         snackbarManager = snackbarManager
                     )

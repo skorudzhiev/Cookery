@@ -74,7 +74,6 @@ class CategoryDetailsViewModel @Inject constructor(
                 updateMealsByCategory(UpdateMealsByCategory.Params(categoryName))
                     .watchStatus(
                         loadingCounter = categoriesLoadingState,
-                        viewModelScope = viewModelScope,
                         logger = logger,
                         snackbarManager = snackbarManager
                     )

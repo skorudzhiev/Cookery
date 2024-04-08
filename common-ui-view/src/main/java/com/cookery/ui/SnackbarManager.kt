@@ -1,11 +1,10 @@
 package com.cookery.ui
 
 import app.cookery.extensions.delayFlow
-import com.cookery.api.UiError
+import app.cookery.presentation.UiStatus.UiError
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.merge

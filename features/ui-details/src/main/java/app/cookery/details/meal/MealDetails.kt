@@ -63,7 +63,7 @@ private fun MealDetails(
     val snackBarHostState = remember { SnackbarHostState() }
 
     SnackBar(
-        error = state.error,
+        errorMessage = state.error,
         snackBarHostState = snackBarHostState,
         onClearError = listeners.clearError
     )

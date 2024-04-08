@@ -64,7 +64,7 @@ private fun RandomMeal(
     val snackBarHostState = remember { SnackbarHostState() }
 
     SnackBar(
-        error = viewState.error,
+        errorMessage = viewState.error,
         snackBarHostState = snackBarHostState,
         onClearError = listeners.clearError
     )

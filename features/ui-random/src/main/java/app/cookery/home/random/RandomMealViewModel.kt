@@ -10,7 +10,6 @@ import app.cookery.domain.observers.random.ObserveLastMeal
 import app.cookery.extensions.combine
 import app.cookery.home.random.RandomMealViewModel.Companion.RandomMealAction.ClearError
 import app.cookery.home.random.RandomMealViewModel.Companion.RandomMealAction.UpdateFavoriteMeal
-import com.cookery.api.UiError
 import com.cookery.ui.SnackbarManager
 import com.cookery.util.ObservableLoadingCounter
 import com.cookery.watchStatus
@@ -62,10 +61,9 @@ internal class RandomMealViewModel @Inject constructor(
         }
     }
 
-    internal fun getRandomMealFromRemote() {
+    internal suspend fun getRandomMealFromRemote() {
         updateRandomMeal(Unit).watchStatus(
             loadingCounter = loadingState,
-            viewModelScope = viewModelScope,
             logger = logger,
             snackbarManager = snackBarManager
         )
@@ -83,8 +81,8 @@ internal class RandomMealViewModel @Inject constructor(
     }
 
     private fun updateFavoriteMeal() {
-        getRandomMealFromRemote()
         viewModelScope.launch {
+            getRandomMealFromRemote()
             updateMealDetails.updateFavoriteMeal(
                 params = UpdateMealDetails.Params(mealId = getRandomMealId().toString()),
                 isMarkedAsFavorite = state.value.isMealMarkedAsFavorite
@@ -105,7 +103,7 @@ internal class RandomMealViewModel @Inject constructor(
             var randomMeal: MealDetails? = null,
             val refreshing: Boolean = false,
             val isMealMarkedAsFavorite: Boolean = false,
-            val error: UiError? = null
+            val error: String? = null
         ) {
             companion object {
                 val Empty = RandomMealViewState()

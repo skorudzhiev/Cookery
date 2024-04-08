@@ -84,12 +84,13 @@ private fun Categories(
 
             LaunchedEffect(state.error) {
                 state.error?.let { error ->
-                    snackbarHostState.showSnackbar(error.message)
+                    snackbarHostState.showSnackbar(error)
                 }
             }
             SnackBar(
-                clearError = listeners.clearError,
-                snackbarHostState
+                onClearError = listeners.clearError,
+                snackBarHostState = snackbarHostState,
+                errorMessage = state.error
             )
         }
     }

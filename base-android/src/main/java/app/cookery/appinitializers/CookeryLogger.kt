@@ -57,8 +57,8 @@ class CookeryLogger @Inject constructor() : Logger {
         Timber.d(message, *args)
     }
 
-    override fun d(t: Throwable, message: String, vararg args: Any?) {
-        Timber.d(t, message, *args)
+    override fun d(throwable: Throwable, message: String?, vararg args: Any?) {
+        Timber.d(throwable, message, *args)
     }
 
     override fun i(message: String, vararg args: Any?) {

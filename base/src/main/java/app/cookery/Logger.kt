@@ -9,7 +9,7 @@ interface Logger {
     fun d(message: String, vararg args: Any?)
 
     /** Log a debug exception and a message with optional format args.  */
-    fun d(t: Throwable, message: String, vararg args: Any?)
+    fun d(throwable: Throwable, message: String?, vararg args: Any?)
 
     /** Log an info message with optional format args.  */
     fun i(message: String, vararg args: Any?)

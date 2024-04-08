@@ -15,7 +15,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onSizeChanged
-import com.cookery.api.UiError
 import com.cookery.common.compose.components.CategoryDetailsAppBar
 import com.cookery.common.compose.components.SnackBar
 
@@ -24,7 +23,7 @@ private var appBarHeight by mutableStateOf(0)
 @Composable
 fun ScaffoldDetails(
     title: String?,
-    uiError: UiError?,
+    uiError: String?,
     pageContent: @Composable (
         showAppBackground: Boolean,
         contentPadding: PaddingValues,
@@ -54,7 +53,7 @@ fun ScaffoldDetails(
 
     LaunchedEffect(uiError) {
         uiError?.let { error ->
-            scaffoldState.snackbarHostState.showSnackbar(error.message)
+            scaffoldState.snackbarHostState.showSnackbar(error)
         }
     }
 
@@ -68,8 +67,9 @@ fun ScaffoldDetails(
         },
         snackbarHost = { snackBarHostState ->
             SnackBar(
-                clearError = onClearError,
-                snackbarHostState = snackBarHostState
+                errorMessage = uiError,
+                snackBarHostState = snackBarHostState,
+                onClearError = onClearError
             )
         },
     ) { contentPadding ->

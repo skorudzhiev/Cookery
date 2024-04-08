@@ -1,6 +1,6 @@
 package com.cookery.util
 
-import app.cookery.data.InvokeStatus
+import app.cookery.presentation.InvokeStatus
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect

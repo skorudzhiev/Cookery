@@ -17,18 +17,17 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.cookery.api.UiError
 import com.google.accompanist.insets.navigationBarsPadding
 
 @Composable
 fun SnackBar(
-    error: UiError?,
+    errorMessage: String?,
     snackBarHostState: SnackbarHostState,
     onClearError: () -> Unit
 ) {
-    LaunchedEffect(error) {
-        error?.let { error ->
-            snackBarHostState.showSnackbar(error.message)
+    LaunchedEffect(errorMessage) {
+        errorMessage?.let { error ->
+            snackBarHostState.showSnackbar(error)
         }
     }
 
@@ -39,7 +38,7 @@ fun SnackBar(
 }
 
 @Composable
-fun SnackBar(
+private fun SnackBar(
     clearError: () -> Unit,
     snackbarHostState: SnackbarHostState
 ) {

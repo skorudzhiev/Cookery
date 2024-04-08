@@ -3,10 +3,8 @@ package app.cookery.home.categories
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.cookery.DataStore
+import app.cookery.ErrorMapper
 import app.cookery.Logger
-import app.cookery.data.InvokeError
-import app.cookery.data.InvokeStarted
-import app.cookery.data.InvokeSuccess
 import app.cookery.domain.interactors.InitializeHomeScreenData
 import app.cookery.domain.interactors.areas.UpdateAreas
 import app.cookery.domain.interactors.categories.UpdateAllMealCategories
@@ -15,7 +13,6 @@ import app.cookery.domain.observers.areas.ObserveRandomAreaMeals
 import app.cookery.domain.observers.categories.ObserveCategories
 import app.cookery.domain.observers.categories.ObserveRandomCategoryMeals
 import app.cookery.extensions.combine
-import com.cookery.api.UiError
 import com.cookery.ui.SnackbarManager
 import com.cookery.util.ObservableLoadingCounter
 import com.cookery.watchStatus
@@ -34,12 +31,13 @@ internal class CategoriesViewModel @Inject constructor(
     private val updateAllMealCategories: UpdateAllMealCategories,
     private val updateAreas: UpdateAreas,
     private val snackbarManager: SnackbarManager,
+    private val uiErrorMapper: ErrorMapper,
     private val dataStore: DataStore,
     private val logger: Logger,
     private val observeCategories: ObserveCategories,
     private val observeAreas: ObserveAreas,
     private val observeRandomCategoryMeals: ObserveRandomCategoryMeals,
-    private val observeRandomAreaMeals: ObserveRandomAreaMeals
+    private val observeRandomAreaMeals: ObserveRandomAreaMeals,
 ) : ViewModel() {
 
     private val categoriesLoadingState = ObservableLoadingCounter()
@@ -69,7 +67,7 @@ internal class CategoriesViewModel @Inject constructor(
             randomCategoriesRefreshing = randomCategoriesLoad,
             recommendedMeals = randomAreaMeals,
             randomAreasRefreshing = randomAreasLoad,
-            error = errors
+            error = uiErrorMapper.mapError(errors?.errorType)
         )
     }.stateIn(
         scope = viewModelScope,
@@ -113,38 +111,29 @@ internal class CategoriesViewModel @Inject constructor(
 
     private fun initializeData() {
         viewModelScope.launch {
-            initializeHomeScreenData(InitializeHomeScreenData.Params()).collectLatest { status ->
-                when (status) {
-                    InvokeStarted -> categoriesLoadingState.addLoader()
-                    InvokeSuccess -> {
-                        categoriesLoadingState.removeLoader()
-                        dataStore.setAppInitializationState(true)
-                    }
-                    is InvokeError -> {
-                        logger.i(status.throwable)
-                        snackbarManager.addError(UiError(status.throwable))
-                        categoriesLoadingState.removeLoader()
-                    }
+            initializeHomeScreenData(InitializeHomeScreenData.Params()).watchStatus(
+                loadingCounter = categoriesLoadingState,
+                logger = logger,
+                snackbarManager = snackbarManager,
+                invokeSuccess = {
+                    dataStore.setAppInitializationState(true)
                 }
-            }
+            )
         }
     }
 
     private fun refresh() {
         viewModelScope.launch {
-            updateAllMealCategories(UpdateAllMealCategories.Params())
-                .watchStatus(
-                    loadingCounter = categoriesLoadingState,
-                    viewModelScope = viewModelScope,
-                    logger = logger,
-                    snackbarManager = snackbarManager
-                )
+            updateAllMealCategories(UpdateAllMealCategories.Params()).watchStatus(
+                loadingCounter = categoriesLoadingState,
+                logger = logger,
+                snackbarManager = snackbarManager
+            )
         }
         viewModelScope.launch {
             updateAreas(UpdateAreas.Params())
                 .watchStatus(
                     loadingCounter = categoriesLoadingState,
-                    viewModelScope = viewModelScope,
                     logger = logger,
                     snackbarManager = snackbarManager
                 )

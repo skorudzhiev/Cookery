@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Error messages -->
+    <string name="error_network_offline">No internet connection detected. Please check your connection and try again.</string>
+    <string name="error_network_timeout">The request took too long. Please check your internet connection and try again.</string>
+    <string name="error_illegal_argument">Invalid data provided. Please check your input and try again.</string>
+    <string name="error_bad_request">The request was malformed. Please contact support if this persists.</string>
+    <string name="error_forbidden">You don\'t have permission to access this resource.</string>
+    <string name="error_unauthorized">Authorization failed. Please check your credentials and try again.</string>
+    <string name="error_expired">Your session has expired. Please log in again.</string>
+    <string name="error_unknown">An unknown error occurred. Please try again later or contact support.</string>
+</resources>

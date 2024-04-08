@@ -1,9 +1,9 @@
 package app.cookery.domain
 
-import app.cookery.data.InvokeError
-import app.cookery.data.InvokeStarted
-import app.cookery.data.InvokeStatus
-import app.cookery.data.InvokeSuccess
+import app.cookery.presentation.InvokeStatus
+import app.cookery.presentation.InvokeStatus.InvokeError
+import app.cookery.presentation.InvokeStatus.InvokeStarted
+import app.cookery.presentation.InvokeStatus.InvokeSuccess
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow

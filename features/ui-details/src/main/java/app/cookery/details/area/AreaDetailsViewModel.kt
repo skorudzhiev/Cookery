@@ -58,7 +58,6 @@ class AreaDetailsViewModel @Inject constructor(
                     updateMealsByArea(UpdateMealsByArea.Params(area))
                         .watchStatus(
                             loadingCounter = loadingState,
-                            viewModelScope = viewModelScope,
                             logger = logger,
                             snackbarManager = snackbarManager
                         )

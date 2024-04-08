@@ -65,15 +65,17 @@ private fun Favorites(
 
     LaunchedEffect(viewState.error) {
         viewState.error?.let { error ->
-            scaffoldState.snackbarHostState.showSnackbar(error.message)
+            scaffoldState.snackbarHostState.showSnackbar(error)
         }
     }
 
     Scaffold(
         snackbarHost = { state ->
             SnackBar(
-                clearError = listeners.onClearError,
-                snackbarHostState = state
+                errorMessage = viewState.error,
+                snackBarHostState = state,
+                onClearError = listeners.onClearError
+
             )
         }
     ) { contentPadding ->

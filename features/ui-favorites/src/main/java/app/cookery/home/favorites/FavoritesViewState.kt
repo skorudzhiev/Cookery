@@ -2,13 +2,12 @@ package app.cookery.home.favorites
 
 import androidx.compose.runtime.Immutable
 import app.cookery.domain.model.CategoryDetails
-import com.cookery.api.UiError
 
 @Immutable
 internal data class FavoritesViewState(
     val favorites: List<CategoryDetails> = emptyList(),
     val refreshing: Boolean = false,
-    val error: UiError? = null
+    val error: String? = null
 ) {
     companion object {
         val Empty = FavoritesViewState()
