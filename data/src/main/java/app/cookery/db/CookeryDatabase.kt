@@ -5,6 +5,8 @@ import app.cookery.db.daos.MealDao
 import app.cookery.db.daos.categories.AreaDao
 import app.cookery.db.daos.categories.CategoriesDao
 import app.cookery.db.daos.categories.CategoryDetailsDao
+import app.cookery.db.daos.search.LastOpenedMealsDao
+import app.cookery.db.daos.search.RecentSearchesDao
 
 interface CookeryDatabase {
     fun areaDao(): AreaDao
@@ -12,4 +14,6 @@ interface CookeryDatabase {
     fun categoryDetailsDao(): CategoryDetailsDao
     fun mealDetailsDao(): MealDao
     fun favoritesDao(): FavoritesDao
+    fun recentSearchesDao(): RecentSearchesDao
+    fun lastOpenedMealsDao(): LastOpenedMealsDao
 }

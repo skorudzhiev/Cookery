@@ -8,6 +8,8 @@ import app.cookery.db.entities.MealDetailsEntity
 import app.cookery.db.entities.categories.AreaEntity
 import app.cookery.db.entities.categories.CategoryDetailsEntity
 import app.cookery.db.entities.categories.CategoryEntity
+import app.cookery.db.entities.search.LastOpenedMealsEntity
+import app.cookery.db.entities.search.RecentSearchesEntity
 
 @Database(
     entities = [
@@ -15,7 +17,9 @@ import app.cookery.db.entities.categories.CategoryEntity
         AreaEntity::class,
         CategoryDetailsEntity::class,
         MealDetailsEntity::class,
-        FavoritesEntity::class
+        FavoritesEntity::class,
+        RecentSearchesEntity::class,
+        LastOpenedMealsEntity::class
     ],
     version = 1
 )
