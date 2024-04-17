@@ -6,6 +6,8 @@ import app.cookery.repositories.details.remote.MealRemoteDataSource
 import app.cookery.repositories.details.remote.MealRemoteDataSourceImpl
 import app.cookery.repositories.random.RandomRemoteDataSource
 import app.cookery.repositories.random.RandomRemoteDataSourceImpl
+import app.cookery.repositories.search.SearchRemoteDataSource
+import app.cookery.repositories.search.SearchRemoteDataSourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -23,4 +25,7 @@ abstract class RemoteDataSourceBinds {
 
     @Binds
     abstract fun bindRandomRemoteDataSource(source: RandomRemoteDataSourceImpl): RandomRemoteDataSource
+
+    @Binds
+    abstract fun bindSearchRemoteDataSource(source: SearchRemoteDataSourceImpl): SearchRemoteDataSource
 }

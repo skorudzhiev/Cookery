@@ -5,11 +5,13 @@ import app.cookery.domain.repositories.CategoriesRepository
 import app.cookery.domain.repositories.FavoritesRepository
 import app.cookery.domain.repositories.MealRepository
 import app.cookery.domain.repositories.RandomRepository
+import app.cookery.domain.repositories.SearchRepository
 import app.cookery.repositories.areas.AreaRepositoryImpl
 import app.cookery.repositories.categories.CategoriesRepositoryImpl
 import app.cookery.repositories.details.MealRepositoryImpl
 import app.cookery.repositories.favorites.FavoritesRepositoryImpl
 import app.cookery.repositories.random.RandomRepositoryImpl
+import app.cookery.repositories.search.SearchRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -33,4 +35,7 @@ abstract class RepositoryBinds {
 
     @Binds
     abstract fun bindAreaRepository(repository: AreaRepositoryImpl): AreaRepository
+
+    @Binds
+    abstract fun bindSearchRepository(repository: SearchRepositoryImpl): SearchRepository
 }
