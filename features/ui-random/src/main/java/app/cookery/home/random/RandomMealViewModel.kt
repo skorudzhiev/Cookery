@@ -3,10 +3,10 @@ package app.cookery.home.random
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.cookery.Logger
-import app.cookery.domain.interactors.UpdateMealDetails
 import app.cookery.domain.interactors.UpdateRandomMeal
 import app.cookery.domain.model.MealDetails
 import app.cookery.domain.observers.random.ObserveLastMeal
+import app.cookery.domain.usecases.UpdateFavoriteMealUseCase
 import app.cookery.extensions.combine
 import app.cookery.home.random.RandomMealViewModel.Companion.RandomMealAction.ClearError
 import app.cookery.home.random.RandomMealViewModel.Companion.RandomMealAction.UpdateFavoriteMeal
@@ -26,7 +26,7 @@ import javax.inject.Inject
 internal class RandomMealViewModel @Inject constructor(
     private val observeLastMeal: ObserveLastMeal,
     private val updateRandomMeal: UpdateRandomMeal,
-    private val updateMealDetails: UpdateMealDetails,
+    private val updateFavoriteMeal: UpdateFavoriteMealUseCase,
     private val snackBarManager: SnackbarManager,
     private val logger: Logger
 ) : ViewModel() {
@@ -83,8 +83,8 @@ internal class RandomMealViewModel @Inject constructor(
     private fun updateFavoriteMeal() {
         viewModelScope.launch {
             getRandomMealFromRemote()
-            updateMealDetails.updateFavoriteMeal(
-                params = UpdateMealDetails.Params(mealId = getRandomMealId().toString()),
+            updateFavoriteMeal.invoke(
+                mealId = getRandomMealId().toString(),
                 isMarkedAsFavorite = state.value.isMealMarkedAsFavorite
             )
         }

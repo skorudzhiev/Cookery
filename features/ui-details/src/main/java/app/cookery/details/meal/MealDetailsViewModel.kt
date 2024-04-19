@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import app.cookery.Logger
 import app.cookery.domain.interactors.UpdateMealDetails
 import app.cookery.domain.observers.ObserveMealDetails
+import app.cookery.domain.usecases.UpdateFavoriteMealUseCase
 import app.cookery.extensions.combine
 import com.cookery.ui.SnackbarManager
 import com.cookery.util.ObservableLoadingCounter
@@ -25,6 +26,7 @@ class MealDetailsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val observeMealDetails: ObserveMealDetails,
     private val updateMealDetails: UpdateMealDetails,
+    private val updateFavoriteMeal: UpdateFavoriteMealUseCase,
     private val snackbarManager: SnackbarManager,
     private val logger: Logger
 ) : ViewModel() {
@@ -78,8 +80,8 @@ class MealDetailsViewModel @Inject constructor(
 
     private fun updateFavoriteMeal() {
         viewModelScope.launch {
-            updateMealDetails.updateFavoriteMeal(
-                params = UpdateMealDetails.Params(mealId = meal),
+            updateFavoriteMeal.invoke(
+                mealId = meal,
                 isMarkedAsFavorite = state.value.isMealMarkedAsFavorite
             )
         }

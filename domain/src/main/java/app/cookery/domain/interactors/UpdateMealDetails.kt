@@ -17,12 +17,5 @@ class UpdateMealDetails @Inject constructor(
         }
     }
 
-    suspend fun updateFavoriteMeal(params: Params, isMarkedAsFavorite: Boolean) {
-        repository.updateFavoriteMeal(
-            mealId = params.mealId,
-            isFavorite = isMarkedAsFavorite
-        )
-    }
-
     data class Params(val mealId: String)
 }
