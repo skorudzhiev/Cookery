@@ -1,4 +1,4 @@
-package app.cookery.domain.usecases
+package app.cookery.domain.usecases.search
 
 import app.cookery.domain.repositories.SearchRepository
 import javax.inject.Inject
