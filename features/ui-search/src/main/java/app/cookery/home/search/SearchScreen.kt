@@ -7,6 +7,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import app.cookery.home.search.SearchActions.SearchMealByName
 import app.cookery.home.search.SearchEffects.OpenMealDetails
 import com.cookery.common.compose.HandleEffects
 import com.cookery.common.compose.components.SnackBar
@@ -32,7 +33,7 @@ fun SearchScreen(
 
 @Composable
 private fun SearchScreenLayout(
-    state: SearchState,
+    state: SearchScreenState,
     onActionSent: (SearchActions) -> Unit
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
@@ -43,7 +44,13 @@ private fun SearchScreenLayout(
         error = state.error
     )
 
-    // TODO: Display Search Bar
+    SearchBar(
+        isSearching = state.isSearching,
+        onSearchQueryUpdate = { onActionSent(SearchMealByName(it.text)) }
+    )
+
+    // TODO: Display Search Results
+
     // TODO: Display Recent Searches
     // TODO: Display Last Opened Meals
 }
@@ -70,11 +77,11 @@ private fun SnackBar(
 @Composable
 fun SearchScreenPreview() {
     SearchScreenLayout(
-        state = SearchState(
+        state = SearchScreenState(
             recentSearches = emptyList(),
             lastOpenedMeals = emptyList(),
             searchResults = emptyList(),
-            isLoading = false,
+            isSearching = false,
             error = null
         )
     ) {

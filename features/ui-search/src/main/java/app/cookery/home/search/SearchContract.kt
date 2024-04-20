@@ -6,11 +6,11 @@ import com.cookery.Action
 import com.cookery.Effect
 import com.cookery.ScreenState
 
-data class SearchState(
+data class SearchScreenState(
     val recentSearches: List<String>,
     val lastOpenedMeals: List<CategoryDetails>,
-    val searchResults: List<MealDetails>,
-    val isLoading: Boolean,
+    val searchResults: List<MealDetails>?,
+    val isSearching: Boolean,
     val error: String?
 ) : ScreenState
 

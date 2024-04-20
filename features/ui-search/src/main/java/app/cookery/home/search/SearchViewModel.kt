@@ -24,17 +24,17 @@ class SearchViewModel @Inject constructor(
     private val snackbarManager: SnackbarManager,
     private val logger: Logger,
     private val errorMapper: ErrorMapper
-) : BaseViewModel<SearchState, SearchActions, SearchEffects>() {
+) : BaseViewModel<SearchScreenState, SearchActions, SearchEffects>() {
 
     init {
         initializeObservers()
     }
 
-    override fun createInitialScreenState() = SearchState(
+    override fun createInitialScreenState() = SearchScreenState(
         recentSearches = emptyList(),
         lastOpenedMeals = emptyList(),
         searchResults = emptyList(),
-        isLoading = false,
+        isSearching = false,
         error = null
     )
 
@@ -70,31 +70,38 @@ class SearchViewModel @Inject constructor(
     }
 
     private suspend fun searchMealByName(mealName: String) {
-        updateScreenState { copy(isLoading = true) }
+        updateSearchState(
+            isSearching = true,
+            searchResults = null
+        )
         searchUseCases.searchMealByNameUseCase(mealName)
             .onSuccess { searchResults ->
-                handleSuccess(searchResults)
+                updateSearchState(
+                    isSearching = false,
+                    searchResults = searchResults
+                )
             }
             .onFailure { throwable ->
                 handleFailure(throwable)
             }
     }
 
-    private fun handleSuccess(searchResults: List<MealDetails>) {
-        viewModelScope.launch(coroutineDispatchers.io) {
+    private fun updateSearchState(
+        isSearching: Boolean,
+        searchResults: List<MealDetails>?,
+    ) = viewModelScope.launch(coroutineDispatchers.io) {
             updateScreenState {
                 copy(
-                    searchResults = searchResults,
-                    isLoading = false
+                    isSearching = isSearching,
+                    searchResults = searchResults
                 )
             }
-        }
     }
 
     private fun handleFailure(throwable: Throwable) {
         viewModelScope.launch(coroutineDispatchers.io) {
             snackbarManager.addError(getUiError(throwable))
-            updateScreenState { copy(isLoading = false) }
+            updateScreenState { copy(isSearching = false) }
             logger.e(throwable)
         }
     }
