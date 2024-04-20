@@ -94,6 +94,7 @@ object Libs {
     object Compose {
         const val version = "1.6.5"
         const val compilerVersion = "1.5.11"
+        const val lifecycle_version = "2.7.0"
 
         const val ui = "androidx.compose.ui:ui:$version"
         const val foundation = "androidx.compose.foundation:foundation:$version"
@@ -104,6 +105,7 @@ object Libs {
         const val viewBinding = "androidx.compose.ui:ui-viewbinding:$version"
         const val util = "androidx.compose.ui:ui-util:$version"
         const val uiTest = "androidx.compose.ui:ui-test-junit4:$version"
+        const val runtime = "androidx.lifecycle:lifecycle-runtime-compose:$lifecycle_version"
     }
 
     object Accompanist {

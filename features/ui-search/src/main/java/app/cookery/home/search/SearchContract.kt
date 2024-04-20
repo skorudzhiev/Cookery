@@ -21,5 +21,5 @@ sealed class SearchActions : Action {
 }
 
 sealed class SearchEffects : Effect {
-    data class OpenMealDetails(val mealName: String) : SearchEffects()
+    data class OpenMealDetails(val mealId: String) : SearchEffects()
 }

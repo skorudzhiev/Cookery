@@ -46,11 +46,6 @@ class SearchViewModel @Inject constructor(
         }
     }
 
-    private suspend fun openMealDetailsFromSearchResults(mealId: String) {
-        searchUseCases.saveLastOpenedMealFromSearchUseCase(mealId)
-        sendEffect(SearchEffects.OpenMealDetails(mealId))
-    }
-
     private fun initializeObservers() {
         viewModelScope.launch(coroutineDispatchers.io) {
             combine(
@@ -67,6 +62,11 @@ class SearchViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    private suspend fun openMealDetailsFromSearchResults(mealId: String) {
+        searchUseCases.saveLastOpenedMealFromSearchUseCase(mealId)
+        sendEffect(SearchEffects.OpenMealDetails(mealId))
     }
 
     private suspend fun searchMealByName(mealName: String) {

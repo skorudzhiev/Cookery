@@ -49,6 +49,7 @@ dependencies {
     implementation Libs.Compose.material
     implementation Libs.Compose.animation
     implementation Libs.Compose.tooling
+    implementation Libs.Compose.runtime
     implementation Libs.Accompanist.insets
     implementation Libs.Accompanist.swipe_refresh
 
