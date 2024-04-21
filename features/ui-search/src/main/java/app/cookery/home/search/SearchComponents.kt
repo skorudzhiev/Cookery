@@ -41,6 +41,7 @@ import com.skorudzhiev.cookery.ui.search.R
 fun SearchBar(
     isSearching: Boolean,
     onSearchQueryUpdate: (TextFieldValue) -> Unit,
+    onClearSearchQuery: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     var query by remember { mutableStateOf(TextFieldValue("")) }
@@ -58,7 +59,12 @@ fun SearchBar(
                 .wrapContentHeight()
         ) {
             if (searchFocused && query.text.isNotEmpty()) {
-                ClearSearchQueryButton(onClearQuery = { query = TextFieldValue("") })
+                ClearSearchQueryButton(
+                    onClearQuery = {
+                        query = TextFieldValue("")
+                        onClearSearchQuery()
+                    }
+                )
             }
 
             BasicTextField(

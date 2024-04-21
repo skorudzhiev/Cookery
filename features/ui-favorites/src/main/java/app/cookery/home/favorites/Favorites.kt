@@ -1,11 +1,8 @@
 package app.cookery.home.favorites
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -13,21 +10,19 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import app.cookery.domain.model.CategoryDetails
 import com.cookery.common.compose.components.CategoryDetailsItem
+import com.cookery.common.compose.components.DisplayPlaceholder
 import com.cookery.common.compose.components.Header
 import com.cookery.common.compose.components.SnackBar
 import com.cookery.common.compose.components.getAppBarColor
@@ -107,7 +102,11 @@ private fun Favorites(
 
 private fun LazyListScope.placeholderItem() {
     item {
-        DisplayPlaceholder(Modifier.fillParentMaxSize())
+        DisplayPlaceholder(
+            image = FavoritesRes.drawable.ic_favorites_placeholder,
+            text = R.string.favorites_screen_placeholder,
+            modifier = Modifier.fillParentMaxSize()
+        )
     }
 }
 
@@ -149,24 +148,6 @@ private fun DisplayFavoriteMeals(
         CategoryDetailsItem(
             imageUrl = categoryDetails.mealImage,
             mealDescription = categoryDetails.mealName
-        )
-    }
-}
-
-@Composable
-private fun DisplayPlaceholder(modifier: Modifier) {
-    Column(
-        modifier = modifier,
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        Image(
-            painter = painterResource(FavoritesRes.drawable.ic_favorites_placeholder),
-            contentDescription = ""
-        )
-        Text(
-            modifier = Modifier.padding(16.dp),
-            text = stringResource(R.string.favorites_screen_placeholder)
         )
     }
 }

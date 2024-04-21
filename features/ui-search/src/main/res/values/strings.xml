@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="search_hint">Search Recipe</string>
+    <string name="search_hint">Search here</string>
+    <string name="search_no_results">No recipes found. Try searching with a different keyword or check your spelling.</string>
+    <string name="search_placeholder">Search for a recipe by name or ingredient.</string>
 </resources>
