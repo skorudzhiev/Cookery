@@ -6,6 +6,7 @@ import app.cookery.ErrorMapper
 import app.cookery.Logger
 import app.cookery.data.onFailure
 import app.cookery.data.onSuccess
+import app.cookery.domain.model.CategoryDetails
 import app.cookery.domain.model.MealDetails
 import app.cookery.domain.usecases.search.SearchUseCases
 import app.cookery.home.search.SearchActions.CleanRecentSearchResults
@@ -13,6 +14,7 @@ import app.cookery.home.search.SearchActions.ClearError
 import app.cookery.home.search.SearchActions.ClearSearchQuery
 import app.cookery.home.search.SearchActions.OpenMealDetails
 import app.cookery.home.search.SearchActions.SearchMealByName
+import app.cookery.home.search.SearchScreenContentType.Placeholder
 import app.cookery.home.search.SearchScreenContentType.Recent
 import app.cookery.home.search.SearchScreenContentType.SearchResults
 import app.cookery.presentation.getUiError
@@ -38,7 +40,7 @@ class SearchViewModel @Inject constructor(
         recentSearches = null,
         lastOpenedMeals = null,
         searchResults = null,
-        contentType = null,
+        contentType = Recent, // Will default to empty screen, while we observe the data
         isSearching = false,
         error = null
     )
@@ -47,16 +49,31 @@ class SearchViewModel @Inject constructor(
         when (action) {
             is ClearError -> snackbarManager.removeCurrentError()
             is SearchMealByName -> searchMealByName(action.mealName)
-            is ClearSearchQuery -> updateScreenContentType(Recent)
+            is ClearSearchQuery -> handleClearSearchQuery()
             is CleanRecentSearchResults -> searchUseCases.cleanRecentSearchResultsUseCase()
             is OpenMealDetails -> openMealDetailsFromSearchResults(action.mealId)
         }
     }
 
-    private fun updateScreenContentType(content: SearchScreenContentType) =
-        viewModelScope.launch(coroutineDispatchers.io) {
-            updateScreenState { copy(contentType = content) }
+    private fun handleClearSearchQuery() = viewModelScope.launch(coroutineDispatchers.io) {
+        updateScreenState {
+            copy(
+                contentType = getContentTypeForRecent(
+                    recentSearches = recentSearches ?: emptyList(),
+                    lastOpenedMeals = lastOpenedMeals ?: emptyList()
+                )
+            )
         }
+    }
+
+    private fun getContentTypeForRecent(
+        recentSearches: List<String>,
+        lastOpenedMeals: List<CategoryDetails>,
+    ): SearchScreenContentType {
+        val isRecentSearchesEmpty = recentSearches.isEmpty()
+        val isLastOpenedMealsEmpty = lastOpenedMeals.isEmpty()
+        return if (isRecentSearchesEmpty && isLastOpenedMealsEmpty) Placeholder else Recent
+    }
 
     private fun initializeObservers() {
         viewModelScope.launch(coroutineDispatchers.io) {
@@ -69,6 +86,7 @@ class SearchViewModel @Inject constructor(
                     copy(
                         recentSearches = recentSearches,
                         lastOpenedMeals = lastOpenedMeals,
+                        contentType = getContentTypeForRecent(recentSearches, lastOpenedMeals),
                         error = errorMapper.mapError(errors?.errorType)
                     )
                 }
@@ -115,7 +133,12 @@ class SearchViewModel @Inject constructor(
     private fun handleFailure(throwable: Throwable) {
         viewModelScope.launch(coroutineDispatchers.io) {
             snackbarManager.addError(getUiError(throwable))
-            updateScreenState { copy(isSearching = false) }
+            updateScreenState {
+                copy(
+                    isSearching = false,
+                    searchResults = null
+                )
+            }
             logger.e(throwable)
         }
     }

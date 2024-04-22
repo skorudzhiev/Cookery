@@ -1,4 +1,4 @@
-package app.cookery.home.search
+package app.cookery.home.search.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -45,7 +45,7 @@ fun SearchBar(
     modifier: Modifier = Modifier
 ) {
     var query by remember { mutableStateOf(TextFieldValue("")) }
-    var searchFocused = remember { false }
+    var isSearchFocused = remember { false }
 
     Box(modifier = modifier.searchBarModifier()) {
         if (query.text.isEmpty()) {
@@ -58,7 +58,7 @@ fun SearchBar(
                 .fillMaxSize()
                 .wrapContentHeight()
         ) {
-            if (searchFocused && query.text.isNotEmpty()) {
+            if (isSearchFocused && query.text.isNotEmpty()) {
                 ClearSearchQueryButton(
                     onClearQuery = {
                         query = TextFieldValue("")
@@ -76,7 +76,7 @@ fun SearchBar(
                 modifier = Modifier
                     .weight(1f)
                     .onFocusChanged {
-                        searchFocused = it.isFocused
+                        isSearchFocused = it.isFocused
                     }
             )
 

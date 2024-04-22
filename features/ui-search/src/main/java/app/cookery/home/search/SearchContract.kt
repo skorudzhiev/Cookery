@@ -10,14 +10,15 @@ data class SearchScreenState(
     val recentSearches: List<String>?,
     val lastOpenedMeals: List<CategoryDetails>?,
     val searchResults: List<MealDetails>?,
-    val contentType: SearchScreenContentType?,
+    val contentType: SearchScreenContentType,
     val isSearching: Boolean,
     val error: String?
 ) : ScreenState
 
 enum class SearchScreenContentType {
     SearchResults,
-    Recent
+    Recent,
+    Placeholder
 }
 
 sealed class SearchActions : Action {

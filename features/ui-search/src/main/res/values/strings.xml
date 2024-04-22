@@ -3,4 +3,6 @@
     <string name="search_hint">Search here</string>
     <string name="search_no_results">No recipes found. Try searching with a different keyword or check your spelling.</string>
     <string name="search_placeholder">Search for a recipe by name or ingredient.</string>
+    <string name="label_recent_searches">Recent searches</string>
+    <string name="label_clear_all_recent_searches">clear all</string>
 </resources>

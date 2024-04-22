@@ -71,8 +71,12 @@ fun ExpandingText(
 }
 
 @Composable
-fun CaptionText(text: String) {
+fun CaptionText(
+    text: String,
+    textAlign: TextAlign? = null,
+) {
     Text(
+        textAlign = textAlign,
         text = text,
         style = MaterialTheme.typography.caption
     )
