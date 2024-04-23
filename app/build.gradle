@@ -68,6 +68,7 @@ dependencies {
     implementation project(':features:ui-details')
     implementation project(':features:ui-favorites')
     implementation project(':features:ui-random')
+    implementation project(':features:ui-search')
 
     implementation Libs.AndroidX.activityCompose
     implementation Libs.AndroidX.navigationCompose

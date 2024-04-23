@@ -20,7 +20,9 @@ class SearchRepositoryImpl @Inject constructor(
 
     override suspend fun searchMealByName(mealName: String): Result<List<MealDetails>> =
         remoteDataSource.searchMealByName(mealName).also {
-            localDataSource.addRecentSearch(mealName)
+            if (mealName.length >= 4) {
+                localDataSource.addRecentSearch(mealName)
+            }
         }
 
     override suspend fun cleanRecentSearchResults() = localDataSource.cleanRecentSearchResults()

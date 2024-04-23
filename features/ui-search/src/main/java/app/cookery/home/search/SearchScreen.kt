@@ -20,6 +20,7 @@ import app.cookery.home.search.SearchEffects.OpenMealDetails
 import app.cookery.home.search.SearchScreenContentType.Placeholder
 import app.cookery.home.search.SearchScreenContentType.Recent
 import app.cookery.home.search.SearchScreenContentType.SearchResults
+import app.cookery.home.search.components.LastOpenedMeals
 import app.cookery.home.search.components.RecentSearches
 import app.cookery.home.search.components.SearchBar
 import app.cookery.home.search.components.SearchResults
@@ -76,9 +77,7 @@ private fun SearchScreenLayout(
                     )
                 }
             }
-            Recent -> {
-                RecentContent(state, onActionSent)
-            }
+            Recent -> { RecentContent(state, onActionSent) }
             Placeholder -> DisplayPlaceholder(
                 image = R.drawable.search_meal,
                 text = R.string.search_placeholder,
@@ -104,7 +103,7 @@ private fun RecentContent(
     state.lastOpenedMeals?.let { lastOpenedMeals ->
         LastOpenedMeals(
             lastOpenedMeals = lastOpenedMeals,
-            onMealClicked = { onActionSent(SearchActions.OpenMealDetails(it.id)) }
+            onMealClicked = { onActionSent(SearchActions.OpenMealDetails(it)) }
         )
     }
 }

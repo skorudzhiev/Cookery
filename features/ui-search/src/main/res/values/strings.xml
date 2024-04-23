@@ -5,4 +5,7 @@
     <string name="search_placeholder">Search for a recipe by name or ingredient.</string>
     <string name="label_recent_searches">Recent searches</string>
     <string name="label_clear_all_recent_searches">clear all</string>
+    <string name="label_last_opened_meals">Last opened meals</string>
+    <string name="label_see_all">See all</string>
+    <string name="label_see_less">See less</string>
 </resources>

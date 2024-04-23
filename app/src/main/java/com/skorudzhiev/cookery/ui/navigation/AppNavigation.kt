@@ -1,14 +1,7 @@
 package com.skorudzhiev.cookery.ui.navigation
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -24,6 +17,7 @@ import app.cookery.details.meal.MealDetails
 import app.cookery.home.categories.Categories
 import app.cookery.home.favorites.Favorites
 import app.cookery.home.random.RandomMeal
+import app.cookery.home.search.SearchScreen
 
 object Destinations {
     const val HOME = "home"
@@ -77,7 +71,7 @@ private fun NavGraphBuilder.addHome(
     composable(HomeSections.HOME.route) {
         Categories(
             openMealsDetails = { mealId ->
-                navController.navigate("${Destinations.MEAL_DETAILS}/$mealId")
+                navController.navigateToMealDetails(mealId)
             },
             openCategoryDetails = { categoryName ->
                 navController.navigate("${Destinations.CATEGORY_DETAILS}/$categoryName")
@@ -101,7 +95,7 @@ private fun NavGraphBuilder.addCategoryDetails(
         CategoryDetails(
             navigateUp = navController::navigateUp,
             openMealDetails = { mealId ->
-                navController.navigate("${Destinations.MEAL_DETAILS}/$mealId")
+                navController.navigateToMealDetails(mealId)
             }
         )
     }
@@ -119,7 +113,7 @@ private fun NavGraphBuilder.addAreaDetails(
         AreaDetails(
             navigateUp = navController::navigateUp,
             openMealDetails = { mealId ->
-                navController.navigate("${Destinations.MEAL_DETAILS}/$mealId")
+                navController.navigateToMealDetails(mealId)
             }
         )
     }
@@ -143,7 +137,9 @@ private fun NavGraphBuilder.addSearch(
     navController: NavController
 ) {
     composable(HomeSections.SEARCH.route) {
-        helloWorld(screen = stringResource(id = HomeSections.SEARCH.title))
+        SearchScreen(openMealsDetails = { mealId ->
+            navController.navigateToMealDetails(mealId)
+        })
     }
 }
 
@@ -153,7 +149,7 @@ private fun NavGraphBuilder.addFavorites(
     composable(HomeSections.FAVORITES.route) {
         Favorites(
             openMealDetails = { mealId ->
-                navController.navigate("${Destinations.MEAL_DETAILS}/$mealId")
+                navController.navigateToMealDetails(mealId)
             }
         )
     }
@@ -161,13 +157,5 @@ private fun NavGraphBuilder.addFavorites(
 
 private fun NavGraphBuilder.addRandom() = composable(HomeSections.RANDOM.route) { RandomMeal() }
 
-@Composable
-fun helloWorld(screen: String) {
-    Surface(modifier = Modifier.fillMaxSize()) {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) { Text(text = screen) }
-    }
-}
+private fun NavController.navigateToMealDetails(mealId: String) =
+    navigate("${Destinations.MEAL_DETAILS}/$mealId")

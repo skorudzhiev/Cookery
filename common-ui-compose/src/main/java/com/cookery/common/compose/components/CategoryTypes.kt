@@ -46,7 +46,7 @@ internal fun Areas(
 }
 
 @Composable
-internal fun RandomizedMeals(
+fun RandomizedMeals(
     categoryMeals: List<CategoryDetails>,
     openMealDetails: (String) -> Unit,
     modifier: Modifier = Modifier
